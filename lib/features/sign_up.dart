@@ -6,7 +6,12 @@ class SignUpPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
+      appBar: AppBar(
+        title: const Text('Sign Up'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
           children: [
             TextFormField(
               decoration: InputDecoration(labelText: 'Username'),
@@ -18,12 +23,14 @@ class SignUpPage extends StatelessWidget {
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                // Handle sign up logic here
+                // Navigate to Dashboard
+                Navigator.pushNamed(context, '/dashboard');
               },
               child: const Text('Sign Up'),
             ),
           ],
         ),
-      );
+      ),
+    );
   }
 }

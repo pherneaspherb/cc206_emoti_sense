@@ -43,6 +43,7 @@ class LoginScreen extends StatelessWidget {
                   ),
                 ),
               ),
+<<<<<<< HEAD
               SizedBox(height: 20),
               TextField(
                 obscureText: true,
@@ -78,6 +79,35 @@ class LoginScreen extends StatelessWidget {
               ),
             ],
           ),
+=======
+            ),
+            SizedBox(height: 20),
+            // Log In Button
+            ElevatedButton(
+              onPressed: () {
+                //for Dashboard
+              },
+              child: Text('Log In'),
+              style: ElevatedButton.styleFrom(
+                minimumSize: Size(double.infinity, 50),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+            ),
+            Spacer(),
+            // Sign Up Prompt
+            TextButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SignUpScreen()),
+                );
+              },
+              child: Text('New to EmotiSense? Sign up for free'),
+            ),
+          ],
+>>>>>>> origin/sign_up-seraspi-deLosReyes
         ),
       ),
     );

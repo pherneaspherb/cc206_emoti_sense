@@ -22,6 +22,7 @@ flutter:
 
   assets:
     - assets/logo.png
+<<<<<<< HEAD
     
   fonts:
     - family: Gotham
@@ -30,3 +31,5 @@ flutter:
         - asset: assets/Gotham Bold.otf
         - asset: assets/Gotham Medium.otf
           weight: 700
+=======
+>>>>>>> origin/sign_up-seraspi-deLosReyes

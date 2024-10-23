@@ -6,6 +6,7 @@ class WelcomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -14,13 +15,24 @@ class WelcomeScreen extends StatelessWidget {
             Spacer(),
             // EmotiSense Logo
             Center(
-              child: Text(
-                'EmotiSense',
-                style: TextStyle(
-                  fontSize: 40,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.blueAccent,
-                ),
+              child: Column(
+                children: [
+                  Text(
+                    'EmotiSense',
+                    style: TextStyle(
+                      fontSize: 40,
+                      fontWeight: FontWeight.bold,
+                      color: const Color.fromARGB(255, 0, 50, 136),
+                    ),
+                  ),
+                  SizedBox(height: 20),
+                  // EmotiSense Image Logo
+                  Image.asset(
+                    'assets/logo.png', 
+                    height: 100,
+                    width: 100,
+                  ),
+                ],
               ),
             ),
             SizedBox(height: 40),

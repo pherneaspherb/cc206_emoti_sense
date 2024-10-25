@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'features/dashboard.dart';
-
+// OCTOBER 25
 void main() {
   runApp(MyApp());
 }
@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: Dashboard(), // Set HomePage as the initial screen
+      home: Dashboard(), 
     );
   }
 }

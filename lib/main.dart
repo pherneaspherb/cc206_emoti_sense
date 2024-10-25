@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'features/dashboard.dart';
-// OCTOBER 25
+import 'features/dashboard.dart'; // Import the dashboard file
+
 void main() {
   runApp(MyApp());
 }
@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: Dashboard(), 
+      home: const Dashboard(), // Use the Dashboard as the initial screen
     );
   }
 }

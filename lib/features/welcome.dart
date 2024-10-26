@@ -6,7 +6,7 @@ class WelcomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-<<<<<<< HEAD
+      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -24,38 +24,25 @@ class WelcomeScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Spacer(),
-              Column(
-                children: [
-                  Image.asset(
-                    'assets/logo.png',
-                    height: 100,
-                  ),
-                  SizedBox(height: 20),
-=======
-      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Spacer(),
-            // EmotiSense Logo
-            Center(
-              child: Column(
-                children: [
->>>>>>> origin/sign_up-seraspi-deLosReyes
-                  Text(
-                    'EmotiSense',
-                    style: TextStyle(
-                      fontSize: 40,
-                      fontWeight: FontWeight.bold,
-<<<<<<< HEAD
-                      fontFamily: 'Gotham Medium',
-                      color: const Color.fromARGB(255, 0, 11, 78),
+              Center(
+                child: Column(
+                  children: [
+                    Image.asset(
+                      'assets/logo.png',
+                      height: 100,
                     ),
-                  ),
-                  SizedBox(height: 40),
-                ],
+                    SizedBox(height: 20),
+                    Text(
+                      'EmotiSense',
+                      style: TextStyle(
+                        fontSize: 40,
+                        fontWeight: FontWeight.bold,
+                        color: const Color.fromARGB(255, 0, 50, 136),
+                      ),
+                    ),
+                    SizedBox(height: 40),
+                  ],
+                ),
               ),
               ElevatedButton(
                 onPressed: () {
@@ -71,19 +58,6 @@ class WelcomeScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(10),
                   ),
                 ),
-=======
-                      color: const Color.fromARGB(255, 0, 50, 136),
-                    ),
-                  ),
-                  SizedBox(height: 20),
-                  // EmotiSense Image Logo
-                  Image.asset(
-                    'assets/logo.png', 
-                    height: 100,
-                    width: 100,
-                  ),
-                ],
->>>>>>> origin/sign_up-seraspi-deLosReyes
               ),
               SizedBox(height: 20),
               OutlinedButton(

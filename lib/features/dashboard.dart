@@ -3,6 +3,8 @@ import 'moods_page.dart'; // Import the MoodsPage file
 import 'discover_page.dart'; // Import the DiscoverPage file
 import 'games_page.dart'; // Import the GamesPage file
 import 'profile_page.dart'; // Import the ProfilePage file
+import 'music_page.dart'; // Import MusicPage
+
 
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key});
@@ -219,42 +221,50 @@ class _DashboardState extends State<Dashboard> {
   }
 
   Widget _buildGridItem(String title, IconData icon, Color color) {
-    return GestureDetector(
-      onHorizontalDragEnd: (details) {
-        String direction = details.primaryVelocity! > 0 ? 'right' : 'left';
-        _onItemSwipe(title, direction); // Show feedback on swipe
-      },
-      onTap: () {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Tapped on $title')),
+  return GestureDetector(
+    onTap: () {
+      if (title == 'Music') {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const MusicPage()),
         );
-      },
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(10),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.1),
-              blurRadius: 10,
-              offset: const Offset(0, 5),
-            ),
-          ],
-        ),
+      }
+    },
+    child: Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(10),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.1),
+            blurRadius: 10,
+            offset: const Offset(0, 5),
+          ),
+        ],
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(10.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(icon, size: 40, color: color),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Text(
               title,
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              style: const TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                color: Colors.black87,
+              ),
+              textAlign: TextAlign.center,
             ),
           ],
         ),
       ),
-    );
-  }
+    ),
+  );
+}
+
 
   // Method to show feedback when an item is swiped
   void _onItemSwipe(String title, String direction) {

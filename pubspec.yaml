@@ -22,3 +22,11 @@ flutter:
 
   assets:
     - assets/logo.png
+    
+  fonts:
+    - family: Gotham
+      fonts:
+        - asset: assets/Gotham Regular.otf
+        - asset: assets/Gotham Bold.otf
+        - asset: assets/Gotham Medium.otf
+          weight: 700

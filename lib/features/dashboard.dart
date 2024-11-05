@@ -3,11 +3,10 @@ import 'moods_page.dart'; // Import the MoodsPage file
 import 'discover_page.dart'; // Import the DiscoverPage file
 import 'games_page.dart'; // Import the GamesPage file
 import 'profile_page.dart'; // Import the ProfilePage file
-import 'music_page.dart'; // Import MusicPage
-import 'meditation_page.dart'; // Import your MeditationPage
-import 'breathwork_page.dart'; // Import your BreathworkPage
-import 'stories_page.dart'; // Import your StoriesPage
-
+import 'discover_sections/music.dart'; // Import MusicPage
+import 'discover_sections/meditation.dart'; // Import MeditationPage
+import 'discover_sections/breathwork.dart'; // Import BreathworkPage
+import 'discover_sections/stories.dart'; // Import StoriesPage
 
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key});
@@ -46,29 +45,20 @@ class _DashboardState extends State<Dashboard> {
   }
 
   // Returns the appropriate page based on the selected index
-Widget _getSelectedPage() {
-  switch (_selectedIndex) {
-    case 0:
-      return _buildHomePage();
-    case 1:
-      return const DiscoverPage();
-    case 2:
-      return const GamesPage();
-    case 3:
-      return const ProfilePage();
-    case 4: // Add a case for the Music Page
-      return const MusicPage();
-    case 5: // Add a case for the Meditation Page
-      return const MeditationPage();
-    case 6: // Add a case for the Breathwork Page
-      return const BreathworkPage();
-    case 7: // Add a case for the Stories Page
-      return const StoriesPage();
-    default:
-      return _buildHomePage();
+  Widget _getSelectedPage() {
+    switch (_selectedIndex) {
+      case 0:
+        return _buildHomePage();
+      case 1:
+        return const DiscoverPage();
+      case 2:
+        return const GamesPage();
+      case 3:
+        return const ProfilePage();
+      default:
+        return _buildHomePage();
+    }
   }
-}
-
 
   // Gets the title based on the selected index
   String _getAppBarTitle() {
@@ -196,74 +186,34 @@ Widget _getSelectedPage() {
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(_getAppBarTitle()), // Update title based on selected tab
-        centerTitle: true,
-        elevation: 0,
-        backgroundColor: Colors.lightBlue,
-      ),
-      body: _getSelectedPage(), // Display the selected page
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.dashboard),
-            label: 'Dashboard',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: 'Discover',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.videogame_asset),
-            label: 'Games',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
-          ),
-        ],
-      ),
-    );
-  }
-
-  // Inside the Dashboard class
-
-Widget _buildGridItem(String title, IconData icon, Color color) {
+  // Build grid item with navigation to respective pages
+  Widget _buildGridItem(String title, IconData icon, Color color) {
   return GestureDetector(
     onTap: () {
       // Handle navigation based on the card tapped
       switch (title) {
         case 'Music':
-          Navigator.push(
+          Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => const MusicPage()),
+            MaterialPageRoute(builder: (context) => MusicScreen()),
           );
           break;
         case 'Meditation':
-          // Replace 'MeditationPage' with the actual name of your meditation page
-          Navigator.push(
+          Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => const MeditationPage()), 
+            MaterialPageRoute(builder: (context) => MeditationScreen()),
           );
           break;
         case 'Breathwork':
-          // Replace 'BreathworkPage' with the actual name of your breathwork page
-          Navigator.push(
+          Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => const BreathworkPage()), 
+            MaterialPageRoute(builder: (context) => BreathworkScreen()),
           );
           break;
         case 'Stories':
-          // Replace 'StoriesPage' with the actual name of your stories page
-          Navigator.push(
+          Navigator.pushReplacement(
             context,
-            MaterialPageRoute(builder: (context) => const StoriesPage()), 
+            MaterialPageRoute(builder: (context) => StoriesScreen()),
           );
           break;
       }
@@ -302,14 +252,39 @@ Widget _buildGridItem(String title, IconData icon, Color color) {
     ),
   );
 }
-
-
-
-  // Method to show feedback when an item is swiped
-  void _onItemSwipe(String title, String direction) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text('You swiped $direction on $title'),
+  
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(_getAppBarTitle()), // Update title based on selected tab
+        centerTitle: true,
+        elevation: 0,
+        backgroundColor: Colors.lightBlue,
+      ),
+      body: _getSelectedPage(), // Display the selected page
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        currentIndex: _selectedIndex,
+        onTap: _onItemTapped,
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.dashboard),
+            label: 'Dashboard',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.search),
+            label: 'Discover',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.videogame_asset),
+            label: 'Games',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'Profile',
+          ),
+        ],
       ),
     );
   }

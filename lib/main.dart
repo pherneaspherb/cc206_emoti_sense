@@ -1,7 +1,8 @@
 // NOVEMBER 11 pushed by pher
+// enhanced features and added games - maggiiee1
 
 import 'package:flutter/material.dart';
-import 'features/dashboard.dart'; // Import the dashboard file
+import 'features/dashboard.dart';
 
 void main() {
   runApp(MyApp());
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const Dashboard(), // Use the Dashboard as the initial screen
+      home: const Dashboard(), 
     );
   }
 }

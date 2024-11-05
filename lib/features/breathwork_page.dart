@@ -1,10 +1,9 @@
-// music_page.dart
+// breathwork_page.dart
 import 'package:flutter/material.dart';
-import 'chill_beats_page.dart';
 import 'discover_page.dart'; // Import Discover Page here
 
-class MusicPage extends StatelessWidget {
-  const MusicPage({super.key});
+class BreathworkPage extends StatelessWidget {
+  const BreathworkPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,11 +17,11 @@ class MusicPage extends StatelessWidget {
           context,
           MaterialPageRoute(builder: (context) => const DiscoverPage()),
         );
-        return false; // Prevents going back to the previous page (e.g., Dashboard)
+        return false; // Prevents going back to the previous page
       },
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Music'),
+          title: const Text('Breathwork'),
           backgroundColor: Colors.lightBlue,
         ),
         body: SingleChildScrollView(
@@ -33,12 +32,12 @@ class MusicPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _buildSectionTitle('Music', screenWidth),
+              _buildSectionTitle('Breathwork Techniques', screenWidth),
               _buildCuratedGrid(
                 [
-                  _buildCuratedItem(context, 'Chill Beats', Icons.music_note, Colors.purpleAccent),
-                  _buildCuratedItem(context, 'Focus Tunes', Icons.headphones, Colors.blueAccent),
-                  _buildCuratedItem(context, 'Feel Good', Icons.audiotrack, Colors.orangeAccent),
+                  _buildCuratedItem(context, 'Deep Breathing', Icons.cloud, Colors.greenAccent),
+                  _buildCuratedItem(context, 'Box Breathing', Icons.star, Colors.orangeAccent),
+                  _buildCuratedItem(context, '4-7-8 Breathing', Icons.access_alarm, Colors.purpleAccent),
                 ],
                 screenWidth,
                 screenHeight,
@@ -79,14 +78,11 @@ class MusicPage extends StatelessWidget {
   Widget _buildCuratedItem(BuildContext context, String title, IconData icon, Color color) {
     return GestureDetector(
       onTap: () {
-        if (title == 'Chill Beats') {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const ChillBeatsPage(),
-            ),
-          );
-        }
+        // Add any specific navigation or functionality for breathwork items here
+        // For now, just display a simple snackbar
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Selected: $title')),
+        );
       },
       child: Container(
         decoration: BoxDecoration(

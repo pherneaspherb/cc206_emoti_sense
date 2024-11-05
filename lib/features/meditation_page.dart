@@ -1,10 +1,9 @@
-// music_page.dart
+// meditation_page.dart
 import 'package:flutter/material.dart';
-import 'chill_beats_page.dart';
 import 'discover_page.dart'; // Import Discover Page here
 
-class MusicPage extends StatelessWidget {
-  const MusicPage({super.key});
+class MeditationPage extends StatelessWidget {
+  const MeditationPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,11 +17,11 @@ class MusicPage extends StatelessWidget {
           context,
           MaterialPageRoute(builder: (context) => const DiscoverPage()),
         );
-        return false; // Prevents going back to the previous page (e.g., Dashboard)
+        return false; // Prevents going back to the previous page
       },
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Music'),
+          title: const Text('Meditation'),
           backgroundColor: Colors.lightBlue,
         ),
         body: SingleChildScrollView(
@@ -33,12 +32,31 @@ class MusicPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _buildSectionTitle('Music', screenWidth),
+              _buildSectionTitle('Meditation Techniques', screenWidth),
               _buildCuratedGrid(
+                context, // Pass context here
                 [
-                  _buildCuratedItem(context, 'Chill Beats', Icons.music_note, Colors.purpleAccent),
-                  _buildCuratedItem(context, 'Focus Tunes', Icons.headphones, Colors.blueAccent),
-                  _buildCuratedItem(context, 'Feel Good', Icons.audiotrack, Colors.orangeAccent),
+                  _buildCuratedItem(
+                    context, // Pass context here
+                    'Mindfulness',
+                    Icons.self_improvement,
+                    Colors.greenAccent,
+                    'Focus on the present moment and acknowledge thoughts and feelings without judgment.',
+                  ),
+                  _buildCuratedItem(
+                    context, // Pass context here
+                    'Sleep Meditation',
+                    Icons.nightlight_round,
+                    Colors.indigoAccent,
+                    'Embrace the night with soothing sounds and relaxation.',
+                  ),
+                  _buildCuratedItem(
+                    context, // Pass context here
+                    'Anxiety Relief',
+                    Icons.spa,
+                    Colors.teal,
+                    'Calm your mind and reclaim your inner strength.',
+                  ),
                 ],
                 screenWidth,
                 screenHeight,
@@ -64,7 +82,7 @@ class MusicPage extends StatelessWidget {
     );
   }
 
-  Widget _buildCuratedGrid(List<Widget> items, double screenWidth, double screenHeight) {
+  Widget _buildCuratedGrid(BuildContext context, List<Widget> items, double screenWidth, double screenHeight) {
     return GridView.count(
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
@@ -76,17 +94,13 @@ class MusicPage extends StatelessWidget {
     );
   }
 
-  Widget _buildCuratedItem(BuildContext context, String title, IconData icon, Color color) {
+  Widget _buildCuratedItem(BuildContext context, String title, IconData icon, Color color, String description) {
     return GestureDetector(
       onTap: () {
-        if (title == 'Chill Beats') {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const ChillBeatsPage(),
-            ),
-          );
-        }
+        // Display the description in a Snackbar for simplicity
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(description)),
+        );
       },
       child: Container(
         decoration: BoxDecoration(

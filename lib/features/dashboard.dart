@@ -4,6 +4,9 @@ import 'discover_page.dart'; // Import the DiscoverPage file
 import 'games_page.dart'; // Import the GamesPage file
 import 'profile_page.dart'; // Import the ProfilePage file
 import 'music_page.dart'; // Import MusicPage
+import 'meditation_page.dart'; // Import your MeditationPage
+import 'breathwork_page.dart'; // Import your BreathworkPage
+import 'stories_page.dart'; // Import your StoriesPage
 
 
 class Dashboard extends StatefulWidget {
@@ -43,20 +46,29 @@ class _DashboardState extends State<Dashboard> {
   }
 
   // Returns the appropriate page based on the selected index
-  Widget _getSelectedPage() {
-    switch (_selectedIndex) {
-      case 0:
-        return _buildHomePage();
-      case 1:
-        return const DiscoverPage(); // Use DiscoverPage
-      case 2:
-        return const GamesPage(); // Use GamesPage
-      case 3:
-        return const ProfilePage(); // Use ProfilePage
-      default:
-        return _buildHomePage();
-    }
+Widget _getSelectedPage() {
+  switch (_selectedIndex) {
+    case 0:
+      return _buildHomePage();
+    case 1:
+      return const DiscoverPage();
+    case 2:
+      return const GamesPage();
+    case 3:
+      return const ProfilePage();
+    case 4: // Add a case for the Music Page
+      return const MusicPage();
+    case 5: // Add a case for the Meditation Page
+      return const MeditationPage();
+    case 6: // Add a case for the Breathwork Page
+      return const BreathworkPage();
+    case 7: // Add a case for the Stories Page
+      return const StoriesPage();
+    default:
+      return _buildHomePage();
   }
+}
+
 
   // Gets the title based on the selected index
   String _getAppBarTitle() {
@@ -220,14 +232,40 @@ class _DashboardState extends State<Dashboard> {
     );
   }
 
-  Widget _buildGridItem(String title, IconData icon, Color color) {
+  // Inside the Dashboard class
+
+Widget _buildGridItem(String title, IconData icon, Color color) {
   return GestureDetector(
     onTap: () {
-      if (title == 'Music') {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const MusicPage()),
-        );
+      // Handle navigation based on the card tapped
+      switch (title) {
+        case 'Music':
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const MusicPage()),
+          );
+          break;
+        case 'Meditation':
+          // Replace 'MeditationPage' with the actual name of your meditation page
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const MeditationPage()), 
+          );
+          break;
+        case 'Breathwork':
+          // Replace 'BreathworkPage' with the actual name of your breathwork page
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const BreathworkPage()), 
+          );
+          break;
+        case 'Stories':
+          // Replace 'StoriesPage' with the actual name of your stories page
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const StoriesPage()), 
+          );
+          break;
       }
     },
     child: Container(
@@ -264,6 +302,7 @@ class _DashboardState extends State<Dashboard> {
     ),
   );
 }
+
 
 
   // Method to show feedback when an item is swiped

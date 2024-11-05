@@ -1,10 +1,9 @@
-// music_page.dart
+// stories_page.dart
 import 'package:flutter/material.dart';
-import 'chill_beats_page.dart';
-import 'discover_page.dart'; // Import Discover Page here
+import 'discover_page.dart'; // Import Discover Page
 
-class MusicPage extends StatelessWidget {
-  const MusicPage({super.key});
+class StoriesPage extends StatelessWidget {
+  const StoriesPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,11 +17,11 @@ class MusicPage extends StatelessWidget {
           context,
           MaterialPageRoute(builder: (context) => const DiscoverPage()),
         );
-        return false; // Prevents going back to the previous page (e.g., Dashboard)
+        return false; // Prevents default back navigation
       },
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Music'),
+          title: const Text('Stories'),
           backgroundColor: Colors.lightBlue,
         ),
         body: SingleChildScrollView(
@@ -33,12 +32,12 @@ class MusicPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _buildSectionTitle('Music', screenWidth),
+              _buildSectionTitle('Curated Stories', screenWidth),
               _buildCuratedGrid(
                 [
-                  _buildCuratedItem(context, 'Chill Beats', Icons.music_note, Colors.purpleAccent),
-                  _buildCuratedItem(context, 'Focus Tunes', Icons.headphones, Colors.blueAccent),
-                  _buildCuratedItem(context, 'Feel Good', Icons.audiotrack, Colors.orangeAccent),
+                  _buildCuratedItem(context, 'Inspirational Tales', Icons.book, Colors.orangeAccent),
+                  _buildCuratedItem(context, 'Mindfulness Stories', Icons.volume_up, Colors.greenAccent),
+                  _buildCuratedItem(context, 'Adventure Stories', Icons.explore, Colors.blueAccent),
                 ],
                 screenWidth,
                 screenHeight,
@@ -79,14 +78,10 @@ class MusicPage extends StatelessWidget {
   Widget _buildCuratedItem(BuildContext context, String title, IconData icon, Color color) {
     return GestureDetector(
       onTap: () {
-        if (title == 'Chill Beats') {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const ChillBeatsPage(),
-            ),
-          );
-        }
+        // Show a simple snackbar on item tap
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Selected: $title')),
+        );
       },
       child: Container(
         decoration: BoxDecoration(

@@ -1,3 +1,5 @@
+// NOVEMBER 11 pushed by pher
+
 import 'package:flutter/material.dart';
 import 'features/dashboard.dart'; // Import the dashboard file
 
@@ -8,7 +10,7 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp( 
       title: 'Stress Relief App',
       theme: ThemeData(
         primarySwatch: Colors.blue,

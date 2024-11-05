@@ -24,12 +24,9 @@ class DiscoverPage extends StatelessWidget {
             _buildSectionTitle('Music', screenWidth),
             _buildCuratedGrid(
               [
-                _buildCuratedItem(
-                    'Chill Beats', Icons.music_note, Colors.purpleAccent),
-                _buildCuratedItem(
-                    'Focus Tunes', Icons.headphones, Colors.blueAccent),
-                _buildCuratedItem(
-                    'Feel Good', Icons.audiotrack, Colors.orangeAccent),
+                _buildCuratedItem(context, 'Chill Beats', Icons.music_note, Colors.purpleAccent),
+                _buildCuratedItem(context, 'Focus Tunes', Icons.headphones, Colors.blueAccent),
+                _buildCuratedItem(context, 'Feel Good', Icons.audiotrack, Colors.orangeAccent),
               ],
               screenWidth,
               screenHeight,
@@ -38,12 +35,9 @@ class DiscoverPage extends StatelessWidget {
             _buildSectionTitle('Meditation', screenWidth),
             _buildCuratedGrid(
               [
-                _buildCuratedItem(
-                    'Mindfulness', Icons.self_improvement, Colors.greenAccent),
-                _buildCuratedItem('Sleep Meditation', Icons.nightlight_round,
-                    Colors.indigoAccent),
-                _buildCuratedItem(
-                    'Anxiety Relief', Icons.spa, Colors.teal),
+                _buildCuratedItem(context, 'Mindfulness', Icons.self_improvement, Colors.greenAccent),
+                _buildCuratedItem(context, 'Sleep Meditation', Icons.nightlight_round, Colors.indigoAccent),
+                _buildCuratedItem(context, 'Anxiety Relief', Icons.spa, Colors.teal),
               ],
               screenWidth,
               screenHeight,
@@ -52,12 +46,9 @@ class DiscoverPage extends StatelessWidget {
             _buildSectionTitle('Breathwork', screenWidth),
             _buildCuratedGrid(
               [
-                _buildCuratedItem(
-                    'Deep Breathing', Icons.air, Colors.lightBlueAccent),
-                _buildCuratedItem(
-                    '4-7-8 Breathing', Icons.slow_motion_video, Colors.cyanAccent),
-                _buildCuratedItem(
-                    'Box Breathing', Icons.crop_square, Colors.blueGrey),
+                _buildCuratedItem(context, 'Deep Breathing', Icons.air, Colors.lightBlueAccent),
+                _buildCuratedItem(context, '4-7-8 Breathing', Icons.slow_motion_video, Colors.cyanAccent),
+                _buildCuratedItem(context, 'Box Breathing', Icons.crop_square, Colors.blueGrey),
               ],
               screenWidth,
               screenHeight,
@@ -66,12 +57,9 @@ class DiscoverPage extends StatelessWidget {
             _buildSectionTitle('Stories', screenWidth),
             _buildCuratedGrid(
               [
-                _buildCuratedItem(
-                    'Inspiring Tales', Icons.book, Colors.redAccent),
-                _buildCuratedItem(
-                    'Bedtime Stories', Icons.bedtime, Colors.deepPurpleAccent),
-                _buildCuratedItem(
-                    'Life Lessons', Icons.menu_book, Colors.pinkAccent),
+                _buildCuratedItem(context, 'Inspiring Tales', Icons.book, Colors.redAccent),
+                _buildCuratedItem(context, 'Bedtime Stories', Icons.bedtime, Colors.deepPurpleAccent),
+                _buildCuratedItem(context, 'Life Lessons', Icons.menu_book, Colors.pinkAccent),
               ],
               screenWidth,
               screenHeight,
@@ -98,9 +86,9 @@ class DiscoverPage extends StatelessWidget {
 
   Widget _buildCuratedGrid(List<Widget> items, double screenWidth, double screenHeight) {
     return GridView.count(
-      physics: const NeverScrollableScrollPhysics(),
-      shrinkWrap: true,
-      crossAxisCount: 2,
+      physics: const NeverScrollableScrollPhysics(), // Prevent scrolling within the grid
+      shrinkWrap: true, // Allows the GridView to take only the necessary height
+      crossAxisCount: 3, // Number of columns in the grid
       crossAxisSpacing: screenWidth * 0.04,
       mainAxisSpacing: screenHeight * 0.02,
       childAspectRatio: 1.5,
@@ -108,21 +96,13 @@ class DiscoverPage extends StatelessWidget {
     );
   }
 
-  Widget _buildCuratedItem(String title, IconData icon, Color color) {
+  Widget _buildCuratedItem(BuildContext context, String title, IconData icon, Color color) {
     return GestureDetector(
-      onHorizontalDragEnd: (details) {
-        if (details.primaryVelocity! > 0) {
-          print('Swiped right on $title');
-        } else if (details.primaryVelocity! < 0) {
-          print('Swiped left on $title');
-        }
-      },
-      onScaleUpdate: (details) {
-        if (details.scale > 1.0) {
-          print('Pinching out on $title');
-        } else if (details.scale < 1.0) {
-          print('Pinching in on $title');
-        }
+      onTap: () {
+        // Define action when the item is tapped
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('You selected: $title')),
+        );
       },
       child: Container(
         decoration: BoxDecoration(

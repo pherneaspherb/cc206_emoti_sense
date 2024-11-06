@@ -29,12 +29,22 @@ class _ProfilePageState extends State<ProfilePage> {
             ),
             const SizedBox(height: 16),
 
-            // Username
+            // Name
             const Text(
               'Yebe',
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 4),
+
+            // Username
+            const Text(
+              '@loveyebe',
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.grey,
               ),
             ),
             const SizedBox(height: 8),
@@ -46,6 +56,26 @@ class _ProfilePageState extends State<ProfilePage> {
                 fontSize: 16,
                 color: Colors.grey,
               ),
+            ),
+            const SizedBox(height: 8),
+
+             // Bio 
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.format_quote, color: Colors.lightBlue),
+                const SizedBox(width: 8),
+                const Text(
+                  'Enter bio here.', // Replace with your actual bio quote
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Colors.black87,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                const SizedBox(width: 8),
+                Icon(Icons.format_quote, color: Colors.lightBlue),
+              ],
             ),
             const SizedBox(height: 32),
 
@@ -60,13 +90,18 @@ class _ProfilePageState extends State<ProfilePage> {
                 }),
               ],
             ),
+            const SizedBox(height: 32),
+
+            // Additional Buttons with Icons
+            _buildButton(Icons.book, "My Journal"),
+            _buildButton(Icons.music_note, "Liked Songs"),
           ],
         ),
       ),
     );
   }
 
-  // Method for profile options
+  // Method for profile options in a row
   Widget _buildProfileOption(IconData icon, String label, {VoidCallback? onTap}) {
     return GestureDetector(
       onTap: onTap,
@@ -77,6 +112,28 @@ class _ProfilePageState extends State<ProfilePage> {
           Text(
             label,
             style: const TextStyle(fontSize: 14, color: Colors.black87),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // Method for buttons with icons beside text
+  Widget _buildButton(IconData icon, String label) {
+    return Container(
+      margin: const EdgeInsets.symmetric(vertical: 8.0),
+      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+      decoration: BoxDecoration(
+        color: Colors.lightBlue[100],
+        borderRadius: BorderRadius.circular(8.0),
+      ),
+      child: Row(
+        children: [
+          Icon(icon, color: Colors.lightBlue),
+          const SizedBox(width: 10),
+          Text(
+            label,
+            style: const TextStyle(fontSize: 16, color: Colors.black87),
           ),
         ],
       ),

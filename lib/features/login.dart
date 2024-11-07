@@ -58,10 +58,7 @@ class LoginScreen extends StatelessWidget {
               ElevatedButton(
                 onPressed: () {
                   //for Dashboard
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (context) => Dashboard())
-                  );
+                  Navigator.pushNamed(context, '/dashboard');
                 },
                 child: Text('Log In'),
                 style: ElevatedButton.styleFrom(
@@ -74,10 +71,8 @@ class LoginScreen extends StatelessWidget {
               Spacer(),
               TextButton(
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => SignUpScreen()),
-                  );
+                  Navigator.pushNamed(context, '/signup');
+
                 },
                 child: Text('New to EmotiSense? Sign up for free'),
               ),

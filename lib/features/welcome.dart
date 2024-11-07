@@ -46,10 +46,8 @@ class WelcomeScreen extends StatelessWidget {
               ),
               ElevatedButton(
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => SignUpScreen()),
-                  );
+                  Navigator.pushNamed(context, '/signup');
+
                 },
                 child: Text('Sign Up'),
                 style: ElevatedButton.styleFrom(
@@ -62,10 +60,8 @@ class WelcomeScreen extends StatelessWidget {
               SizedBox(height: 20),
               OutlinedButton(
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => LoginScreen()),
-                  );
+                  Navigator.pushNamed(context, '/login');
+
                 },
                 child: Text('Log In'),
                 style: OutlinedButton.styleFrom(

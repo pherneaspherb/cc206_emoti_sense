@@ -193,28 +193,17 @@ class _DashboardState extends State<Dashboard> {
         // Handle navigation based on the card tapped
         switch (title) {
           case 'Music':
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => MusicScreen()),
-            );
+            Navigator.pushNamed(context, '/music');
+
             break;
           case 'Meditation':
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => MeditationScreen()),
-            );
+            Navigator.pushNamed(context, '/meditation');
             break;
           case 'Breathwork':
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => BreathworkScreen()),
-            );
+            Navigator.pushNamed(context, '/breathwork');
             break;
           case 'Stories':
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => StoriesScreen()),
-            );
+            Navigator.pushNamed(context, '/stories');
             break;
         }
       },

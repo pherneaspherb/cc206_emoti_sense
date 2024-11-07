@@ -90,10 +90,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     "Edit Profile",
                     onTap: () {
                       // Navigate to the Profile Edit page
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const ProfileEdit()),
-                      );
+                      Navigator.pushNamed(context, '/editprofile');
                     },
                   ),
                   _buildProfileOption(Icons.favorite, "Favorites"),
@@ -102,10 +99,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     "Log Out",
                     onTap: () {
                       // Navigate to the Welcome Screen
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(builder: (context) => WelcomeScreen()),
-                      );
+                      Navigator.pushNamed(context, '/');
                     },
                   ),
                 ],

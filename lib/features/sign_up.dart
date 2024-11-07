@@ -116,10 +116,7 @@ class SignUpScreen extends StatelessWidget {
                   onPressed: () {
                     if (formKey.currentState!.validate()) {
                       // If the form is valid, proceed with sign-up
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(builder: (context) => const Dashboard())
-                      );
+                      Navigator.pushNamed(context, '/dashboard');
                     }
                   },
                   child: Text('Sign Up'),

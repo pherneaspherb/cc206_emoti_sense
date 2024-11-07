@@ -31,10 +31,7 @@ class StoriesScreen extends StatelessWidget {
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => const Dashboard()),
-              );
+              Navigator.pushNamed(context, '/dashboard');
             },
           ),
         ),

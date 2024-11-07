@@ -1,4 +1,3 @@
-// chill_beats_page.dart
 import 'package:flutter/material.dart';
 
 class ChillBeatsPage extends StatefulWidget {
@@ -85,61 +84,64 @@ class _ChillBeatsPageState extends State<ChillBeatsPage> {
             ),
           ),
           const Divider(thickness: 2, color: Colors.grey),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              'Favorites',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          if (favoriteSongs.isNotEmpty)
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                'Favorites',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
             ),
-          ),
-          Expanded(
-            child: ListView.builder(
-              padding: const EdgeInsets.all(8),
-              itemCount: favoriteSongs.length,
-              itemBuilder: (context, index) {
-                final favoriteSong = favoriteSongs[index];
-                return Dismissible(
-                  key: Key(favoriteSong),
-                  direction: DismissDirection.endToStart,
-                  onDismissed: (direction) {
-                    _removeFromFavorites(favoriteSong);
-                  },
-                  confirmDismiss: (direction) async {
-                    return await showDialog(
-                      context: context,
-                      builder: (context) => AlertDialog(
-                        title: const Text('Are you sure?'),
-                        content: const Text('Do you want to remove this song from favorites?'),
-                        actions: [
-                          TextButton(
-                            onPressed: () => Navigator.of(context).pop(false),
-                            child: const Text('Cancel'),
-                          ),
-                          TextButton(
-                            onPressed: () => Navigator.of(context).pop(true),
-                            child: const Text('Delete'),
-                          ),
-                        ],
-                      ),
-                    );
-                  },
-                  background: Container(
-                    color: Colors.red,
-                    alignment: Alignment.centerRight,
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    child: const Icon(Icons.delete, color: Colors.white),
-                  ),
-                  child: ListTile(
-                    leading: Icon(Icons.music_note, color: Colors.purpleAccent),
-                    title: Text(
-                      favoriteSong,
-                      style: const TextStyle(fontSize: 18),
+          if (favoriteSongs.isNotEmpty)
+            SizedBox(
+              height: 150, // Set a fixed height for the favorites section
+              child: ListView.builder(
+                padding: const EdgeInsets.all(8),
+                itemCount: favoriteSongs.length,
+                itemBuilder: (context, index) {
+                  final favoriteSong = favoriteSongs[index];
+                  return Dismissible(
+                    key: Key(favoriteSong),
+                    direction: DismissDirection.endToStart,
+                    onDismissed: (direction) {
+                      _removeFromFavorites(favoriteSong);
+                    },
+                    confirmDismiss: (direction) async {
+                      return await showDialog(
+                        context: context,
+                        builder: (context) => AlertDialog(
+                          title: const Text('Are you sure?'),
+                          content: const Text('Do you want to remove this song from favorites?'),
+                          actions: [
+                            TextButton(
+                              onPressed: () => Navigator.of(context).pop(false),
+                              child: const Text('Cancel'),
+                            ),
+                            TextButton(
+                              onPressed: () => Navigator.of(context).pop(true),
+                              child: const Text('Delete'),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                    background: Container(
+                      color: Colors.red,
+                      alignment: Alignment.centerRight,
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      child: const Icon(Icons.delete, color: Colors.white),
                     ),
-                  ),
-                );
-              },
+                    child: ListTile(
+                      leading: Icon(Icons.music_note, color: Colors.purpleAccent),
+                      title: Text(
+                        favoriteSong,
+                        style: const TextStyle(fontSize: 18),
+                      ),
+                    ),
+                  );
+                },
+              ),
             ),
-          ),
         ],
       ),
     );

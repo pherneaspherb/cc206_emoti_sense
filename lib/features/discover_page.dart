@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:cc206_emoti_sense/features/chill_beats_page.dart';
 
 class DiscoverPage extends StatefulWidget {
   const DiscoverPage({super.key});
@@ -27,7 +28,7 @@ class _DiscoverPageState extends State<DiscoverPage> {
           _buildCuratedItem(context, 'Focus Tunes', Icons.headphones, Colors.blueAccent),
           _buildCuratedItem(context, 'Feel Good', Icons.audiotrack, Colors.orangeAccent),
           const SizedBox(height: 16.0),
-          _buildSectionTitle ('Meditation'),
+          _buildSectionTitle('Meditation'),
           _buildCuratedItem(context, 'Mindfulness', Icons.self_improvement, Colors.greenAccent),
           _buildCuratedItem(context, 'Sleep Meditation', Icons.nightlight_round, Colors.indigoAccent),
           _buildCuratedItem(context, 'Anxiety Relief', Icons.spa, Colors.teal),
@@ -72,7 +73,16 @@ class _DiscoverPageState extends State<DiscoverPage> {
 
   Widget _buildCuratedItem(BuildContext context, String title, IconData icon, Color color) {
     return GestureDetector(
-      onTap: () => _onItemTap(title),
+      onTap: () {
+        if (title == 'Chill Beats') {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const ChillBeatsPage()),
+          );
+        } else {
+          _onItemTap(title);
+        }
+      },
       child: Container(
         margin: const EdgeInsets.symmetric(vertical: 4.0),
         padding: const EdgeInsets.all(16.0),

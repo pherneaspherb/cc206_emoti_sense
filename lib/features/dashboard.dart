@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'moods_page.dart'; // Import the MoodsPage file
-import 'discover_page.dart'; // Import the DiscoverPage file
-import 'games_page.dart'; // Import the GamesPage file
-import 'profile_page.dart'; // Import the ProfilePage file
-import 'discover_sections/music.dart'; // Import MusicPage
-import 'discover_sections/meditation.dart'; // Import MeditationPage
-import 'discover_sections/breathwork.dart'; // Import BreathworkPage
-import 'discover_sections/stories.dart'; // Import StoriesPage
+import 'moods_page.dart'; 
+import 'discover_page.dart'; 
+import 'games_page.dart'; 
+import 'profile_page.dart'; 
+import 'discover_sections/music.dart'; 
+import 'discover_sections/meditation.dart'; 
+import 'discover_sections/breathwork.dart'; 
+import 'discover_sections/stories.dart'; 
 
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key});
@@ -17,9 +17,9 @@ class Dashboard extends StatefulWidget {
 
 class _DashboardState extends State<Dashboard> {
   int _selectedIndex = 0;
-  final List<String> _moods = []; // List to store moods
-  final Set<String> _favorites = {}; // Set to store favorite moods
-  final TextEditingController _moodController = TextEditingController(); // TextField controller
+  final List<String> _moods = []; 
+  final Set<String> _favorites = {}; 
+  final TextEditingController _moodController = TextEditingController();
 
   void _onItemTapped(int index) {
     setState(() {
@@ -29,17 +29,17 @@ class _DashboardState extends State<Dashboard> {
 
   void _addMood(String mood) {
     setState(() {
-      _moods.add(mood); // Add mood to the list
-      _moodController.clear(); // Clear the text field after adding
+      _moods.add(mood); 
+      _moodController.clear(); 
     });
   }
 
   void _toggleFavorite(String mood) {
     setState(() {
       if (_favorites.contains(mood)) {
-        _favorites.remove(mood); // Remove from favorites
+        _favorites.remove(mood); 
       } else {
-        _favorites.add(mood); // Add to favorites
+        _favorites.add(mood); 
       }
     });
   }
@@ -123,13 +123,13 @@ class _DashboardState extends State<Dashboard> {
                                 onMoodDeleted: (mood) {
                                   setState(() {
                                     _moods.remove(mood);
-                                    _favorites.remove(mood); // Remove from favorites if deleted
+                                    _favorites.remove(mood); 
                                   });
                                 },
                                 onClearAll: () {
                                   setState(() {
-                                    _moods.clear(); // Clear all moods
-                                    _favorites.clear(); // Clear all favorites
+                                    _moods.clear(); 
+                                    _favorites.clear(); 
                                   });
                                 },
                                 onToggleFavorite: _toggleFavorite,
@@ -159,7 +159,7 @@ class _DashboardState extends State<Dashboard> {
                     ),
                     onSubmitted: (value) {
                       if (value.isNotEmpty) {
-                        _addMood(value); // Add mood on submit
+                        _addMood(value); 
                       }
                     },
                   ),
@@ -188,103 +188,114 @@ class _DashboardState extends State<Dashboard> {
 
   // Build grid item with navigation to respective pages
   Widget _buildGridItem(String title, IconData icon, Color color) {
-  return GestureDetector(
-    onTap: () {
-      // Handle navigation based on the card tapped
-      switch (title) {
-        case 'Music':
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => MusicScreen()),
-          );
-          break;
-        case 'Meditation':
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => MeditationScreen()),
-          );
-          break;
-        case 'Breathwork':
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => BreathworkScreen()),
-          );
-          break;
-        case 'Stories':
-          Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(builder: (context) => StoriesScreen()),
-          );
-          break;
-      }
-    },
-    child: Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(10),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.1),
-            blurRadius: 10,
-            offset: const Offset(0, 5),
-          ),
-        ],
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(icon, size: 40, color: color),
-            const SizedBox(height: 10),
-            Text(
-              title,
-              style: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                color: Colors.black87,
-              ),
-              textAlign: TextAlign.center,
+    return GestureDetector(
+      onTap: () {
+        // Handle navigation based on the card tapped
+        switch (title) {
+          case 'Music':
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => MusicScreen()),
+            );
+            break;
+          case 'Meditation':
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => MeditationScreen()),
+            );
+            break;
+          case 'Breathwork':
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => BreathworkScreen()),
+            );
+            break;
+          case 'Stories':
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => StoriesScreen()),
+            );
+            break;
+        }
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(10),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.1),
+              blurRadius: 10,
+              offset: const Offset(0, 5),
             ),
           ],
         ),
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(icon, size: 40, color: color),
+              const SizedBox(height: 10),
+              Text(
+                title,
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black87,
+                ),
+                textAlign: TextAlign.center,
+              ),
+            ],
+          ),
+        ),
       ),
-    ),
-  );
-}
-  
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(_getAppBarTitle()), // Update title based on selected tab
-        centerTitle: true,
-        elevation: 0,
-        backgroundColor: Colors.lightBlue,
-      ),
-      body: _getSelectedPage(), // Display the selected page
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.dashboard),
-            label: 'Dashboard',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: 'Discover',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.videogame_asset),
-            label: 'Games',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
-          ),
-        ],
+    return WillPopScope(
+      onWillPop: () async {
+        if (_selectedIndex != 0) {
+          setState(() {
+            _selectedIndex = 0; 
+          });
+          return false; 
+        }
+        return true; 
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(_getAppBarTitle()),
+          centerTitle: true,
+          elevation: 0,
+          backgroundColor: Colors.lightBlue,
+        ),
+        body: _getSelectedPage(), 
+        bottomNavigationBar: BottomNavigationBar(
+          type: BottomNavigationBarType.fixed,
+          currentIndex: _selectedIndex,
+          onTap: _onItemTapped,
+          items: const [
+            BottomNavigationBarItem(
+              icon: Icon(Icons.dashboard),
+              label: 'Dashboard',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.search),
+              label: 'Discover',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.videogame_asset),
+              label: 'Games',
+            ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.account_circle),
+              label: 'Profile',
+            ),
+          ],
+        ),
       ),
     );
   }

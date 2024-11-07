@@ -1,3 +1,5 @@
+import 'package:cc206_emoti_sense/features/profile_edit.dart';
+import 'package:cc206_emoti_sense/features/welcome.dart';
 import 'package:flutter/material.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -8,94 +10,113 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
-  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Profile'),
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.lightBlue,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            // Profile Picture
-            CircleAvatar(
-              radius: 50,
-              backgroundImage: AssetImage('assets/logo.png'),
-              backgroundColor: Colors.grey[300],
-            ),
-            const SizedBox(height: 16),
-
-            // Name
-            const Text(
-              'Yebe',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
+      body: SingleChildScrollView(  
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              // Profile Picture
+              CircleAvatar(
+                radius: 50,
+                backgroundImage: AssetImage('assets/logo.png'),
+                backgroundColor: Colors.grey[300],
               ),
-            ),
-            const SizedBox(height: 4),
+              const SizedBox(height: 16),
 
-            // Username
-            const Text(
-              '@loveyebe',
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.grey,
-              ),
-            ),
-            const SizedBox(height: 8),
-
-            // Email Address
-            const Text(
-              'yebedebi@gmail.com',
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.grey,
-              ),
-            ),
-            const SizedBox(height: 8),
-
-             // Bio 
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Icon(Icons.format_quote, color: Colors.lightBlue),
-                const SizedBox(width: 8),
-                const Text(
-                  'Enter bio here.', // Replace with your actual bio quote
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.black87,
-                  ),
-                  textAlign: TextAlign.center,
+              // Name
+              const Text(
+                'Yebe',
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
                 ),
-                const SizedBox(width: 8),
-                Icon(Icons.format_quote, color: Colors.lightBlue),
-              ],
-            ),
-            const SizedBox(height: 32),
+              ),
+              const SizedBox(height: 4),
 
-            // Profile Options
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                _buildProfileOption(Icons.edit, "Edit Profile"),
-                _buildProfileOption(Icons.favorite, "Favorites"),
-                _buildProfileOption(Icons.logout, "Log Out", onTap: () {
-                  // Navigator.pushNamed(context, 'Login');
-                }),
-              ],
-            ),
-            const SizedBox(height: 32),
+              // Username
+              const Text(
+                '@loveyebe',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.grey,
+                ),
+              ),
+              const SizedBox(height: 8),
 
-            // Additional Buttons with Icons
-            _buildButton(Icons.book, "My Journal"),
-            _buildButton(Icons.music_note, "Liked Songs"),
-          ],
+              // Email Address
+              const Text(
+                'yebedebi@gmail.com',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.grey,
+                ),
+              ),
+              const SizedBox(height: 8),
+
+              // Bio
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.format_quote, color: Colors.lightBlue),
+                  const SizedBox(width: 8),
+                  const Text(
+                    'Enter bio here.',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.black87,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(width: 8),
+                  Icon(Icons.format_quote, color: Colors.lightBlue),
+                ],
+              ),
+              const SizedBox(height: 32),
+
+              // Profile Options
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  _buildProfileOption(
+                    Icons.edit,
+                    "Edit Profile",
+                    onTap: () {
+                      // Navigate to the Profile Edit page
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const ProfileEdit()),
+                      );
+                    },
+                  ),
+                  _buildProfileOption(Icons.favorite, "Favorites"),
+                  _buildProfileOption(
+                    Icons.logout,
+                    "Log Out",
+                    onTap: () {
+                      // Navigate to the Welcome Screen
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => WelcomeScreen()),
+                      );
+                    },
+                  ),
+                ],
+              ),
+              const SizedBox(height: 32),
+
+              // Additional Buttons with Icons
+              _buildButton(Icons.book, "My Journal"),
+              _buildButton(Icons.music_note, "Liked Songs"),
+            ],
+          ),
         ),
       ),
     );

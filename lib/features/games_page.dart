@@ -24,9 +24,9 @@ class _GamesPageState extends State<GamesPage> {
         child: Column(
           children: [
             GridView.count(
-              shrinkWrap: true, // Makes the grid view fit the available space
-              physics: const NeverScrollableScrollPhysics(), // Prevent scrolling within the grid
-              crossAxisCount: 2, // Two games per row
+              shrinkWrap: true, 
+              physics: const NeverScrollableScrollPhysics(), 
+              crossAxisCount: 2, 
               crossAxisSpacing: 16.0,
               mainAxisSpacing: 16.0,
               children: [
@@ -37,7 +37,6 @@ class _GamesPageState extends State<GamesPage> {
               ],
             ),
             const SizedBox(height: 16.0),
-            // Message displayed when a game is selected
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
@@ -55,10 +54,10 @@ class _GamesPageState extends State<GamesPage> {
   // Helper function to build game cards
   Widget _buildGameCard(String title, IconData icon, Color color) {
     return GestureDetector(
-      onTap: () => _onGameTap(title), // Handle tap and update the message
+      onTap: () => _onGameTap(title), 
       child: Container(
         decoration: BoxDecoration(
-          color: color.withOpacity(0.2), // Add color opacity for background
+          color: color.withOpacity(0.2), 
           borderRadius: BorderRadius.circular(10),
           boxShadow: [
             BoxShadow(

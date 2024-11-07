@@ -38,14 +38,11 @@ class _ProfileEditState extends State<ProfileEdit> {
               ),
               const SizedBox(height: 16),
 
-              // Editable Name Field
               _buildEditable(nameController, 'Name'),
 
-              // Editable Username Field
               const SizedBox(height: 16),
               _buildEditable(usernameController, 'Username'),
 
-              // Editable Email Field
               const SizedBox(height: 16),
               TextFormField(
                 controller: emailController,
@@ -62,13 +59,11 @@ class _ProfileEditState extends State<ProfileEdit> {
                 },
               ),
 
-              // Editable Bio Field
               const SizedBox(height: 16),
               _buildEditable(bioController, 'Bio'),
 
               const SizedBox(height: 32),
 
-              // Save button 
               ElevatedButton(
                 onPressed: () {
                   if (formKey.currentState!.validate()) {

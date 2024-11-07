@@ -1,3 +1,4 @@
+import 'package:cc206_emoti_sense/features/dashboard.dart';
 import 'package:flutter/material.dart';
 
 class SignUpScreen extends StatelessWidget {
@@ -111,11 +112,14 @@ class SignUpScreen extends StatelessWidget {
                   },
                 ),
                 SizedBox(height: 20),
-                // Sign Up Button
                 ElevatedButton(
                   onPressed: () {
                     if (formKey.currentState!.validate()) {
                       // If the form is valid, proceed with sign-up
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => const Dashboard())
+                      );
                     }
                   },
                   child: Text('Sign Up'),

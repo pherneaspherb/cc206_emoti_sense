@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 class MoodsPage extends StatefulWidget {
-  final List<String> moods; // The list of moods
-  final List<String> favorites; // The list of favorite moods
-  final ValueChanged<String> onMoodDeleted; // Callback for deleting a mood
-  final VoidCallback onClearAll; // Callback for clearing all moods
-  final ValueChanged<String> onToggleFavorite; // Callback for toggling favorite status
-  final ValueChanged<String> onMoodEdited; // Callback for editing a mood
+  final List<String> moods; 
+  final List<String> favorites; 
+  final ValueChanged<String> onMoodDeleted; 
+  final VoidCallback onClearAll; 
+  final ValueChanged<String> onToggleFavorite; 
+  final ValueChanged<String> onMoodEdited; 
 
   MoodsPage({
     required this.moods,
@@ -22,23 +22,23 @@ class MoodsPage extends StatefulWidget {
 }
 
 class _MoodsPageState extends State<MoodsPage> {
-  List<String> _currentFavorites = []; // Maintain a local copy of current favorites
+  List<String> _currentFavorites = []; 
 
   @override
   void initState() {
     super.initState();
-    _currentFavorites = List.from(widget.favorites); // Initialize with passed favorites
+    _currentFavorites = List.from(widget.favorites); 
   }
 
   void _toggleFavorite(String mood) {
     setState(() {
       if (_currentFavorites.contains(mood)) {
-        _currentFavorites.remove(mood); // Remove from favorites
+        _currentFavorites.remove(mood); 
       } else {
-        _currentFavorites.add(mood); // Add to favorites
+        _currentFavorites.add(mood); 
       }
     });
-    widget.onToggleFavorite(mood); // Call the parent toggle function
+    widget.onToggleFavorite(mood); 
   }
 
   void _editMood(String oldMood) {
@@ -56,7 +56,7 @@ class _MoodsPageState extends State<MoodsPage> {
           actions: [
             TextButton(
               onPressed: () {
-                Navigator.of(context).pop(); // Close the dialog
+                Navigator.of(context).pop(); 
               },
               child: Text('Cancel'),
             ),
@@ -67,11 +67,11 @@ class _MoodsPageState extends State<MoodsPage> {
                   setState(() {
                     int index = widget.moods.indexOf(oldMood);
                     if (index != -1) {
-                      widget.moods[index] = newMood; // Update the mood
-                      widget.onMoodEdited(newMood); // Notify the parent
+                      widget.moods[index] = newMood;
+                      widget.onMoodEdited(newMood); 
                     }
                   });
-                  Navigator.of(context).pop(); // Close the dialog
+                  Navigator.of(context).pop(); 
                 }
               },
               child: Text('Save'),
@@ -94,14 +94,14 @@ class _MoodsPageState extends State<MoodsPage> {
         children: [
           ElevatedButton(
             onPressed: () {
-              widget.onClearAll(); // Call the clear all function
+              widget.onClearAll(); 
               ScaffoldMessenger.of(context).showSnackBar(
                 SnackBar(
                   content: Text('All moods cleared.'),
                 ),
               );
               setState(() {
-                _currentFavorites.clear(); // Clear local favorites
+                _currentFavorites.clear(); 
               });
             },
             child: const Text('Clear All'),
@@ -111,7 +111,7 @@ class _MoodsPageState extends State<MoodsPage> {
               itemCount: widget.moods.length,
               itemBuilder: (context, index) {
                 final mood = widget.moods[index];
-                final isFavorite = _currentFavorites.contains(mood); // Check local favorites
+                final isFavorite = _currentFavorites.contains(mood); 
 
                 return ListTile(
                   title: Text(mood),
@@ -124,28 +124,28 @@ class _MoodsPageState extends State<MoodsPage> {
                           color: isFavorite ? Colors.red : null,
                         ),
                         onPressed: () {
-                          _toggleFavorite(mood); // Toggle favorite status locally
-                          setState(() {}); // Refresh the UI
+                          _toggleFavorite(mood); 
+                          setState(() {}); 
                         },
                       ),
                       IconButton(
-                        icon: Icon(Icons.edit, color: Colors.blue), // Edit icon
+                        icon: Icon(Icons.edit, color: Colors.blue), 
                         onPressed: () {
-                          _editMood(mood); // Call the edit function
+                          _editMood(mood); 
                         },
                       ),
                       IconButton(
                         icon: Icon(Icons.delete, color: Colors.red),
                         onPressed: () {
-                          widget.onMoodDeleted(mood); // Call the delete function
+                          widget.onMoodDeleted(mood); 
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
                               content: Text('Mood "$mood" deleted.'),
                             ),
                           );
                           setState(() {
-                            _currentFavorites.remove(mood); // Remove from local favorites if deleted
-                          }); // Refresh the UI
+                            _currentFavorites.remove(mood); 
+                          }); 
                         },
                       ),
                     ],
@@ -154,7 +154,7 @@ class _MoodsPageState extends State<MoodsPage> {
               },
             ),
           ),
-          Divider(), // Separator between moods and favorites
+          Divider(), 
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
@@ -173,13 +173,13 @@ class _MoodsPageState extends State<MoodsPage> {
                   trailing: IconButton(
                     icon: Icon(Icons.delete, color: Colors.red),
                     onPressed: () {
-                      _toggleFavorite(favoriteMood); // Remove from favorites
+                      _toggleFavorite(favoriteMood);
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           content: Text('Favorite mood "$favoriteMood" removed.'),
                         ),
                       );
-                      setState(() {}); // Refresh the UI
+                      setState(() {});
                     },
                   ),
                 );

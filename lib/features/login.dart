@@ -1,3 +1,4 @@
+import 'package:cc206_emoti_sense/features/dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:cc206_emoti_sense/features/sign_up.dart';
 
@@ -57,6 +58,10 @@ class LoginScreen extends StatelessWidget {
               ElevatedButton(
                 onPressed: () {
                   //for Dashboard
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => Dashboard())
+                  );
                 },
                 child: Text('Log In'),
                 style: ElevatedButton.styleFrom(

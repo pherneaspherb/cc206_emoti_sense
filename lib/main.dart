@@ -1,5 +1,3 @@
-import 'package:cc206_emoti_sense/features/profile_edit.dart';
-import 'package:cc206_emoti_sense/features/profile_page.dart';
 import 'package:flutter/material.dart';
 import 'package:cc206_emoti_sense/features/welcome.dart';
 

@@ -1,5 +1,7 @@
+import 'package:cc206_emoti_sense/features/profile_edit.dart';
+import 'package:cc206_emoti_sense/features/profile_page.dart';
 import 'package:flutter/material.dart';
-import 'features/dashboard.dart';
+import 'package:cc206_emoti_sense/features/welcome.dart';
 
 void main() {
   runApp(MyApp());
@@ -9,11 +11,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Stress Relief App',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: Dashboard(),
+      debugShowCheckedModeBanner: false,
+      home: WelcomeScreen(),
     );
   }
 }

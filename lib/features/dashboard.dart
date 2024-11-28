@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
-import 'moods_page.dart'; 
-import 'discover_page.dart'; 
-import 'games_page.dart'; 
-import 'profile_page.dart'; 
-import 'discover_sections/music.dart'; 
-import 'discover_sections/meditation.dart'; 
-import 'discover_sections/breathwork.dart'; 
-import 'discover_sections/stories.dart'; 
+import 'moods_page.dart';
+import 'discover_page.dart';
+import 'games_page.dart';
+import 'profile_page.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key});
@@ -17,8 +13,10 @@ class Dashboard extends StatefulWidget {
 
 class _DashboardState extends State<Dashboard> {
   int _selectedIndex = 0;
-  final List<String> _moods = []; 
-  final Set<String> _favorites = {}; 
+
+  // Moods functionality
+  final List<String> _moods = [];
+  final Set<String> _favorites = {};
   final TextEditingController _moodController = TextEditingController();
 
   void _onItemTapped(int index) {
@@ -29,54 +27,103 @@ class _DashboardState extends State<Dashboard> {
 
   void _addMood(String mood) {
     setState(() {
-      _moods.add(mood); 
-      _moodController.clear(); 
+      _moods.add(mood);
+      _moodController.clear();
     });
   }
 
   void _toggleFavorite(String mood) {
     setState(() {
       if (_favorites.contains(mood)) {
-        _favorites.remove(mood); 
+        _favorites.remove(mood);
       } else {
-        _favorites.add(mood); 
+        _favorites.add(mood);
       }
     });
   }
 
-  // Returns the appropriate page based on the selected index
-  Widget _getSelectedPage() {
-    switch (_selectedIndex) {
-      case 0:
-        return _buildHomePage();
-      case 1:
-        return const DiscoverPage();
-      case 2:
-        return const GamesPage();
-      case 3:
-        return const ProfilePage();
-      default:
-        return _buildHomePage();
-    }
+  Widget _buildMiddleSection() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          "Daily Inspiration",
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(height: 8),
+        Container(
+          padding: const EdgeInsets.all(12),
+          decoration: BoxDecoration(
+            color: Colors.lightBlueAccent.shade100,
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: const Text(
+            "\"Happiness is not something ready-made. It comes from your own actions.\" - Dalai Lama",
+            style: TextStyle(fontSize: 16, color: Colors.black87),
+          ),
+        ),
+        const SizedBox(height: 16),
+        const Text(
+          "Wellness Tip of the Day",
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(height: 8),
+        Container(
+          padding: const EdgeInsets.all(12),
+          decoration: BoxDecoration(
+            color: Colors.greenAccent.shade100,
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: const Text(
+            "Take a 5-minute break every hour to stretch and breathe deeply.",
+            style: TextStyle(fontSize: 16, color: Colors.black87),
+          ),
+        ),
+      ],
+    );
   }
 
-  // Gets the title based on the selected index
-  String _getAppBarTitle() {
-    switch (_selectedIndex) {
-      case 0:
-        return 'Home';
-      case 1:
-        return 'Discover';
-      case 2:
-        return 'Games';
-      case 3:
-        return 'Profile';
-      default:
-        return 'Home';
-    }
+  Widget _buildRecentlyPlayed() {
+    // Mock data for recently played
+    final recentItems = [
+      {"title": "Relaxing Meditation", "type": "Meditation"},
+      {"title": "Lo-fi Beats", "type": "Music"},
+      {"title": "Deep Breathing Exercise", "type": "Breathwork"},
+    ];
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          "Recently Played",
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(height: 8),
+        Column(
+          children: recentItems.map((item) {
+            return ListTile(
+              leading: Icon(
+                item["type"] == "Music"
+                    ? Icons.music_note
+                    : item["type"] == "Meditation"
+                        ? Icons.self_improvement
+                        : Icons.air,
+                color: Colors.blueAccent,
+              ),
+              title: Text(item["title"]!),
+              subtitle: Text(item["type"]!),
+              trailing: const Icon(Icons.play_arrow),
+              onTap: () {
+                // Handle playback navigation
+                print("Playing: ${item['title']}");
+              },
+            );
+          }).toList(),
+        ),
+      ],
+    );
   }
 
-  // Builds the Home Page with mood functionality
   Widget _buildHomePage() {
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
@@ -123,13 +170,13 @@ class _DashboardState extends State<Dashboard> {
                                 onMoodDeleted: (mood) {
                                   setState(() {
                                     _moods.remove(mood);
-                                    _favorites.remove(mood); 
+                                    _favorites.remove(mood);
                                   });
                                 },
                                 onClearAll: () {
                                   setState(() {
-                                    _moods.clear(); 
-                                    _favorites.clear(); 
+                                    _moods.clear();
+                                    _favorites.clear();
                                   });
                                 },
                                 onToggleFavorite: _toggleFavorite,
@@ -159,84 +206,18 @@ class _DashboardState extends State<Dashboard> {
                     ),
                     onSubmitted: (value) {
                       if (value.isNotEmpty) {
-                        _addMood(value); 
+                        _addMood(value);
                       }
                     },
                   ),
                 ],
               ),
             ),
-            SizedBox(height: screenHeight * 0.02),
-            GridView.count(
-              shrinkWrap: true,
-              crossAxisCount: 2,
-              crossAxisSpacing: screenWidth * 0.04,
-              mainAxisSpacing: screenHeight * 0.02,
-              childAspectRatio: 1.5,
-              children: [
-                _buildGridItem('Music', Icons.music_note, Colors.purpleAccent),
-                _buildGridItem('Meditation', Icons.self_improvement, Colors.greenAccent),
-                _buildGridItem('Breathwork', Icons.air, Colors.lightBlueAccent),
-                _buildGridItem('Stories', Icons.book, Colors.orangeAccent),
-              ],
-            ),
+            const SizedBox(height: 20),
+            _buildMiddleSection(),
+            const SizedBox(height: 20),
+            _buildRecentlyPlayed(),
           ],
-        ),
-      ),
-    );
-  }
-
-  // Build grid item with navigation to respective pages
-  Widget _buildGridItem(String title, IconData icon, Color color) {
-    return GestureDetector(
-      onTap: () {
-        // Handle navigation based on the card tapped
-        switch (title) {
-          case 'Music':
-            Navigator.pushNamed(context, '/music');
-
-            break;
-          case 'Meditation':
-            Navigator.pushNamed(context, '/meditation');
-            break;
-          case 'Breathwork':
-            Navigator.pushNamed(context, '/breathwork');
-            break;
-          case 'Stories':
-            Navigator.pushNamed(context, '/stories');
-            break;
-        }
-      },
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(10),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.1),
-              blurRadius: 10,
-              offset: const Offset(0, 5),
-            ),
-          ],
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(icon, size: 40, color: color),
-              const SizedBox(height: 10),
-              Text(
-                title,
-                style: const TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black87,
-                ),
-                textAlign: TextAlign.center,
-              ),
-            ],
-          ),
         ),
       ),
     );
@@ -244,47 +225,44 @@ class _DashboardState extends State<Dashboard> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        if (_selectedIndex != 0) {
-          setState(() {
-            _selectedIndex = 0; 
-          });
-          return false; 
-        }
-        return true; 
-      },
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(_getAppBarTitle()),
-          centerTitle: true,
-          elevation: 0,
-          backgroundColor: Colors.lightBlue,
-        ),
-        body: _getSelectedPage(), 
-        bottomNavigationBar: BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,
-          currentIndex: _selectedIndex,
-          onTap: _onItemTapped,
-          items: const [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.dashboard),
-              label: 'Dashboard',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.search),
-              label: 'Discover',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.videogame_asset),
-              label: 'Games',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.account_circle),
-              label: 'Profile',
-            ),
-          ],
-        ),
+    final List<Widget> pages = [
+      _buildHomePage(),
+      const DiscoverPage(),
+      const GamesPage(),
+      const ProfilePage(),
+    ];
+
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Home"),
+        centerTitle: true,
+        backgroundColor: Colors.lightBlue,
+        elevation: 0,
+        automaticallyImplyLeading: false,
+      ),
+      body: pages[_selectedIndex],
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        currentIndex: _selectedIndex,
+        onTap: _onItemTapped,
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.dashboard),
+            label: 'Dashboard',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.search),
+            label: 'Discover',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.videogame_asset),
+            label: 'Games',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.account_circle),
+            label: 'Profile',
+          ),
+        ],
       ),
     );
   }

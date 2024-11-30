@@ -1,47 +1,76 @@
-import 'package:cc206_emoti_sense/features/dashboard.dart';
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-Widget _buildCuratedItem(BuildContext context, String title, IconData icon, Color color) {
-  return Container(
-    margin: const EdgeInsets.all(8.0),
-    padding: const EdgeInsets.all(16.0),
-    decoration: BoxDecoration(
-      color: color.withOpacity(0.2),
-      borderRadius: BorderRadius.circular(12),
-    ),
-    child: Row(
-      children: [
-        Icon(icon, color: color, size: 30),
-        const SizedBox(width: 10),
-        Text(
-          title,
-          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: color),
-        ),
-      ],
-    ),
-  );
-}
+class MeditationPage extends StatelessWidget {
+  // List of YouTube video URLs for breathing exercises
+  final List<Map<String, String>> videoDetails = [
+    {
+      'url': 'https://www.youtube.com/watch?v=Dx112W4i5I0&pp=ygUZc2hvcnQgYnJlYXRoaW5nIGV4ZXJjaXNlcw%3D%3D',
+      'title': 'Breathing Exercise 1',
+    },
+    {
+      'url': 'https://www.youtube.com/watch?v=eZBa63NZbbE&pp=ygUZc2hvcnQgYnJlYXRoaW5nIGV4ZXJjaXNlcw%3D%3D',
+      'title': 'Breathing Exercise 2',
+    },
+    {
+      'url': 'https://www.youtube.com/watch?v=kpSkoXRrZnE&pp=ygUZc2hvcnQgYnJlYXRoaW5nIGV4ZXJjaXNlcw%3D%3D',
+      'title': 'Breathing Exercise 3',
+    },
+    {
+      'url': 'https://www.youtube.com/watch?v=Fu6XOe6SwHI&pp=ygUZc2hvcnQgYnJlYXRoaW5nIGV4ZXJjaXNlcw%3D%3D',
+      'title': 'Breathing Exercise 4',
+    },
+  ];
 
-class MeditationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-      return Scaffold(
-        appBar: AppBar(
-          title: const Text('Mediation'),
-          leading: IconButton(
-            icon: const Icon(Icons.arrow_back),
-            onPressed: () {
-              Navigator.pushNamed(context, '/dashboard');
-            },
-          ),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Breathing Exercises"),
+      ),
+      body: GridView.builder(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2, // Two videos per row
+          crossAxisSpacing: 8.0, // Spacing between columns
+          mainAxisSpacing: 8.0, // Spacing between rows
+          childAspectRatio: 1.5, // Adjust aspect ratio for tile size
         ),
-        body: ListView(
-          children: [
-            _buildCuratedItem(context, 'Morning Meditation', Icons.wb_sunny, const Color.fromARGB(255, 236, 155, 49)),
-            _buildCuratedItem(context, 'Deep Relaxation', Icons.spa, Colors.greenAccent),
-            _buildCuratedItem(context, 'Mindfulness', Icons.center_focus_strong, Colors.blueAccent),
-          ],
-        ),
+        itemCount: videoDetails.length,
+        itemBuilder: (context, index) {
+          final video = videoDetails[index];
+          final videoUrl = video['url']!;
+          final videoTitle = video['title']!;
+
+          return Card(
+            margin: EdgeInsets.all(10),
+            child: GestureDetector(
+              onTap: () => _launchURL(videoUrl),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.play_circle_fill, size: 50, color: Colors.blue), // Play icon
+                  SizedBox(height: 8),
+                  Text(
+                    videoTitle,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+      ),
     );
+  }
+
+  // Launches the YouTube URL in the browser
+  Future<void> _launchURL(String url) async {
+    final Uri uri = Uri.parse(url); // Parse the URL
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri); // Use launchUrl() method for newer versions
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 }

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:cc206_emoti_sense/features/chill_beats_page.dart';
+import 'package:cc206_emoti_sense/features/discover_sections/music.dart';
+import 'package:cc206_emoti_sense/features/discover_sections/meditation.dart'; 
+import 'package:cc206_emoti_sense/features//discover_sections/breathwork.dart';
+import 'package:cc206_emoti_sense/features//discover_sections/stories.dart';
 
 class DiscoverPage extends StatefulWidget {
   const DiscoverPage({super.key});
@@ -9,98 +12,60 @@ class DiscoverPage extends StatefulWidget {
 }
 
 class _DiscoverPageState extends State<DiscoverPage> {
-  String _selectedItemMessage = '';
-
-  void _onItemTap(String itemName) {
-    setState(() {
-      _selectedItemMessage = 'You selected: $itemName';
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView(
+      body: GridView.builder(
         padding: const EdgeInsets.all(8.0),
-        children: [
-          _buildSectionTitle('Music'),
-          _buildCuratedItem(context, 'Chill Beats', Icons.music_note, Colors.purpleAccent),
-          _buildCuratedItem(context, 'Focus Tunes', Icons.headphones, Colors.blueAccent),
-          _buildCuratedItem(context, 'Feel Good', Icons.audiotrack, Colors.orangeAccent),
-          const SizedBox(height: 16.0),
-          _buildSectionTitle('Meditation'),
-          _buildCuratedItem(context, 'Mindfulness', Icons.self_improvement, Colors.greenAccent),
-          _buildCuratedItem(context, 'Sleep Meditation', Icons.nightlight_round, Colors.indigoAccent),
-          _buildCuratedItem(context, 'Anxiety Relief', Icons.spa, Colors.teal),
-          const SizedBox(height: 16.0),
-          _buildSectionTitle('Breathwork'),
-          _buildCuratedItem(context, 'Deep Breathing', Icons.air, Colors.lightBlueAccent),
-          _buildCuratedItem(context, '4-7-8 Breathing', Icons.slow_motion_video, Colors.cyanAccent),
-          _buildCuratedItem(context, 'Box Breathing', Icons.crop_square, Colors.blueGrey),
-          const SizedBox(height: 16.0),
-          _buildSectionTitle('Stories'),
-          _buildCuratedItem(context, 'Inspiring Tales', Icons.book, Colors.redAccent),
-          _buildCuratedItem(context, 'Bedtime Stories', Icons.bedtime, Colors.deepPurpleAccent),
-          _buildCuratedItem(context, 'Life Lessons', Icons.menu_book, Colors.pinkAccent),
-          const SizedBox(height: 16.0),
-          // Message displayed when an item is selected
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              _selectedItemMessage,
-              style: const TextStyle(fontSize: 16, color: Colors.black54),
-              textAlign: TextAlign.center,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildSectionTitle(String title) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Text(
-        title,
-        style: const TextStyle(
-          fontSize: 20,
-          fontWeight: FontWeight.bold,
-          color: Colors.black87,
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2, // 2 columns
+          crossAxisSpacing: 8.0,
+          mainAxisSpacing: 8.0,
         ),
+        itemCount: 4, // We have 4 categories
+        itemBuilder: (context, index) {
+          switch (index) {
+            case 0:
+              return _buildCategoryItem(context, 'Music', Icons.music_note, Colors.purpleAccent, MusicPage());
+            case 1:
+              return _buildCategoryItem(context, 'Meditation', Icons.self_improvement, Colors.greenAccent, MeditationPage());
+            case 2:
+              return _buildCategoryItem(context, 'Breathwork', Icons.air, Colors.lightBlueAccent, BreathworkScreen());
+            case 3:
+              return _buildCategoryItem(context, 'Stories', Icons.book, Colors.redAccent, PoemsPage());
+            default:
+              return Container(); // Empty container for any undefined index
+          }
+        },
       ),
     );
   }
 
-  Widget _buildCuratedItem(BuildContext context, String title, IconData icon, Color color) {
+  Widget _buildCategoryItem(BuildContext context, String title, IconData icon, Color color, Widget page) {
     return GestureDetector(
       onTap: () {
-        if (title == 'Chill Beats') {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const ChillBeatsPage()),
-          );
-        } else {
-          _onItemTap(title);
-        }
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => page),
+        );
       },
-      child: Container(
-        margin: const EdgeInsets.symmetric(vertical: 4.0),
-        padding: const EdgeInsets.all(16.0),
-        decoration: BoxDecoration(
-          color: color.withOpacity(0.2),
+      child: Card(
+        color: color.withOpacity(0.2),
+        shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
         ),
-        child: Row(
-          children: [
-            Icon(icon, color: color, size: 30),
-            const SizedBox(width: 10),
-            Expanded(
-              child: Text(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(icon, color: color, size: 50),
+              const SizedBox(height: 10),
+              Text(
                 title,
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: color),
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: color),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

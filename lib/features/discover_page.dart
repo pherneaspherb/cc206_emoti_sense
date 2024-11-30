@@ -30,7 +30,7 @@ class _DiscoverPageState extends State<DiscoverPage> {
             case 1:
               return _buildCategoryItem(context, 'Meditation', Icons.self_improvement, Colors.greenAccent, MeditationPage());
             case 2:
-              return _buildCategoryItem(context, 'Breathwork', Icons.air, Colors.lightBlueAccent, BreathworkScreen());
+              return _buildCategoryItem(context, 'Breathwork', Icons.air, Colors.lightBlueAccent, BreathworkPage());
             case 3:
               return _buildCategoryItem(context, 'Stories', Icons.book, Colors.redAccent, PoemsPage());
             default:

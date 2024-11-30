@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
         '/editprofile': (context) => const ProfileEdit(), 
         '/music': (context) => MusicPage(),
         '/meditation': (context) => MeditationPage(),
-        '/breathwork': (context) => BreathworkScreen(), 
+        '/breathwork': (context) => BreathworkPage(), 
         '/stories': (context) => PoemsPage(), 
       },
     );

@@ -1,5 +1,4 @@
-import 'package:cc206_emoti_sense/features/profile_edit.dart';
-import 'package:cc206_emoti_sense/features/welcome.dart';
+import 'package:cc206_emoti_sense/features/journal.dart';
 import 'package:flutter/material.dart';
 
 class ProfilePage extends StatefulWidget {
@@ -17,7 +16,7 @@ class _ProfilePageState extends State<ProfilePage> {
         automaticallyImplyLeading: false,
         backgroundColor: Colors.lightBlue,
       ),
-      body: SingleChildScrollView(  
+      body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
@@ -107,7 +106,16 @@ class _ProfilePageState extends State<ProfilePage> {
               const SizedBox(height: 32),
 
               // Additional Buttons with Icons
-              _buildButton(Icons.book, "My Journal"),
+              _buildButton(
+                Icons.book,
+                "My Journal",
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => JournalPage()),
+                  );
+                },
+              ),
               _buildButton(Icons.music_note, "Liked Songs"),
             ],
           ),
@@ -134,23 +142,26 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   // Method for buttons with icons beside text
-  Widget _buildButton(IconData icon, String label) {
-    return Container(
-      margin: const EdgeInsets.symmetric(vertical: 8.0),
-      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
-      decoration: BoxDecoration(
-        color: Colors.lightBlue[100],
-        borderRadius: BorderRadius.circular(8.0),
-      ),
-      child: Row(
-        children: [
-          Icon(icon, color: Colors.lightBlue),
-          const SizedBox(width: 10),
-          Text(
-            label,
-            style: const TextStyle(fontSize: 16, color: Colors.black87),
-          ),
-        ],
+  Widget _buildButton(IconData icon, String label, {VoidCallback? onTap}) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        margin: const EdgeInsets.symmetric(vertical: 8.0),
+        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+        decoration: BoxDecoration(
+          color: Colors.lightBlue[100],
+          borderRadius: BorderRadius.circular(8.0),
+        ),
+        child: Row(
+          children: [
+            Icon(icon, color: Colors.lightBlue),
+            const SizedBox(width: 10),
+            Text(
+              label,
+              style: const TextStyle(fontSize: 16, color: Colors.black87),
+            ),
+          ],
+        ),
       ),
     );
   }

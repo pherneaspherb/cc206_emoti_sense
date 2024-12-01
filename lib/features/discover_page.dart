@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:cc206_emoti_sense/features/discover_sections/music.dart';
 import 'package:cc206_emoti_sense/features/discover_sections/meditation.dart'; 
-import 'package:cc206_emoti_sense/features//discover_sections/breathwork.dart';
-import 'package:cc206_emoti_sense/features//discover_sections/stories.dart';
+import 'package:cc206_emoti_sense/features/discover_sections/breathwork.dart';
+import 'package:cc206_emoti_sense/features/discover_sections/stories.dart';
 
 class DiscoverPage extends StatefulWidget {
   const DiscoverPage({super.key});
@@ -28,7 +28,7 @@ class _DiscoverPageState extends State<DiscoverPage> {
             case 0:
               return _buildCategoryItem(context, 'Music', Icons.music_note, Colors.purpleAccent, MusicPage());
             case 1:
-              return _buildCategoryItem(context, 'Meditation', Icons.self_improvement, Colors.greenAccent, MeditationPage());
+              return _buildCategoryItem(context, 'Meditation', Icons.self_improvement, Colors.greenAccent, const MeditationPage());
             case 2:
               return _buildCategoryItem(context, 'Breathwork', Icons.air, Colors.lightBlueAccent, BreathworkPage());
             case 3:

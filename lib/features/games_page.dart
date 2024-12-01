@@ -1,4 +1,9 @@
+
 import 'package:flutter/material.dart';
+import 'package:cc206_emoti_sense/features/games_section/mood_matching_game.dart';
+import 'package:cc206_emoti_sense/features/games_section/mindfulness_maze.dart';
+import 'package:cc206_emoti_sense/features/games_section/daily_check_in_quiz.dart';
+import 'package:cc206_emoti_sense/features/games_section/bubble_pop.dart';
 
 class GamesPage extends StatefulWidget {
   const GamesPage({Key? key}) : super(key: key);
@@ -8,14 +13,6 @@ class GamesPage extends StatefulWidget {
 }
 
 class _GamesPageState extends State<GamesPage> {
-  String _selectedGameMessage = '';
-
-  void _onGameTap(String gameName) {
-    setState(() {
-      _selectedGameMessage = 'You selected: $gameName';
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,26 +21,17 @@ class _GamesPageState extends State<GamesPage> {
         child: Column(
           children: [
             GridView.count(
-              shrinkWrap: true, 
-              physics: const NeverScrollableScrollPhysics(), 
-              crossAxisCount: 2, 
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              crossAxisCount: 2,
               crossAxisSpacing: 16.0,
               mainAxisSpacing: 16.0,
               children: [
-                _buildGameCard('Bubble Pop', Icons.bubble_chart, Colors.purpleAccent),
-                _buildGameCard('Mood Matching Game', Icons.tag_faces, Colors.blueAccent),
-                _buildGameCard('Mindfulness Maze', Icons.map, Colors.greenAccent),
-                _buildGameCard('Daily Check-In Quiz', Icons.quiz, Colors.teal),
+                _buildGameCard('Bubble Pop', Icons.bubble_chart, Colors.purpleAccent, context, const BubblePopPage()),
+                _buildGameCard('Mood Matching Game', Icons.tag_faces, Colors.blueAccent, context, const MoodMatchingGamePage()),
+                _buildGameCard('Mindfulness Maze', Icons.map, Colors.greenAccent, context, const MindfulnessMazePage()),
+                _buildGameCard('Daily Check-In Quiz', Icons.quiz, Colors.teal, context, const DailyCheckInQuizPage()),
               ],
-            ),
-            const SizedBox(height: 16.0),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                _selectedGameMessage,
-                style: const TextStyle(fontSize: 16, color: Colors.black54),
-                textAlign: TextAlign.center,
-              ),
             ),
           ],
         ),
@@ -51,13 +39,16 @@ class _GamesPageState extends State<GamesPage> {
     );
   }
 
-  // Helper function to build game cards
-  Widget _buildGameCard(String title, IconData icon, Color color) {
+  // Helper function to build game cards with navigation
+  Widget _buildGameCard(String title, IconData icon, Color color, BuildContext context, Widget page) {
     return GestureDetector(
-      onTap: () => _onGameTap(title), 
+      onTap: () => Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => page),
+      ),
       child: Container(
         decoration: BoxDecoration(
-          color: color.withOpacity(0.2), 
+          color: color.withOpacity(0.2),
           borderRadius: BorderRadius.circular(10),
           boxShadow: [
             BoxShadow(

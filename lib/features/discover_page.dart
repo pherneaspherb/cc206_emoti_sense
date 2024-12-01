@@ -26,13 +26,13 @@ class _DiscoverPageState extends State<DiscoverPage> {
         itemBuilder: (context, index) {
           switch (index) {
             case 0:
-              return _buildCategoryItem(context, 'Music', Icons.music_note, Colors.purpleAccent, MusicPage());
+              return _buildCategoryItem(context, 'Music', Icons.music_note, const Color.fromARGB(255, 13, 101, 174), const Color.fromARGB(255, 113, 194, 232), MusicPage());
             case 1:
-              return _buildCategoryItem(context, 'Meditation', Icons.self_improvement, Colors.greenAccent, const MeditationPage());
+              return _buildCategoryItem(context, 'Meditation', Icons.self_improvement, const Color.fromARGB(255, 247, 234, 117), Colors.amber, const MeditationPage());
             case 2:
-              return _buildCategoryItem(context, 'Breathwork', Icons.air, Colors.lightBlueAccent, BreathworkPage());
+              return _buildCategoryItem(context, 'Breathwork', Icons.air, Colors.green, const Color.fromARGB(255, 172, 236, 99), BreathworkPage());
             case 3:
-              return _buildCategoryItem(context, 'Readings', Icons.book, Colors.redAccent, ReadingsPage());
+              return _buildCategoryItem(context, 'Readings', Icons.book, Colors.pink, const Color.fromARGB(255, 247, 148, 181), ReadingsPage());
             default:
               return Container(); // Empty container for any undefined index
           }
@@ -41,7 +41,7 @@ class _DiscoverPageState extends State<DiscoverPage> {
     );
   }
 
-  Widget _buildCategoryItem(BuildContext context, String title, IconData icon, Color color, Widget page) {
+  Widget _buildCategoryItem(BuildContext context, String title, IconData icon, Color color1, Color color2, Widget page) {
     return GestureDetector(
       onTap: () {
         Navigator.push(
@@ -50,21 +50,30 @@ class _DiscoverPageState extends State<DiscoverPage> {
         );
       },
       child: Card(
-        color: color.withOpacity(0.2),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
         ),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(icon, color: color, size: 50),
-              const SizedBox(height: 10),
-              Text(
-                title,
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: color),
-              ),
-            ],
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12),
+            gradient: LinearGradient(
+              colors: [color1, color2],
+              begin: Alignment.topCenter, // Darker color starts at the top center
+              end: Alignment.bottomCenter, // Lighter color ends at the bottom center
+            ),
+          ),
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(icon, color: Colors.white, size: 50),
+                const SizedBox(height: 10),
+                Text(
+                  title,
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+                ),
+              ],
+            ),
           ),
         ),
       ),

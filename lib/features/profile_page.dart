@@ -12,25 +12,18 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        backgroundColor: Colors.lightBlue,
-      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              // Profile Picture
               CircleAvatar(
                 radius: 50,
                 backgroundImage: AssetImage('assets/logo.png'),
                 backgroundColor: Colors.grey[300],
               ),
               const SizedBox(height: 16),
-
-              // Name
               const Text(
                 'Yebe',
                 style: TextStyle(
@@ -39,8 +32,6 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
               ),
               const SizedBox(height: 4),
-
-              // Username
               const Text(
                 '@loveyebe',
                 style: TextStyle(
@@ -49,8 +40,6 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
               ),
               const SizedBox(height: 8),
-
-              // Email Address
               const Text(
                 'yebedebi@gmail.com',
                 style: TextStyle(
@@ -59,8 +48,6 @@ class _ProfilePageState extends State<ProfilePage> {
                 ),
               ),
               const SizedBox(height: 8),
-
-              // Bio
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -79,8 +66,6 @@ class _ProfilePageState extends State<ProfilePage> {
                 ],
               ),
               const SizedBox(height: 32),
-
-              // Profile Options
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -88,7 +73,6 @@ class _ProfilePageState extends State<ProfilePage> {
                     Icons.edit,
                     "Edit Profile",
                     onTap: () {
-                      // Navigate to the Profile Edit page
                       Navigator.pushNamed(context, '/editprofile');
                     },
                   ),
@@ -97,15 +81,12 @@ class _ProfilePageState extends State<ProfilePage> {
                     Icons.logout,
                     "Log Out",
                     onTap: () {
-                      // Navigate to the Welcome Screen
                       Navigator.pushNamed(context, '/');
                     },
                   ),
                 ],
               ),
               const SizedBox(height: 32),
-
-              // Additional Buttons with Icons
               _buildButton(
                 Icons.book,
                 "My Journal",
@@ -124,7 +105,6 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  // Method for profile options in a row
   Widget _buildProfileOption(IconData icon, String label, {VoidCallback? onTap}) {
     return GestureDetector(
       onTap: onTap,
@@ -141,7 +121,6 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  // Method for buttons with icons beside text
   Widget _buildButton(IconData icon, String label, {VoidCallback? onTap}) {
     return GestureDetector(
       onTap: onTap,

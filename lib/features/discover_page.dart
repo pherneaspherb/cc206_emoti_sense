@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cc206_emoti_sense/features/discover_sections/music.dart';
 import 'package:cc206_emoti_sense/features/discover_sections/meditation.dart'; 
 import 'package:cc206_emoti_sense/features/discover_sections/breathwork.dart';
-import 'package:cc206_emoti_sense/features/discover_sections/stories.dart';
+import 'package:cc206_emoti_sense/features/discover_sections/readings.dart';
 
 class DiscoverPage extends StatefulWidget {
   const DiscoverPage({super.key});
@@ -32,7 +32,7 @@ class _DiscoverPageState extends State<DiscoverPage> {
             case 2:
               return _buildCategoryItem(context, 'Breathwork', Icons.air, Colors.lightBlueAccent, BreathworkPage());
             case 3:
-              return _buildCategoryItem(context, 'Stories', Icons.book, Colors.redAccent, PoemsPage());
+              return _buildCategoryItem(context, 'Readings', Icons.book, Colors.redAccent, ReadingsPage());
             default:
               return Container(); // Empty container for any undefined index
           }

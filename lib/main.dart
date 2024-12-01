@@ -10,7 +10,7 @@ import 'package:cc206_emoti_sense/features/profile_page.dart';
 import 'package:cc206_emoti_sense/features/discover_sections/music.dart'; 
 import 'package:cc206_emoti_sense/features/discover_sections/meditation.dart';
 import 'package:cc206_emoti_sense/features/discover_sections/breathwork.dart';
-import 'package:cc206_emoti_sense/features/discover_sections/stories.dart';
+import 'package:cc206_emoti_sense/features/discover_sections/readings.dart';
 
 void main() {
   runApp(MyApp());
@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
         '/music': (context) => MusicPage(),
         '/meditation': (context) => MeditationPage(),
         '/breathwork': (context) => BreathworkPage(), 
-        '/stories': (context) => PoemsPage(), 
+        '/stories': (context) => ReadingsPage(), 
       },
     );
   }

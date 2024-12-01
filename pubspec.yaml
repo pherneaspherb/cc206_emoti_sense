@@ -25,6 +25,7 @@ flutter:
 
   assets:
     - assets/logo.png
+    - assets/wellness.png
     
   fonts:
     - family: Gotham
@@ -33,3 +34,8 @@ flutter:
         - asset: assets/Gotham Bold.otf
         - asset: assets/Gotham Medium.otf
           weight: 700
+          
+
+    - family: Apple Garamond
+      fonts:
+        - asset: assets/AppleGaramond-Italic.ttf

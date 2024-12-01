@@ -11,7 +11,7 @@ class WelcomeScreen extends StatelessWidget {
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              Color.fromARGB(255, 133, 216, 206), // Top gradient color
+              Color(0xFF56E1E9), // Top gradient color
               Color(0xFFEEF7FF), // Bottom gradient color
             ],
             begin: Alignment.topCenter,
@@ -53,40 +53,63 @@ class WelcomeScreen extends StatelessWidget {
                 ),
               ),
               // Sign Up Button
-              ElevatedButton(
-                onPressed: () {
+              GestureDetector(
+                onTap: () {
                   Navigator.pushNamed(context, '/signup');
                 },
-                child: Text(
-                  'Sign Up',
-                  style: TextStyle(fontSize: 16),
-                ),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFF225BDF), // Deep blue color
-                  foregroundColor: Colors.white, // Text color
-                  minimumSize: Size(double.infinity, 50),
-                  shape: RoundedRectangleBorder(
+                child: Container(
+                  width: double.infinity,
+                  height: 50,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        Color(0xFF1B3C73), // Gradient start
+                        Color(0xFF3371D9), // Gradient end
+                      ],
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                    ),
                     borderRadius: BorderRadius.circular(30),
+                  ),
+                  alignment: Alignment.center,
+                  child: Text(
+                    'Sign Up',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),
               SizedBox(height: 20),
               // Log In Button
-              ElevatedButton(
-                onPressed: () {
+              GestureDetector(
+                onTap: () {
                   Navigator.pushNamed(context, '/login');
                 },
-                child: Text(
-                  'Log In',
-                  style: TextStyle(fontSize: 16),
-                ),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFF225BDF), // Deep blue color
-                  foregroundColor: Colors.white, // Text color
-                 // side: BorderSide(color: Color(0xFF225BDF), width: 2), // Outline
-                  minimumSize: Size(double.infinity, 50),
-                  shape: RoundedRectangleBorder(
+                child: Container(
+                  width: double.infinity,
+                  height: 50,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        Color(0xFF1B3C73), // Gradient start
+                        Color(0xFF3371D9), // Gradient end
+                      ],
+                      begin: Alignment.centerLeft,
+                      end: Alignment.centerRight,
+                    ),
                     borderRadius: BorderRadius.circular(30),
+                  ),
+                  alignment: Alignment.center,
+                  child: Text(
+                    'Log In',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),

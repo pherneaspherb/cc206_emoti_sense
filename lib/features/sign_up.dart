@@ -10,18 +10,18 @@ class SignUpScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+      backgroundColor: const Color(0xFF56E1E9),
       appBar: AppBar(
-        leading: BackButton(color: const Color.fromARGB(255, 8, 3, 87)),
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-      ),
+      leading: BackButton(color: const Color.fromARGB(255, 8, 3, 87)),
+      backgroundColor: Colors.transparent,  
+      elevation: 0,  
+    ),
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              Color.fromARGB(255, 255, 255, 255),
-              Color.fromARGB(255, 137, 176, 255),
+              Color(0xFF56E1E9),
+              Color(0xFFEEF7FF),
             ],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
@@ -47,7 +47,7 @@ class SignUpScreen extends StatelessWidget {
                 TextField(
                   decoration: InputDecoration(
                     labelText: 'Full Name',
-                    border: OutlineInputBorder(
+                    border: UnderlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
                   ),
@@ -58,7 +58,7 @@ class SignUpScreen extends StatelessWidget {
                   controller: emailController,
                   decoration: InputDecoration(
                     labelText: 'Email Address',
-                    border: OutlineInputBorder(
+                    border: UnderlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
                   ),
@@ -79,7 +79,7 @@ class SignUpScreen extends StatelessWidget {
                   obscureText: true,
                   decoration: InputDecoration(
                     labelText: 'Password',
-                    border: OutlineInputBorder(
+                    border: UnderlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
                   ),
@@ -97,7 +97,7 @@ class SignUpScreen extends StatelessWidget {
                   obscureText: true,
                   decoration: InputDecoration(
                     labelText: 'Confirm Password',
-                    border: OutlineInputBorder(
+                    border: UnderlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
                   ),
@@ -112,18 +112,35 @@ class SignUpScreen extends StatelessWidget {
                   },
                 ),
                 SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: () {
+                GestureDetector(
+                  onTap: () {
                     if (formKey.currentState!.validate()) {
                       // If the form is valid, proceed with sign-up
                       Navigator.pushNamed(context, '/dashboard');
                     }
                   },
-                  child: Text('Sign Up'),
-                  style: ElevatedButton.styleFrom(
-                    minimumSize: Size(double.infinity, 50),
-                    shape: RoundedRectangleBorder(
+                  child: Container(
+                    width: double.infinity,
+                    height: 50,
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [
+                          Color(0xFF1B3C73), // Gradient start
+                          Color(0xFF3371D9), // Gradient end
+                        ],
+                        begin: Alignment.centerLeft,
+                        end: Alignment.centerRight,
+                      ),
                       borderRadius: BorderRadius.circular(10),
+                    ),
+                    alignment: Alignment.center,
+                    child: Text(
+                      'Sign Up',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ),

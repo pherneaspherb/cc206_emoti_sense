@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:cc206_emoti_sense/features/games_section/mood_matching_game.dart';
 import 'package:cc206_emoti_sense/features/games_section/mindfulness_maze.dart';
@@ -27,10 +26,38 @@ class _GamesPageState extends State<GamesPage> {
               crossAxisSpacing: 16.0,
               mainAxisSpacing: 16.0,
               children: [
-                _buildGameCard('Bubble Pop', Icons.bubble_chart, Colors.purpleAccent, context, const BubblePopPage()),
-                _buildGameCard('Mood Matching Game', Icons.tag_faces, Colors.blueAccent, context, const MoodMatchingGamePage()),
-                _buildGameCard('Mindfulness Maze', Icons.map, Colors.greenAccent, context, const MindfulnessMazePage()),
-                _buildGameCard('Daily Check-In Quiz', Icons.quiz, Colors.teal, context, const DailyCheckInQuizPage()),
+                _buildGameCard(
+                  'Bubble Pop',
+                  Icons.bubble_chart,
+                  const Color.fromARGB(255, 148, 87, 231), // Darker purple
+                  const Color.fromARGB(255, 201, 153, 255), // Lighter purple
+                  context,
+                  const BubblePopPage(),
+                ),
+                _buildGameCard(
+                  'Mood Matching Game',
+                  Icons.tag_faces,
+                  const Color.fromARGB(255, 3, 169, 244), // Darker blue
+                  const Color.fromARGB(255, 100, 181, 246), // Lighter blue
+                  context,
+                  const MoodMatchingGamePage(),
+                ),
+                _buildGameCard(
+                  'Mindfulness Maze',
+                  Icons.map,
+                  const Color.fromARGB(255, 76, 175, 80), // Darker green
+                  const Color.fromARGB(255, 139, 195, 74), // Lighter green
+                  context,
+                  const MindfulnessMazePage(),
+                ),
+                _buildGameCard(
+                  'Daily Check-In Quiz',
+                  Icons.quiz,
+                  const Color.fromARGB(255, 211, 47, 47), // Dark red
+                  const Color.fromARGB(255, 244, 67, 54), // Lighter red
+                  context,
+                  const DailyCheckInQuizPage(),
+                ),
               ],
             ),
           ],
@@ -40,7 +67,8 @@ class _GamesPageState extends State<GamesPage> {
   }
 
   // Helper function to build game cards with navigation
-  Widget _buildGameCard(String title, IconData icon, Color color, BuildContext context, Widget page) {
+  Widget _buildGameCard(
+      String title, IconData icon, Color color1, Color color2, BuildContext context, Widget page) {
     return GestureDetector(
       onTap: () => Navigator.push(
         context,
@@ -48,7 +76,6 @@ class _GamesPageState extends State<GamesPage> {
       ),
       child: Container(
         decoration: BoxDecoration(
-          color: color.withOpacity(0.2),
           borderRadius: BorderRadius.circular(10),
           boxShadow: [
             BoxShadow(
@@ -57,20 +84,25 @@ class _GamesPageState extends State<GamesPage> {
               offset: const Offset(0, 5),
             ),
           ],
+          gradient: LinearGradient(
+            colors: [color1, color2],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
         ),
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(icon, size: 50, color: color),
+              Icon(icon, size: 50, color: Colors.white),
               const SizedBox(height: 10),
               Text(
                 title,
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
-                  color: Colors.black87,
+                  color: Colors.white,
                 ),
                 textAlign: TextAlign.center,
               ),

@@ -1,4 +1,6 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class ProfileEdit extends StatefulWidget {
   const ProfileEdit({super.key});
@@ -10,11 +12,21 @@ class ProfileEdit extends StatefulWidget {
 class _ProfileEditState extends State<ProfileEdit> {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
-  // Text controllers for editing fields
   final TextEditingController nameController = TextEditingController(text: 'Yebe');
   final TextEditingController usernameController = TextEditingController(text: '@loveyebe');
   final TextEditingController emailController = TextEditingController(text: 'yebedebi@gmail.com');
   final TextEditingController bioController = TextEditingController(text: 'Enter bio here.');
+  File? _profileImage;
+
+  Future<void> _pickImage() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      setState(() {
+        _profileImage = File(pickedFile.path);
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,58 +40,42 @@ class _ProfileEditState extends State<ProfileEdit> {
         child: Form(
           key: formKey,
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              // Profile Picture
-              CircleAvatar(
-                radius: 50,
-                backgroundImage: AssetImage('assets/logo.png'),
-                backgroundColor: Colors.grey[300],
+              GestureDetector(
+                onTap: _pickImage,
+                child: CircleAvatar(
+                  radius: 50,
+                  backgroundImage: _profileImage != null
+                      ? FileImage(_profileImage!) as ImageProvider
+                      : AssetImage('assets/logo.png'),
+                  child: Icon(
+                    Icons.camera_alt,
+                    color: Colors.white70,
+                  ),
+                ),
               ),
               const SizedBox(height: 16),
-
               _buildEditable(nameController, 'Name'),
-
               const SizedBox(height: 16),
               _buildEditable(usernameController, 'Username'),
-
               const SizedBox(height: 16),
-              TextFormField(
-                controller: emailController,
-                decoration: InputDecoration(
-                  labelText: 'Email',
-                  border: OutlineInputBorder(),
-                  contentPadding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter an email';
-                  }
-                  return null;
-                },
-              ),
-
+              _buildEditable(emailController, 'Email'),
               const SizedBox(height: 16),
               _buildEditable(bioController, 'Bio'),
-
               const SizedBox(height: 32),
-
               ElevatedButton(
                 onPressed: () {
                   if (formKey.currentState!.validate()) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Profile saved!')),
-                    );
+                    Navigator.pop(context, {
+                      'name': nameController.text,
+                      'username': usernameController.text,
+                      'email': emailController.text,
+                      'bio': bioController.text,
+                      'profileImage': _profileImage,
+                    });
                   }
                 },
-                child: const Text('Save', style: TextStyle(color: Colors.black)), 
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.lightBlue, 
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30.0), 
-                  ),
-                  padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 40.0), 
-                ),
+                child: const Text('Save'),
               ),
             ],
           ),
@@ -88,15 +84,10 @@ class _ProfileEditState extends State<ProfileEdit> {
     );
   }
 
-  // Method to build editable text fields with validation for empty values
   Widget _buildEditable(TextEditingController controller, String label) {
     return TextFormField(
       controller: controller,
-      decoration: InputDecoration(
-        labelText: label,
-        border: OutlineInputBorder(),
-        contentPadding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 12.0),
-      ),
+      decoration: InputDecoration(labelText: label, border: OutlineInputBorder()),
       validator: (value) {
         if (value == null || value.isEmpty) {
           return 'Please enter $label';

@@ -1,5 +1,7 @@
-import 'package:cc206_emoti_sense/features/journal.dart';
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:cc206_emoti_sense/features/journal.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -9,6 +11,13 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  // State variables for profile data
+  String _name = 'Yebe';
+  String _username = '@loveyebe';
+  String _email = 'yebedebi@gmail.com';
+  String _bio = 'Enter bio here.';
+  File? _profileImage; // Holds the profile image file
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,15 +34,17 @@ class _ProfilePageState extends State<ProfilePage> {
               // Profile Picture
               CircleAvatar(
                 radius: 50,
-                backgroundImage: AssetImage('assets/logo.png'),
+                backgroundImage: _profileImage != null
+                    ? FileImage(_profileImage!) as ImageProvider
+                    : AssetImage('assets/yebe.png'),
                 backgroundColor: Colors.grey[300],
               ),
               const SizedBox(height: 16),
 
               // Name
-              const Text(
-                'Yebe',
-                style: TextStyle(
+              Text(
+                _name,
+                style: const TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
                 ),
@@ -41,9 +52,9 @@ class _ProfilePageState extends State<ProfilePage> {
               const SizedBox(height: 4),
 
               // Username
-              const Text(
-                '@loveyebe',
-                style: TextStyle(
+              Text(
+                _username,
+                style: const TextStyle(
                   fontSize: 16,
                   color: Colors.grey,
                 ),
@@ -51,9 +62,9 @@ class _ProfilePageState extends State<ProfilePage> {
               const SizedBox(height: 8),
 
               // Email Address
-              const Text(
-                'yebedebi@gmail.com',
-                style: TextStyle(
+              Text(
+                _email,
+                style: const TextStyle(
                   fontSize: 16,
                   color: Colors.grey,
                 ),
@@ -66,9 +77,9 @@ class _ProfilePageState extends State<ProfilePage> {
                 children: [
                   Icon(Icons.format_quote, color: Colors.lightBlue),
                   const SizedBox(width: 8),
-                  const Text(
-                    'Enter bio here.',
-                    style: TextStyle(
+                  Text(
+                    _bio,
+                    style: const TextStyle(
                       fontSize: 16,
                       color: Colors.black87,
                     ),
@@ -80,32 +91,34 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
               const SizedBox(height: 32),
 
-              // Profile Options
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  _buildProfileOption(
-                    Icons.edit,
-                    "Edit Profile",
-                    onTap: () {
-                      // Navigate to the Profile Edit page
-                      Navigator.pushNamed(context, '/editprofile');
-                    },
-                  ),
-                  _buildProfileOption(Icons.favorite, "Favorites"),
-                  _buildProfileOption(
-                    Icons.logout,
-                    "Log Out",
-                    onTap: () {
-                      // Navigate to the Welcome Screen
-                      Navigator.pushNamed(context, '/');
-                    },
-                  ),
-                ],
-              ),
-              const SizedBox(height: 32),
+              // Buttons
+              _buildButton(
+                Icons.edit,
+                "Edit Profile",
+                onTap: () async {
+                  // Navigate to ProfileEdit and await the result
+                  final updatedProfile = await Navigator.pushNamed(context, '/editprofile');
 
-              // Additional Buttons with Icons
+                  // Check if data was returned and update the state
+                  if (updatedProfile != null && updatedProfile is Map<String, dynamic>) {
+                    setState(() {
+                      _name = updatedProfile['name'] ?? _name;
+                      _username = updatedProfile['username'] ?? _username;
+                      _email = updatedProfile['email'] ?? _email;
+                      _bio = updatedProfile['bio'] ?? _bio;
+                      _profileImage = updatedProfile['profileImage'];
+                    });
+                  }
+                },
+              ),
+              _buildButton(Icons.favorite, "Favorites"),
+              _buildButton(
+                Icons.logout,
+                "Log Out",
+                onTap: () {
+                  Navigator.pushNamed(context, '/');
+                },
+              ),
               _buildButton(
                 Icons.book,
                 "My Journal",
@@ -116,7 +129,6 @@ class _ProfilePageState extends State<ProfilePage> {
                   );
                 },
               ),
-              _buildButton(Icons.music_note, "Liked Songs"),
             ],
           ),
         ),
@@ -124,24 +136,7 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  // Method for profile options in a row
-  Widget _buildProfileOption(IconData icon, String label, {VoidCallback? onTap}) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Column(
-        children: [
-          Icon(icon, size: 30, color: Colors.lightBlue),
-          const SizedBox(height: 8),
-          Text(
-            label,
-            style: const TextStyle(fontSize: 14, color: Colors.black87),
-          ),
-        ],
-      ),
-    );
-  }
-
-  // Method for buttons with icons beside text
+  // Method for buttons
   Widget _buildButton(IconData icon, String label, {VoidCallback? onTap}) {
     return GestureDetector(
       onTap: onTap,

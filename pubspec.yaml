@@ -27,6 +27,7 @@ flutter:
   assets:
     - assets/logo.png
     - assets/wellness.png
+    - assets/yebe.png
     
   fonts:
     - family: Gotham

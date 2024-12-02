@@ -314,7 +314,7 @@ Widget _buildHomePage() {
             ),
             const SizedBox(width: 8),
             const Text(
-              "Home", 
+              "EmotiSense", 
               style: TextStyle(fontWeight: FontWeight.bold), // Set font weight to bold for Home
             ),
           ],
@@ -326,30 +326,42 @@ Widget _buildHomePage() {
       ),
      body: pages[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.fixed,
-        currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
-        selectedItemColor: const Color(0xFF1B3C73),
-        unselectedItemColor: Color(0xFF0D99FF), // Dark blue color
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.dashboard),
-            label: 'Dashboard',
+      type: BottomNavigationBarType.fixed,
+      currentIndex: _selectedIndex,
+      onTap: _onItemTapped,
+      selectedItemColor: const Color(0xFF1B3C73),
+      unselectedItemColor: const Color(0xFF0D99FF), // Dark blue color
+      items: List.generate(4, (index) {
+        bool isSelected = index == _selectedIndex;
+        return BottomNavigationBarItem(
+          icon: Container(
+            decoration: BoxDecoration(
+              border: isSelected
+                  ? Border.all(color: const Color(0xFF1B3C73), width: 2)
+                  : null,
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Icon(
+              index == 0
+                  ? Icons.dashboard
+                  : index == 1
+                      ? Icons.search
+                      : index == 2
+                          ? Icons.videogame_asset
+                          : Icons.account_circle,
+              color: isSelected ? const Color(0xFF1B3C73) : const Color(0xFF0D99FF),
+            ),
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.search),
-            label: 'Discover',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.videogame_asset),
-            label: 'Games',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.account_circle),
-            label: 'Profile',
-          ), // Added closing parenthesis here
-        ],
-      ),
+          label: index == 0
+              ? 'Dashboard'
+              : index == 1
+                  ? 'Discover'
+                  : index == 2
+                      ? 'Games'
+                      : 'Profile',
+        );
+      }),
+    ),
     );
   }
 }

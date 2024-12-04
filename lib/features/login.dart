@@ -1,11 +1,32 @@
+import 'package:cc206_emoti_sense/features/auth_service.dart';
 import 'package:cc206_emoti_sense/features/dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:cc206_emoti_sense/features/sign_up.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:developer';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
+  @override
+  _LoginScreenState createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  final _auth = AuthService();
+
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
+  String? emailError; // For handling email error
+  String? passwordError; // For handling password error
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,14 +72,28 @@ class LoginScreen extends StatelessWidget {
                     border: UnderlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
+                    errorText: emailError, // Show error text for email
+                    errorStyle: TextStyle(
+                      color: Colors.red, // Error text color
+                      fontSize: 14, // Error text size
+                    ),
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter your email';
+                      setState(() {
+                        emailError = 'Please enter your email';
+                      });
+                      return '';
                     }
                     if (!value.contains('@') || !value.contains('.')) {
-                      return 'Please enter a valid email address';
+                      setState(() {
+                        emailError = 'Please enter a valid email address';
+                      });
+                      return '';
                     }
+                    setState(() {
+                      emailError = null;
+                    });
                     return null;
                   },
                 ),
@@ -72,11 +107,22 @@ class LoginScreen extends StatelessWidget {
                     border: UnderlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
+                    errorText: passwordError, // Show error text for password
+                    errorStyle: TextStyle(
+                      color: Colors.red, // Error text color
+                      fontSize: 14, // Error text size
+                    ),
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter your password';
+                      setState(() {
+                        passwordError = 'Please enter your password';
+                      });
+                      return '';
                     }
+                    setState(() {
+                      passwordError = null;
+                    });
                     return null;
                   },
                 ),
@@ -84,8 +130,7 @@ class LoginScreen extends StatelessWidget {
                 GestureDetector(
                   onTap: () {
                     if (formKey.currentState!.validate()) {
-                      // If the form is valid, proceed with login
-                      Navigator.pushNamed(context, '/dashboard');
+                      _login(context);
                     }
                   },
                   child: Container(
@@ -126,10 +171,34 @@ class LoginScreen extends StatelessWidget {
                 Spacer(),
               ],
             ),
-            
           ),
         ),
       ),
     );
+  }
+
+  
+  _login(BuildContext context) async {
+    try {
+      final user = await _auth.loginUserWithEmailAndPassword(
+        emailController.text,
+        passwordController.text,
+      );
+      if (user != null) {
+        log("User Logged In");
+        Navigator.pushReplacementNamed(context, '/dashboard');
+      } else {
+        
+        setState(() {
+          emailError = 'Invalid email or password';
+          passwordError = 'Invalid email or password';
+        });
+      }
+    } catch (e) {
+      setState(() {
+        emailError = 'Error: $e'; 
+        passwordError = 'Error: $e'; 
+      });
+    }
   }
 }

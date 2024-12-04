@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "584166979867",
+    "project_id": "aesync-emotisense",
+    "storage_bucket": "aesync-emotisense.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:584166979867:android:b0f044af5a45b5d8db7bbe",
+        "android_client_info": {
+          "package_name": "com.example.cc206_emoti_sense"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBpGrQPsiGvlXmyP3UYDRw42gnT1Gvlnkc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

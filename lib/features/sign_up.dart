@@ -1,7 +1,11 @@
-import 'package:cc206_emoti_sense/features/dashboard.dart';
 import 'package:flutter/material.dart';
+import 'dart:developer';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class SignUpScreen extends StatelessWidget {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmPassController = TextEditingController();
@@ -12,10 +16,10 @@ class SignUpScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color(0xFF56E1E9),
       appBar: AppBar(
-      leading: BackButton(color: const Color.fromARGB(255, 8, 3, 87)),
-      backgroundColor: Colors.transparent,  
-      elevation: 0,  
-    ),
+        leading: BackButton(color: const Color.fromARGB(255, 8, 3, 87)),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+      ),
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -43,7 +47,6 @@ class SignUpScreen extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 20),
-                // Full Name Input
                 TextField(
                   decoration: InputDecoration(
                     labelText: 'Full Name',
@@ -53,7 +56,6 @@ class SignUpScreen extends StatelessWidget {
                   ),
                 ),
                 SizedBox(height: 20),
-                // Email Input with Validation
                 TextFormField(
                   controller: emailController,
                   decoration: InputDecoration(
@@ -73,7 +75,6 @@ class SignUpScreen extends StatelessWidget {
                   },
                 ),
                 SizedBox(height: 20),
-                // Password Input
                 TextFormField(
                   controller: passwordController,
                   obscureText: true,
@@ -87,11 +88,13 @@ class SignUpScreen extends StatelessWidget {
                     if (value == null || value.isEmpty) {
                       return 'Please enter your password';
                     }
+                    if (value.length < 6) {
+                      return 'Password must be at least 6 characters long';
+                    }
                     return null;
                   },
                 ),
                 SizedBox(height: 20),
-                // Confirm Password Input with Validation
                 TextFormField(
                   controller: confirmPassController,
                   obscureText: true,
@@ -115,8 +118,7 @@ class SignUpScreen extends StatelessWidget {
                 GestureDetector(
                   onTap: () {
                     if (formKey.currentState!.validate()) {
-                      // If the form is valid, proceed with sign-up
-                      Navigator.pushNamed(context, '/dashboard');
+                      _signup(context);
                     }
                   },
                   child: Container(
@@ -125,8 +127,8 @@ class SignUpScreen extends StatelessWidget {
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
                         colors: [
-                          Color(0xFF1B3C73), // Gradient start
-                          Color(0xFF3371D9), // Gradient end
+                          Color(0xFF1B3C73),
+                          Color(0xFF3371D9),
                         ],
                         begin: Alignment.centerLeft,
                         end: Alignment.centerRight,
@@ -151,5 +153,29 @@ class SignUpScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+
+  Future<void> _signup(BuildContext context) async {
+    try {
+      final UserCredential user = await _auth.createUserWithEmailAndPassword(
+        email: emailController.text.trim(),
+        password: passwordController.text.trim(),
+      );
+
+      if (user.user != null) {
+        log("User created successfully: ${user.user!.uid}");
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("User created successfully")),
+        );
+
+        Navigator.pushReplacementNamed(context, '/login');
+      }
+    } catch (e) {
+      log("Error: $e");
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Error: $e")),
+      );
+    }
   }
 }

@@ -1,9 +1,9 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'moods_page.dart';
 import 'package:provider/provider.dart';
-import 'package:cc206_emoti_sense/provider/recent_items.dart'; 
+import 'package:cc206_emoti_sense/provider/recent_items.dart';
+import 'quotes_dataset.dart'; // Import your custom dataset
 
 class DashboardNavigation {
   int selectedIndex = 0;
@@ -12,15 +12,18 @@ class DashboardNavigation {
   final TextEditingController moodController = TextEditingController();
   String dailyQuote = "Loading quote..."; // Initialize with a placeholder quote
 
+  // Method to handle tab switching
   void onItemTapped(int index) {
     selectedIndex = index;
   }
 
+  // Method to add a mood to the list
   void addMood(String mood) {
     moods.add(mood);
     moodController.clear();
   }
 
+  // Method to toggle a mood as a favorite
   void toggleFavorite(String mood) {
     if (favorites.contains(mood)) {
       favorites.remove(mood);
@@ -29,28 +32,15 @@ class DashboardNavigation {
     }
   }
 
-  // Fetch daily quote from the ZenQuotes API
-  Future<void> fetchDailyQuote() async {
-    final url = Uri.parse('https://zenquotes.io/api/random');
-    try {
-      final response = await http.get(url);
-      if (response.statusCode == 200) {
-        final data = jsonDecode(response.body);
-        final quote = data[0]['q'] ?? 'No quote available'; // Handle no quote scenario
-        final author = data[0]['a'] ?? 'Unknown author';
-        dailyQuote = '"$quote" - $author';
-      } else {
-        throw Exception('Failed to load quote');
-      }
-    } catch (e) {
-      dailyQuote = 'Failed to fetch quote';
-      print('Error: $e');
-    }
-
-    
+  // Fetch daily quote from the local dataset
+  void fetchDailyQuote(StateSetter setState) {
+    final quoteData = QuotesDataset.getRandomQuote(); // Fetching from local dataset
+    setState(() {
+      dailyQuote = '"${quoteData['quote']}" - ${quoteData['author']}';
+    });
   }
 
-  // Define the AppBar here
+  // Build the AppBar for the Dashboard
   PreferredSizeWidget buildAppBar() {
     return AppBar(
       title: Row(
@@ -73,7 +63,11 @@ class DashboardNavigation {
     );
   }
 
+  // Build the Home Page with dynamic quote and mood management
   Widget buildHomePage(BuildContext context, StateSetter setState) {
+    // Fetch the quote on page load
+    fetchDailyQuote(setState);
+
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -167,6 +161,7 @@ class DashboardNavigation {
     );
   }
 
+  // Build the middle section with daily quote and wellness tip
   Widget _buildMiddleSection() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -184,7 +179,7 @@ class DashboardNavigation {
               child: RichText(
                 text: TextSpan(
                   style: const TextStyle(
-                    fontSize: 24,
+                    fontSize: 18,
                     fontStyle: FontStyle.italic,
                     color: Colors.black87,
                   ),
@@ -234,6 +229,7 @@ class DashboardNavigation {
     );
   }
 
+  // Build the Recently Played section
   Widget _buildRecentlyPlayed(BuildContext context) {
     final recentItems = Provider.of<RecentItems>(context).recentItems;
 

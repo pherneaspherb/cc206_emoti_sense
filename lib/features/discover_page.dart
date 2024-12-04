@@ -66,7 +66,7 @@ class _DiscoverPageState extends State<DiscoverPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Icon(icon, color: Colors.white, size: 50),
+                Icon(icon, color: const Color.fromARGB(255, 255, 255, 255), size: 50),
                 const SizedBox(height: 10),
                 Text(
                   title,
@@ -80,3 +80,4 @@ class _DiscoverPageState extends State<DiscoverPage> {
     );
   }
 }
+

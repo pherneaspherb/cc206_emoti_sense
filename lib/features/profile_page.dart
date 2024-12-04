@@ -10,6 +10,28 @@ class ProfilePage extends StatefulWidget {
   _ProfilePageState createState() => _ProfilePageState();
 }
 
+PreferredSizeWidget buildAppBar() {
+    return AppBar(
+      title: Row(
+        children: [
+          Image.asset(
+            'assets/logo.png',
+            height: 30,
+          ),
+          const SizedBox(width: 8),
+          const Text(
+            "Profile",
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+        ],
+      ),
+      backgroundColor: Colors.transparent,
+      elevation: 0,
+      centerTitle: true,
+      automaticallyImplyLeading: false,
+    );
+  }
+
 class _ProfilePageState extends State<ProfilePage> {
   // State variables for profile data
   String _name = 'Yebe';
@@ -106,13 +128,6 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
               _buildButton(Icons.favorite, "Favorites"),
               _buildButton(
-                Icons.logout,
-                "Log Out",
-                onTap: () {
-                  Navigator.pushNamed(context, '/');
-                },
-              ),
-              _buildButton(
                 Icons.book,
                 "My Journal",
                 onTap: () {
@@ -120,6 +135,13 @@ class _ProfilePageState extends State<ProfilePage> {
                     context,
                     MaterialPageRoute(builder: (context) => JournalPage()),
                   );
+                },
+              ),
+              _buildButton(
+                Icons.logout,
+                "Log Out",
+                onTap: () {
+                  Navigator.pushNamed(context, '/');
                 },
               ),
             ],

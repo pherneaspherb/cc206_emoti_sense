@@ -1,4 +1,4 @@
-import 'package:cc206_emoti_sense/features/dashboard.dart';
+import 'package:cc206_emoti_sense/features/dashboard_page.dart';
 import 'package:flutter/material.dart';
 
 class SignUpScreen extends StatelessWidget {

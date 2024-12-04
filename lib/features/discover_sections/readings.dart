@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
+import 'package:cc206_emoti_sense/provider/recent_items.dart';  
 
 class ReadingsPage extends StatefulWidget {
   @override
@@ -42,6 +44,12 @@ class _ReadingsPageState extends State<ReadingsPage> {
       });
       print('Error: $e');
     }
+  }
+
+  // Update recent items when a poem collection is tapped
+  void _updateRecent(BuildContext context, String title, String type) {
+    final recent = Provider.of<RecentItems>(context, listen: false); // Get the context to access RecentItems provider
+    recent.addRecentItem(title, type);
   }
 
   @override
@@ -95,6 +103,7 @@ class _ReadingsPageState extends State<ReadingsPage> {
                                 subtitle: Text('by ${collection['author']}'),
                                 trailing: Icon(Icons.arrow_forward, color: Colors.blueAccent),
                                 onTap: () {
+                                  _updateRecent(context, collection['title'], 'Reading'); // Update recent on tap
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(

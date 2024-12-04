@@ -32,13 +32,27 @@ class _DashboardState extends State<Dashboard> {
 
     return Scaffold(
       appBar: appBars[_navigation.selectedIndex], 
-      body: pages[_navigation.selectedIndex],
+      body: Container(
+        // Set a gradient or background color for the body
+        decoration: BoxDecoration(
+          gradient: const LinearGradient(
+            colors: [
+              Color(0xFF003366), // Calming deep blue
+              Color(0xFF006699), // Lighter deep blue
+            ],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
+        ),
+        child: pages[_navigation.selectedIndex],
+      ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         currentIndex: _navigation.selectedIndex,
         onTap: (index) => setState(() => _navigation.onItemTapped(index)),
-        selectedItemColor: const Color(0xFF1B3C73),
-        unselectedItemColor: const Color(0xFF0D99FF),
+        backgroundColor:  Color(0xFF006699),
+        selectedItemColor: const Color.fromARGB(255, 129, 255, 251),
+        unselectedItemColor: const Color.fromARGB(255, 255, 255, 255),
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.dashboard),
@@ -67,17 +81,17 @@ class _DashboardState extends State<Dashboard> {
       title: Row(
         children: [
           Image.asset(
-            'assets/logo.png',
+            'assets/emo-logo-white.png',
             height: 30,
           ),
           const SizedBox(width: 8),
           const Text(
             "Discover",
-            style: TextStyle(fontWeight: FontWeight.bold),
+            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white), // Set text color to white
           ),
         ],
       ),
-      backgroundColor: Colors.transparent,
+      backgroundColor: const Color(0xFF003366),
       elevation: 0,
       centerTitle: true,
       automaticallyImplyLeading: false,
@@ -90,17 +104,17 @@ class _DashboardState extends State<Dashboard> {
       title: Row(
         children: [
           Image.asset(
-            'assets/logo.png',
+            'assets/emo-logo-white.png',
             height: 30,
           ),
           const SizedBox(width: 8),
           const Text(
             "Games",
-            style: TextStyle(fontWeight: FontWeight.bold),
+            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white), // Set text color to white
           ),
         ],
       ),
-      backgroundColor: Colors.transparent,
+      backgroundColor: const Color(0xFF003366),
       elevation: 0,
       centerTitle: true,
       automaticallyImplyLeading: false,
@@ -113,17 +127,17 @@ class _DashboardState extends State<Dashboard> {
       title: Row(
         children: [
           Image.asset(
-            'assets/logo.png',
+            'assets/emo-logo-white.png',
             height: 30,
           ),
           const SizedBox(width: 8),
           const Text(
             "Profile",
-            style: TextStyle(fontWeight: FontWeight.bold),
+            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white), // Set text color to white
           ),
         ],
       ),
-      backgroundColor: Colors.transparent,
+      backgroundColor: const Color(0xFF003366),
       elevation: 0,
       centerTitle: true,
       automaticallyImplyLeading: false,

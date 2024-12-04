@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'moods_page.dart';
 import 'package:provider/provider.dart';
 import 'package:cc206_emoti_sense/provider/recent_items.dart';
-import 'quotes_dataset.dart'; // Import your custom dataset
+import 'quotes_dataset.dart';
+import 'wellness_dataset.dart'; // Import your custom dataset
 
 class DashboardNavigation {
   int selectedIndex = 0;
@@ -11,6 +12,7 @@ class DashboardNavigation {
   final Set<String> favorites = {};
   final TextEditingController moodController = TextEditingController();
   String dailyQuote = "Loading quote..."; // Initialize with a placeholder quote
+  String dailyTip = "Loading tip..."; 
 
   // Method to handle tab switching
   void onItemTapped(int index) {
@@ -36,7 +38,14 @@ class DashboardNavigation {
   void fetchDailyQuote(StateSetter setState) {
     final quoteData = QuotesDataset.getRandomQuote(); // Fetching from local dataset
     setState(() {
-      dailyQuote = '"${quoteData['quote']}" - ${quoteData['author']}';
+      dailyQuote = '${quoteData['quote']} - ${quoteData['author']}';
+    });
+  }
+
+  void fetchDailyTip(StateSetter setState) {
+    final quoteTip = WellnessDataset.getRandomWellnessTip(); // Fetching from local dataset
+    setState(() {
+      dailyTip= '${quoteTip['tip']}';
     });
   }
 
@@ -46,17 +55,17 @@ class DashboardNavigation {
       title: Row(
         children: [
           Image.asset(
-            'assets/logo.png',
+            'assets/emo-logo-white.png',
             height: 30,
           ),
           const SizedBox(width: 8),
           const Text(
             "Home",
-            style: TextStyle(fontWeight: FontWeight.bold),
+            style: TextStyle(fontWeight: FontWeight.bold, color:Colors.white),
           ),
         ],
       ),
-      backgroundColor: Colors.transparent,
+      backgroundColor: Color(0xFF003366),
       elevation: 0,
       centerTitle: true,
       automaticallyImplyLeading: false,
@@ -67,6 +76,8 @@ class DashboardNavigation {
   Widget buildHomePage(BuildContext context, StateSetter setState) {
     // Fetch the quote on page load
     fetchDailyQuote(setState);
+    fetchDailyTip(setState);
+    
 
     return SingleChildScrollView(
       child: Padding(
@@ -79,10 +90,13 @@ class DashboardNavigation {
               decoration: BoxDecoration(
                 gradient: const LinearGradient(
                   colors: [
-                    Colors.blueAccent,
-                    Colors.lightBlueAccent,
+                    Color.fromARGB(255, 25, 118, 210),
+                    Color.fromARGB(255, 100, 181, 246),
                   ],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
                 ),
+                
                 borderRadius: BorderRadius.circular(15),
               ),
               child: Column(
@@ -108,11 +122,12 @@ class DashboardNavigation {
                             MaterialPageRoute(
                               builder: (context) => MoodsPage(
                                 moods: moods,
-                                favorites: favorites.toList(),
+                      
                                 onMoodDeleted: (mood) {
                                   setState(() {
                                     moods.remove(mood);
                                     favorites.remove(mood);
+                                    
                                   });
                                 },
                                 onClearAll: () {
@@ -121,8 +136,7 @@ class DashboardNavigation {
                                     favorites.clear();
                                   });
                                 },
-                                onToggleFavorite: toggleFavorite,
-                                onMoodEdited: (String value) {},
+                               
                               ),
                             ),
                           );
@@ -162,98 +176,121 @@ class DashboardNavigation {
   }
 
   // Build the middle section with daily quote and wellness tip
-  Widget _buildMiddleSection() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          "Daily Inspiration",
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+  // Build the middle section with daily quote and wellness tip
+Widget _buildMiddleSection() {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      const Text(
+        "Daily Inspiration",
+        style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.white),
+      ),
+      const SizedBox(height: 8),
+      Row(
+        children: [
+          const Icon(Icons.format_quote, color: Color.fromARGB(255, 255, 239, 11), size: 24),
+          const SizedBox(width: 8),
+          Expanded(
+            child: RichText(
+              text: TextSpan(
+                style: const TextStyle(
+                  fontSize: 22,
+                  fontStyle: FontStyle.italic,
+                  fontFamily: 'Apple Garamond',
+                  color: Color.fromARGB(221, 255, 255, 255),
+                ),
+                children: [
+                  TextSpan(
+                    text: dailyQuote, // Display the fetched quote
+                  ),
+                ],
+              ),
+            ),
+          ),
+          const SizedBox(width: 8),
+          const Icon(Icons.format_quote, color: Color.fromARGB(255, 255, 239, 11), size: 24),
+        ],
+      ),
+      const SizedBox(height: 16),
+      const Text(
+        "Wellness Tip of the Day",
+        style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.white),
+      ),
+      const SizedBox(height: 8),
+      Container(
+        padding: const EdgeInsets.all(12),
+        decoration: BoxDecoration(
+          color: const Color.fromARGB(255, 233, 241, 255),
+          borderRadius: BorderRadius.circular(10),
         ),
-        const SizedBox(height: 8),
-        Row(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const Icon(Icons.format_quote, color: Colors.blue, size: 24),
-            const SizedBox(width: 8),
+            // Replaced incorrect 'child:' with proper widget structure
             Expanded(
               child: RichText(
                 text: TextSpan(
                   style: const TextStyle(
                     fontSize: 18,
                     fontStyle: FontStyle.italic,
-                    color: Colors.black87,
+                    color: Color.fromARGB(221, 0, 24, 122),
                   ),
                   children: [
                     TextSpan(
-                      text: dailyQuote, // Display the fetched quote
+                      text: dailyTip, // Display the fetched wellness tip
                     ),
                   ],
                 ),
               ),
             ),
             const SizedBox(width: 8),
-            const Icon(Icons.format_quote, color: Colors.blue, size: 24),
+            Image.asset(
+              'assets/wellness.png',
+              height: 50,
+              width: 50,
+            ),
           ],
         ),
-        const SizedBox(height: 16),
-        const Text(
-          "Wellness Tip of the Day",
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 8),
-        Container(
-          padding: const EdgeInsets.all(12),
-          decoration: BoxDecoration(
-            color: const Color(0xFF1B3C73),
-            borderRadius: BorderRadius.circular(10),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Expanded(
-                child: Text(
-                  "Take a 5-minute break every hour to stretch and breathe deeply.",
-                  style: TextStyle(fontSize: 16, color: Colors.white),
-                ),
-              ),
-              const SizedBox(width: 8),
-              Image.asset(
-                'assets/wellness.png',
-                height: 50,
-                width: 50,
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
+      ),
+    ],
+  );
+}
 
-  // Build the Recently Played section
-  Widget _buildRecentlyPlayed(BuildContext context) {
-    final recentItems = Provider.of<RecentItems>(context).recentItems;
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          "Recents",
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 8),
-        Column(
-          children: recentItems.map((item) {
+// Build the Recently Played section with horizontal ListView
+Widget _buildRecentlyPlayed(BuildContext context) {
+  final recentItems = Provider.of<RecentItems>(context).recentItems;
+
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      const Text(
+        "Recents",
+        style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.white),
+      ),
+      const SizedBox(height: 8),
+      // Horizontal scrolling ListView
+      SizedBox(
+        height: 220,  // Adjusted height to make the box not too wide
+        child: ListView.builder(
+          scrollDirection: Axis.horizontal,  // Set scroll direction to horizontal
+          itemCount: recentItems.length,
+          itemBuilder: (context, index) {
+            final item = recentItems[index];
             List<Color> gradientColors;
 
             if (item["type"] == "Music") {
-              gradientColors = [Colors.blue.shade700, Colors.blue.shade300];
+              gradientColors = [Colors.purple.shade300, Colors.purple.shade100];
             } else if (item["type"] == "Meditation") {
-              gradientColors = [Colors.orange.shade700, Colors.orange.shade400];
-            } else {
-              gradientColors = [Colors.red.shade700, Colors.red.shade400];
-            }
-
+              gradientColors = [Colors.yellow.shade700, Colors.orange.shade400];
+            } else if (item["type"] == "Breathwork"){
+              gradientColors = [Colors.green.shade400, Colors.green.shade200];
+            } else{
+              gradientColors = [Colors.pink.shade700, Colors.pink.shade400];
+            } 
             return Container(
+              width: 160,  // Controls the width of each item (portrait style)
+              margin: const EdgeInsets.only(right: 10), // Spacing between items
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: gradientColors,
@@ -262,33 +299,43 @@ class DashboardNavigation {
                 ),
                 borderRadius: BorderRadius.circular(10),
               ),
-              margin: const EdgeInsets.only(bottom: 10),
-              child: ListTile(
-                leading: Icon(
-                  item["type"] == "Music"
-                      ? Icons.music_note
-                      : item["type"] == "Meditation"
-                          ? Icons.self_improvement
-                          : Icons.air,
-                  color: Colors.white,
-                ),
-                title: Text(
-                  item["title"]!,
-                  style: const TextStyle(color: Colors.white),
-                ),
-                subtitle: Text(
-                  item["type"]!,
-                  style: const TextStyle(color: Colors.white),
-                ),
-                trailing: Icon(
-                  Icons.play_circle_outline,
-                  color: Colors.white,
-                ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    Icons.play_circle_outline,
+                    color: Colors.white,
+                    size: 40,  // Make the play button smaller
+                  ),
+                  const SizedBox(height: 8), // Space between the play button and text
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: Text(
+                      item["title"]!,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  const SizedBox(height: 4),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: Text(
+                      item["type"]!,
+                      style: const TextStyle(color: Colors.white),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ],
               ),
             );
-          }).toList(),
+          },
         ),
-      ],
-    );
-  }
+      ),
+    ],
+  );
+}
 }

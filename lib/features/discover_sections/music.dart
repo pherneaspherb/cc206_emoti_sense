@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart'; // Import provider
+import 'package:cc206_emoti_sense/provider/recent_items.dart';  // Import the RecentItems provider
 
 class MusicPage extends StatefulWidget {
   MusicPage({Key? key}) : super(key: key);
@@ -41,6 +43,12 @@ class _MusicPageState extends State<MusicPage> {
       });
       print('Error: $e');
     }
+  }
+
+  // Update recent items when a music track is tapped
+  void _updateRecent(BuildContext context, String title, String type) {
+    final recent = Provider.of<RecentItems>(context, listen: false); // Get the context to access RecentItems provider
+    recent.addRecentItem(title, type);
   }
 
   @override
@@ -94,6 +102,9 @@ class _MusicPageState extends State<MusicPage> {
                             ),
                             subtitle: Text(artist),
                             leading: Icon(Icons.music_note, color: Colors.deepPurple),
+                            onTap: () {
+                              _updateRecent(context, title, 'Music'); // Update recent on tap
+                            },
                           ),
                         );
                       },

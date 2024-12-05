@@ -5,7 +5,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:cc206_emoti_sense/features/welcome.dart';
-import 'package:cc206_emoti_sense/features/dashboard.dart'; 
+import 'package:cc206_emoti_sense/features/dashboard_page.dart'; 
 import 'package:cc206_emoti_sense/features/discover_page.dart';
 import 'package:cc206_emoti_sense/features/games_page.dart'; 
 import 'package:cc206_emoti_sense/features/profile_page.dart'; 
@@ -13,7 +13,8 @@ import 'package:cc206_emoti_sense/features/discover_sections/music.dart';
 import 'package:cc206_emoti_sense/features/discover_sections/meditation.dart';
 import 'package:cc206_emoti_sense/features/discover_sections/breathwork.dart';
 import 'package:cc206_emoti_sense/features/discover_sections/readings.dart';
-
+import 'package:provider/provider.dart';
+import 'package:cc206_emoti_sense/provider/recent_items.dart'; 
 void main() async{
 
   WidgetsFlutterBinding.ensureInitialized();
@@ -34,7 +35,12 @@ void main() async{
     await Firebase.initializeApp();
   }
 
-  runApp(MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => RecentItems(), // Provide RecentItems globally
+      child: MyApp(),
+    ),
+  );
 }
 
 

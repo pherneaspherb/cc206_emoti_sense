@@ -1,5 +1,5 @@
-import 'package:cc206_emoti_sense/features/auth_service.dart';
-import 'package:cc206_emoti_sense/features/dashboard.dart';
+import 'package:cc206_emoti_sense/services/auth_service.dart';
+import 'package:cc206_emoti_sense/features/dashboard_page.dart';
 import 'package:flutter/material.dart';
 import 'package:cc206_emoti_sense/features/sign_up.dart';
 import 'package:firebase_core/firebase_core.dart';

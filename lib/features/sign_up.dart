@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'dart:developer';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cc206_emoti_sense/services/database.dart';
 
 class SignUpScreen extends StatelessWidget {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
+  final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final TextEditingController confirmPassController = TextEditingController();
@@ -48,8 +49,9 @@ class SignUpScreen extends StatelessWidget {
                 ),
                 SizedBox(height: 20),
                 TextField(
+                  controller: nameController,
                   decoration: InputDecoration(
-                    labelText: 'Full Name',
+                    labelText: 'Name',
                     border: UnderlineInputBorder(
                       borderRadius: BorderRadius.circular(10),
                     ),
@@ -155,7 +157,6 @@ class SignUpScreen extends StatelessWidget {
     );
   }
 
-
   Future<void> _signup(BuildContext context) async {
     try {
       final UserCredential user = await _auth.createUserWithEmailAndPassword(
@@ -164,6 +165,11 @@ class SignUpScreen extends StatelessWidget {
       );
 
       if (user.user != null) {
+        // Save user data to Firestore
+        await DatabaseService(uid: user.user!.uid).updateUserData(
+          nameController.text.trim(),
+        );
+
         log("User created successfully: ${user.user!.uid}");
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text("User created successfully")),

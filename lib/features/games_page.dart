@@ -11,6 +11,28 @@ class GamesPage extends StatefulWidget {
   _GamesPageState createState() => _GamesPageState();
 }
 
+PreferredSizeWidget buildAppBar() {
+    return AppBar(
+      title: Row(
+        children: [
+          Image.asset(
+            'assets/logo.png',
+            height: 30,
+          ),
+          const SizedBox(width: 8),
+          const Text(
+            "Games",
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+        ],
+      ),
+      backgroundColor: Colors.transparent,
+      elevation: 0,
+      centerTitle: true,
+      automaticallyImplyLeading: false,
+    );
+  }
+
 class _GamesPageState extends State<GamesPage> {
   @override
   Widget build(BuildContext context) {

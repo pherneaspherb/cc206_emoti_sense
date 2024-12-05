@@ -15,28 +15,40 @@ class _DiscoverPageState extends State<DiscoverPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: GridView.builder(
-        padding: const EdgeInsets.all(8.0),
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2, // 2 columns
-          crossAxisSpacing: 8.0,
-          mainAxisSpacing: 8.0,
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              Color(0xFF003366), // Deep blue
+              Color(0xFF006699), // Lighter deep blue
+            ],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
         ),
-        itemCount: 4, // We have 4 categories
-        itemBuilder: (context, index) {
-          switch (index) {
-            case 0:
-              return _buildCategoryItem(context, 'Music', Icons.music_note, const Color.fromARGB(255, 13, 101, 174), const Color.fromARGB(255, 113, 194, 232), MusicPage());
-            case 1:
-              return _buildCategoryItem(context, 'Meditation', Icons.self_improvement, const Color.fromARGB(255, 247, 234, 117), Colors.amber, const MeditationPage());
-            case 2:
-              return _buildCategoryItem(context, 'Breathwork', Icons.air, Colors.green, const Color.fromARGB(255, 172, 236, 99), BreathworkPage());
-            case 3:
-              return _buildCategoryItem(context, 'Readings', Icons.book, Colors.pink, const Color.fromARGB(255, 247, 148, 181), ReadingsPage());
-            default:
-              return Container(); // Empty container for any undefined index
-          }
-        },
+        child: GridView.builder(
+          padding: const EdgeInsets.all(8.0),
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2, // 2 columns
+            crossAxisSpacing: 8.0,
+            mainAxisSpacing: 8.0,
+          ),
+          itemCount: 4, // We have 4 categories
+          itemBuilder: (context, index) {
+            switch (index) {
+              case 0:
+                return _buildCategoryItem(context, 'Music', Icons.music_note, const Color.fromARGB(255, 186, 104, 200), const Color.fromARGB(255, 225, 190, 231), MusicPage());
+              case 1:
+                return _buildCategoryItem(context, 'Meditation', Icons.self_improvement, const Color.fromARGB(255, 247, 234, 117), Colors.amber, const MeditationPage());
+              case 2:
+                return _buildCategoryItem(context, 'Breathwork', Icons.air, Colors.green, const Color.fromARGB(255, 172, 236, 99), BreathworkPage());
+              case 3:
+                return _buildCategoryItem(context, 'Readings', Icons.book, Colors.pink, const Color.fromARGB(255, 247, 148, 181), ReadingsPage());
+              default:
+                return Container(); // Empty container for any undefined index
+            }
+          },
+        ),
       ),
     );
   }
@@ -70,7 +82,7 @@ class _DiscoverPageState extends State<DiscoverPage> {
                 const SizedBox(height: 10),
                 Text(
                   title,
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
+                  style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.white),
                 ),
               ],
             ),
@@ -80,4 +92,3 @@ class _DiscoverPageState extends State<DiscoverPage> {
     );
   }
 }
-

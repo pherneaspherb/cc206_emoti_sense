@@ -24,18 +24,18 @@ class _DashboardState extends State<Dashboard> {
     ];
 
     final List<PreferredSizeWidget?> appBars = [
-      _navigation.buildAppBar(), 
-      _buildDiscoverAppBar(),  
-      _buildGamesAppBar(),
-      _buildProfileAppBar(),   
+      _buildCustomAppBar("Dashboard"), 
+      _buildCustomAppBar("Discover"),  
+      _buildCustomAppBar("Games"),
+      _buildCustomAppBar("Profile"),   
     ];
 
     return Scaffold(
       appBar: appBars[_navigation.selectedIndex], 
       body: Container(
         // Set a gradient or background color for the body
-        decoration: BoxDecoration(
-          gradient: const LinearGradient(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
             colors: [
               Color(0xFF003366), // Calming deep blue
               Color(0xFF006699), // Lighter deep blue
@@ -44,15 +44,16 @@ class _DashboardState extends State<Dashboard> {
             end: Alignment.bottomCenter,
           ),
         ),
-        child: pages[_navigation.selectedIndex],
+        child: SafeArea(
+          child: pages[_navigation.selectedIndex],
+        ),
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         currentIndex: _navigation.selectedIndex,
         onTap: (index) => setState(() => _navigation.onItemTapped(index)),
-        backgroundColor:  Color(0xFF006699),
-        selectedItemColor: const Color.fromARGB(255, 129, 255, 251),
-        unselectedItemColor: const Color.fromARGB(255, 255, 255, 255),
+        selectedItemColor: const Color(0xFF1B3C73),
+        unselectedItemColor: const Color(0xFF0D99FF),
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.dashboard),
@@ -75,69 +76,23 @@ class _DashboardState extends State<Dashboard> {
     );
   }
 
-  // Discover AppBar
-  PreferredSizeWidget _buildDiscoverAppBar() {
+  // Custom AppBar with deep blue background
+  PreferredSizeWidget _buildCustomAppBar(String title) {
     return AppBar(
       title: Row(
         children: [
           Image.asset(
-            'assets/emo-logo-white.png',
+            'assets/logo.png',
             height: 30,
           ),
           const SizedBox(width: 8),
-          const Text(
-            "Discover",
-            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white), // Set text color to white
+          Text(
+            title,
+            style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
           ),
         ],
       ),
-      backgroundColor: const Color(0xFF003366),
-      elevation: 0,
-      centerTitle: true,
-      automaticallyImplyLeading: false,
-    );
-  }
-
-  // Games AppBar
-  PreferredSizeWidget _buildGamesAppBar() {
-    return AppBar(
-      title: Row(
-        children: [
-          Image.asset(
-            'assets/emo-logo-white.png',
-            height: 30,
-          ),
-          const SizedBox(width: 8),
-          const Text(
-            "Games",
-            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white), // Set text color to white
-          ),
-        ],
-      ),
-      backgroundColor: const Color(0xFF003366),
-      elevation: 0,
-      centerTitle: true,
-      automaticallyImplyLeading: false,
-    );
-  }
-
-  // Profile AppBar
-  PreferredSizeWidget _buildProfileAppBar() {
-    return AppBar(
-      title: Row(
-        children: [
-          Image.asset(
-            'assets/emo-logo-white.png',
-            height: 30,
-          ),
-          const SizedBox(width: 8),
-          const Text(
-            "Profile",
-            style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white), // Set text color to white
-          ),
-        ],
-      ),
-      backgroundColor: const Color(0xFF003366),
+      backgroundColor: const Color(0xFF003366), // Deep blue background
       elevation: 0,
       centerTitle: true,
       automaticallyImplyLeading: false,

@@ -60,19 +60,57 @@ class _MusicPageState extends State<MusicPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Find Music'),
-        backgroundColor: Colors.deepPurple,
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(kToolbarHeight),
+        child: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [Colors.purple.shade300, Colors.purple.shade300],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+          ),
+          child: AppBar(
+            title: Text(
+              'Find Music',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+            ),
+            backgroundColor: Colors.transparent,
+            elevation: 0,
+          ),
+        ),
       ),
-      body: Padding(
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Colors.purple.shade300, Colors.purple.shade100],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
+        ),
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
             TextField(
               decoration: InputDecoration(
+                filled: true, // Make the background of the search bar white
+                fillColor: Colors.white, // White background for the search bar
                 labelText: 'Search for music',
-                border: OutlineInputBorder(),
-                prefixIcon: Icon(Icons.search),
+                labelStyle: TextStyle(color: Colors.black), // Dark label color for visibility
+                border: OutlineInputBorder(
+                   borderRadius: BorderRadius.circular(30.0), 
+                ),
+                prefixIcon: Icon(
+                  Icons.search,
+                  color: Colors.white, // Set the search icon color to white
+                ),
+                suffixIcon: Icon(
+                  Icons.arrow_forward,
+                  color: Colors.white, // Set the arrow color to white
+                ),
               ),
               onSubmitted: (value) {
                 fetchMusicData(value); // Fetch data on submit

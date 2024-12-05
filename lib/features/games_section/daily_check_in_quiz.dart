@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 class DailyCheckInQuizPage extends StatefulWidget {
@@ -60,12 +59,30 @@ class _DailyCheckInQuizPageState extends State<DailyCheckInQuizPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Daily Check-In Quiz'),
-        backgroundColor: Colors.teal,
+        title: const Text(
+          'Daily Check-In Quiz',
+          style: TextStyle(
+            color: Colors.white, // White text for the AppBar
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        backgroundColor: const Color.fromARGB(255, 211, 47, 47), // Dark red
       ),
-      body: _currentQuestionIndex < _questions.length
-          ? _buildQuizContent()
-          : _buildResultContent(),
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              const Color.fromARGB(255, 211, 47, 47), // Dark red
+              const Color.fromARGB(255, 244, 67, 54), // Lighter red
+            ],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+        ),
+        child: _currentQuestionIndex < _questions.length
+            ? _buildQuizContent()
+            : _buildResultContent(),
+      ),
     );
   }
 
@@ -78,21 +95,26 @@ class _DailyCheckInQuizPageState extends State<DailyCheckInQuizPage> {
         children: [
           Text(
             question['question'] as String,
-            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            style: const TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: Colors.white, // White text for the question
+            ),
           ),
           const SizedBox(height: 16.0),
           ...(question['options'] as List<Map<String, Object>>).map((option) {
-           return Padding(
-            padding: const EdgeInsets.only(bottom: 10.0), // Adds space below each option
-            child: ElevatedButton(
-             style: ElevatedButton.styleFrom(
-              foregroundColor: Colors.teal[200],
-              padding: const EdgeInsets.all(16.0),
-            ),
-              child: Text(option['text'] as String),
-              onPressed: () => _answerQuestion(option['score'] as int),
-            ),
-           );
+            return Padding(
+              padding: const EdgeInsets.only(bottom: 10.0), // Adds space below each option
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  foregroundColor: const Color.fromARGB(255, 211, 47, 47), backgroundColor: Colors.white, // Dark red text color
+                  padding: const EdgeInsets.all(16.0),
+                  side: BorderSide(color: const Color.fromARGB(255, 211, 47, 47), width: 2), // Dark red border
+                ),
+                child: Text(option['text'] as String),
+                onPressed: () => _answerQuestion(option['score'] as int),
+              ),
+            );
           }).toList(),
         ],
       ),
@@ -117,21 +139,29 @@ class _DailyCheckInQuizPageState extends State<DailyCheckInQuizPage> {
         children: [
           Text(
             'Your Score: $_score',
-            style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            style: const TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+              color: Colors.white, // White text for the score
+            ),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 16.0),
           Text(
             feedback,
-            style: const TextStyle(fontSize: 18),
+            style: const TextStyle(
+              fontSize: 18,
+              color: Colors.white, // White text for feedback
+            ),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 16.0),
           ElevatedButton(
             onPressed: _resetQuiz,
             style: ElevatedButton.styleFrom(
-              foregroundColor: Colors.teal,
+              foregroundColor: const Color.fromARGB(255, 211, 47, 47), backgroundColor: Colors.white, // Dark red text color
               padding: const EdgeInsets.all(16.0),
+              side: BorderSide(color: const Color.fromARGB(255, 211, 47, 47), width: 2), // Dark red border
             ),
             child: const Text('Retake Quiz'),
           ),

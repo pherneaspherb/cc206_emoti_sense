@@ -15,7 +15,7 @@ class AddEntryPage extends StatelessWidget {
     if (title.isNotEmpty && entry.isNotEmpty) {
       // Add entry using the callback function
       addJournalEntryCallback(title, entry);
-      
+
       // Navigate back to JournalPage
       Navigator.pop(context);
     } else {
@@ -30,9 +30,20 @@ class AddEntryPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Add New Journal Entry'),
+        title: Text('Add New Journal Entry', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+        backgroundColor: Color(0xFF003366), // Deep Blue AppBar
       ),
-      body: Padding(
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              Color(0xFF003366), // Deep blue
+              Color(0xFF006699), // Lighter deep blue
+            ],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
+        ),
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
@@ -49,9 +60,8 @@ class AddEntryPage extends StatelessWidget {
               maxLines: 5,
             ),
             SizedBox(height: 20),
-            // Save button (Interaction Widget)
+            // Save button with icon inside (Interaction Widget)
             InteractionButton(
-              label: 'Save Entry',
               onPressed: () => _saveEntry(context),
             ),
           ],
@@ -75,6 +85,8 @@ class InteractionTextField extends StatelessWidget {
       controller: controller,
       decoration: InputDecoration(
         labelText: label,
+        filled: true, // Set filled to true for background color
+        fillColor: Colors.white, // White background for text fields
         border: OutlineInputBorder(),
       ),
       maxLines: maxLines,
@@ -84,16 +96,20 @@ class InteractionTextField extends StatelessWidget {
 
 // Reusable Interaction Widget for Button
 class InteractionButton extends StatelessWidget {
-  final String label;
   final VoidCallback onPressed;
 
-  InteractionButton({required this.label, required this.onPressed});
+  InteractionButton({required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
+    return ElevatedButton.icon(
       onPressed: onPressed,
-      child: Text(label),
+      icon: Icon(Icons.save, color: const Color.fromARGB(255, 6, 0, 124)), // Save icon
+      label: Text('Save Entry', style: TextStyle(color:  Color.fromARGB(255, 6, 0, 124))), // Button text in white
+      style: ElevatedButton.styleFrom(
+        backgroundColor: Colors.white, // White background for the button
+        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+      ),
     );
   }
 }

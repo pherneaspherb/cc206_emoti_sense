@@ -53,6 +53,7 @@ dependencies {
     implementation "com.google.android.material:material:1.9.0"
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.6.1"
     implementation "androidx.activity:activity-ktx:1.7.2"
+    implementation 'com.google.firebase:firebase-analytics:21.3.0'
 }
 
 // Flutter-specific configuration
@@ -63,3 +64,5 @@ flutter {
 dependencies {
     implementation platform('com.google.firebase:firebase-bom:33.6.0')
 }
+
+apply plugin: 'com.google.gms.google-services'

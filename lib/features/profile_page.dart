@@ -1,7 +1,9 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cc206_emoti_sense/features/journal.dart';
+import 'package:cc206_emoti_sense/features/profile_edit.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -10,40 +12,67 @@ class ProfilePage extends StatefulWidget {
   _ProfilePageState createState() => _ProfilePageState();
 }
 
-PreferredSizeWidget buildAppBar() {
-  return AppBar(
-    title: Row(
-      children: [
-        Image.asset(
-          'assets/logo.png',
-          height: 30,
-        ),
-        const SizedBox(width: 8),
-        const Text(
-          "Profile",
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-      ],
-    ),
-    backgroundColor: Colors.transparent,
-    elevation: 0,
-    centerTitle: true,
-    automaticallyImplyLeading: false,
-  );
-}
-
 class _ProfilePageState extends State<ProfilePage> {
-  // State variables for profile data
-  String _name = 'Yebe';
-  String _username = '@loveyebe';
-  String _email = 'yebedebi@gmail.com';
+  String _email = 'user@example.com';
   String _bio = 'Enter bio here.';
-  File? _profileImage; // Holds the profile image file
+  File? _profileImage;
+
+  // Fetch user name from Firestore
+  Future<String> _fetchUserName() async {
+    try {
+      var userDoc = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(FirebaseAuth.instance.currentUser!.uid)
+          .get();
+
+      if (userDoc.exists) {
+        return userDoc['name'] ?? 'User'; // Get the user's name
+      } else {
+        return 'User'; // Fallback if the document doesn't exist
+      }
+    } catch (e) {
+      print("Error fetching user name: $e");
+      return 'User'; // Fallback in case of an error
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _loadUserData();
+  }
+
+  Future<void> _loadUserData() async {
+    try {
+      User? user = FirebaseAuth.instance.currentUser;
+      if (user != null) {
+        // Fetch user details
+        setState(() {
+          _email = user.email ?? 'user@example.com';
+        });
+
+        // Fetch additional data from Firestore for bio
+        DocumentSnapshot userDoc = await FirebaseFirestore.instance
+            .collection('users')
+            .doc(user.uid)
+            .get();
+        if (userDoc.exists) {
+          setState(() {
+            _bio = userDoc['bio'] ?? 'Enter bio here.';
+          });
+        }
+      }
+    } catch (e) {
+      print("Error loading user data: $e");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
+        width: double.infinity,
+        height: double.infinity,
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [
@@ -64,99 +93,109 @@ class _ProfilePageState extends State<ProfilePage> {
                   radius: 50,
                   backgroundImage: _profileImage != null
                       ? FileImage(_profileImage!) as ImageProvider
-                      : AssetImage('assets/yebe.png'),
-                  backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+                      : const AssetImage('assets/yebe.png'),
+                  backgroundColor: Colors.white,
                 ),
                 const SizedBox(height: 16),
 
-                // Name
-                Text(
-                  _name,
-                  style: const TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white, // Yebe text color set to white
-                  ),
-                ),
-                const SizedBox(height: 4),
-
-                // Username
-                Text(
-                  _username,
-                  style: const TextStyle(
-                    fontSize: 16,
-                    color: Color.fromARGB(255, 253, 253, 253),
-                  ),
+                // Fetch user name using FutureBuilder
+                FutureBuilder<String>(
+                  future: _fetchUserName(),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return const CircularProgressIndicator();
+                    }
+                    if (snapshot.hasError) {
+                      return Text('Error: ${snapshot.error}');
+                    }
+                    return Text(
+                      snapshot.data ?? 'User Name',
+                      style: const TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    );
+                  },
                 ),
                 const SizedBox(height: 8),
 
-                // Email Address
+                // Email
                 Text(
                   _email,
                   style: const TextStyle(
                     fontSize: 16,
-                    color: Color.fromARGB(255, 255, 255, 255),
+                    color: Colors.white,
                   ),
                 ),
-                const SizedBox(height: 8),
+                const SizedBox(height: 16),
 
                 // Bio
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(Icons.format_quote, color: Colors.lightBlue),
-                    const SizedBox(width: 8),
-                    Text(
-                      _bio,
-                      style: const TextStyle(
-                        fontSize: 16,
-                        color: Color.fromARGB(255, 255, 255, 255),
-                      ),
-                      textAlign: TextAlign.center,
-                    ),
-                    const SizedBox(width: 8),
-                    Icon(Icons.format_quote, color: Colors.lightBlue),
-                  ],
+                Text(
+                  _bio,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    color: Colors.white,
+                    fontStyle: FontStyle.italic,
+                  ),
+                  textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 32),
 
-                // Buttons
+                // Buttons (Edit, Journal, Log Out)
                 _buildButton(
-                  Icons.edit,
-                  "Edit Profile",
-                  onTap: () async {
-                    // Navigate to ProfileEdit and await the result
-                    final updatedProfile = await Navigator.pushNamed(context, '/editprofile');
+  Icons.edit,
+  "Edit Profile",
+  onTap: () async {
+    print("Navigating to ProfileEdit page...");
+    final updatedProfile = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const ProfileEdit(),
+        settings: RouteSettings(
+          arguments: {
+            'uid': FirebaseAuth.instance.currentUser!.uid,
+          },
+        ),
+      ),
+    );
+    print("Returned from ProfileEdit page with: $updatedProfile");
+    if (updatedProfile != null && updatedProfile is Map<String, dynamic>) {
+      setState(() {
+        _bio = updatedProfile['bio'] ?? _bio;
+        _profileImage = updatedProfile['profileImage'];
+      });
+    }
+  },
+),
 
-                    // Check if data was returned and update the state
-                    if (updatedProfile != null && updatedProfile is Map<String, dynamic>) {
-                      setState(() {
-                        _name = updatedProfile['name'] ?? _name;
-                        _username = updatedProfile['username'] ?? _username;
-                        _email = updatedProfile['email'] ?? _email;
-                        _bio = updatedProfile['bio'] ?? _bio;
-                        _profileImage = updatedProfile['profileImage'];
-                      });
-                    }
-                  },
-                ),
                 _buildButton(
                   Icons.book,
                   "My Journal",
                   onTap: () {
-                    String uid = 'userUID';
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => JournalPage(uid: uid)),
-                    );
+                    String? uid = FirebaseAuth.instance.currentUser?.uid;
+                    if (uid != null) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => JournalPage(uid: uid),
+                        ),
+                      );
+                    } else {
+                      print("UID not found, cannot navigate to JournalPage.");
+                    }
                   },
                 ),
-                _buildButton(Icons.favorite, "Favorites"),
                 _buildButton(
                   Icons.logout,
                   "Log Out",
                   onTap: () {
-                    Navigator.pushNamed(context, '/');
+                    FirebaseAuth.instance.signOut();
+                    Navigator.pushNamedAndRemoveUntil(
+                      context,
+                      '/',
+                      (route) => false,
+                    );
                   },
                 ),
               ],
@@ -168,28 +207,32 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
   // Method for buttons
-  Widget _buildButton(IconData icon, String label, {VoidCallback? onTap}) {
+ Widget _buildButton(IconData icon, String label, {VoidCallback? onTap}) {
   return GestureDetector(
     onTap: onTap,
     child: Container(
       margin: const EdgeInsets.symmetric(vertical: 8.0),
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
       decoration: BoxDecoration(
-        color: Colors.white, // Remove white background
-        border: Border.all(color: Colors.white, width: 1), // Optional: Add a border
+        color: Colors.white,
+        border: Border.all(color: Colors.white, width: 1),
         borderRadius: BorderRadius.circular(8.0),
       ),
       child: Row(
         children: [
-          Icon(icon, color: const Color.fromARGB(255, 0, 0, 159)), // Match icon color with theme
+          Icon(icon, color: const Color.fromARGB(255, 0, 0, 159)),
           const SizedBox(width: 10),
           Text(
             label,
-            style: const TextStyle(fontSize: 16, color: Color.fromARGB(255, 0, 0, 159)), // Match text color with theme
+            style: const TextStyle(
+              fontSize: 16,
+              color: Color.fromARGB(255, 0, 0, 159),
+            ),
           ),
         ],
       ),
     ),
   );
 }
+
 }

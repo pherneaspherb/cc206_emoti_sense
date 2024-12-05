@@ -70,18 +70,19 @@ class DatabaseService {
 
   // Method to fetch the user's name from Firestore
   Future<String> getUserName() async {
-    try {
-      DocumentSnapshot userDoc = await FirebaseFirestore.instance.collection('users').doc(uid).get();
-      if (userDoc.exists) {
-        return userDoc['name'] ?? 'User'; // Return the name or 'User' if not found
-      } else {
-        return 'User';
-      }
-    } catch (e) {
-      print("Error fetching user name: $e");
-      return 'User';
+  try {
+    DocumentSnapshot userDoc = await userCollection.doc(uid).get();
+    if (userDoc.exists) {
+      return userDoc['name'] ?? 'User'; // Fallback to 'User' if 'name' is not found
+    } else {
+      return 'User'; // Return 'User' if the document does not exist
     }
+  } catch (e) {
+    print("Error fetching user name: $e");
+    return 'User';
   }
+}
+
 
   // Method to fetch all moods for the user
   Future<List<String>> getMoodHistory() async {

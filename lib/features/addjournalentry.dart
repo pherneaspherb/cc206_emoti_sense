@@ -8,20 +8,30 @@ class AddEntryPage extends StatelessWidget {
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _entryController = TextEditingController();
 
+  // Function to save the journal entry
   void _saveEntry(BuildContext context) {
-    String title = _titleController.text;
-    String entry = _entryController.text;
+    String title = _titleController.text.trim();
+    String entry = _entryController.text.trim();
 
     if (title.isNotEmpty && entry.isNotEmpty) {
-      // Add entry using the callback function
+      // Add the journal entry via the callback
       addJournalEntryCallback(title, entry);
+
+      // Clear text fields after saving
+      _titleController.clear();
+      _entryController.clear();
+
+      // Show confirmation message
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Journal entry saved successfully!")),
+      );
 
       // Navigate back to JournalPage
       Navigator.pop(context);
     } else {
-      // Show error message if fields are empty
+      // Show an error message if fields are empty
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Please fill both title and entry")),
+        SnackBar(content: Text("Please fill out both title and entry fields")),
       );
     }
   }
@@ -30,7 +40,13 @@ class AddEntryPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Add New Journal Entry', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+        title: Text(
+          'Add New Journal Entry',
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         backgroundColor: Color(0xFF003366), // Deep Blue AppBar
       ),
       body: Container(
@@ -47,22 +63,24 @@ class AddEntryPage extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            // Title input field (Interaction Widget)
+            // Title input field
             InteractionTextField(
               controller: _titleController,
               label: 'Enter Journal Title',
             ),
-            SizedBox(height: 10),
-            // Entry input field (Interaction Widget)
+            SizedBox(height: 16),
+            // Entry input field
             InteractionTextField(
               controller: _entryController,
               label: 'Enter Journal Entry',
               maxLines: 5,
             ),
-            SizedBox(height: 20),
-            // Save button with icon inside (Interaction Widget)
+            SizedBox(height: 24),
+            // Save button
             InteractionButton(
               onPressed: () => _saveEntry(context),
+              text: 'Save Entry',
+              icon: Icons.save,
             ),
           ],
         ),
@@ -77,7 +95,11 @@ class InteractionTextField extends StatelessWidget {
   final String label;
   final int maxLines;
 
-  InteractionTextField({required this.controller, required this.label, this.maxLines = 1});
+  const InteractionTextField({
+    required this.controller,
+    required this.label,
+    this.maxLines = 1,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -85,9 +107,13 @@ class InteractionTextField extends StatelessWidget {
       controller: controller,
       decoration: InputDecoration(
         labelText: label,
-        filled: true, // Set filled to true for background color
-        fillColor: Colors.white, // White background for text fields
-        border: OutlineInputBorder(),
+        labelStyle: TextStyle(color: Colors.black87),
+        filled: true,
+        fillColor: Colors.white, // White background
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(8.0),
+        ),
+        contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       ),
       maxLines: maxLines,
     );
@@ -97,18 +123,33 @@ class InteractionTextField extends StatelessWidget {
 // Reusable Interaction Widget for Button
 class InteractionButton extends StatelessWidget {
   final VoidCallback onPressed;
+  final String text;
+  final IconData icon;
 
-  InteractionButton({required this.onPressed});
+  const InteractionButton({
+    required this.onPressed,
+    required this.text,
+    required this.icon,
+  });
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton.icon(
       onPressed: onPressed,
-      icon: Icon(Icons.save, color: const Color.fromARGB(255, 6, 0, 124)), // Save icon
-      label: Text('Save Entry', style: TextStyle(color:  Color.fromARGB(255, 6, 0, 124))), // Button text in white
+      icon: Icon(
+        icon,
+        color: Color(0xFF003366),
+      ),
+      label: Text(
+        text,
+        style: TextStyle(color: Color(0xFF003366)),
+      ),
       style: ElevatedButton.styleFrom(
         backgroundColor: Colors.white, // White background for the button
-        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
+        ),
       ),
     );
   }

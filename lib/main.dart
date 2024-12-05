@@ -15,6 +15,7 @@ import 'package:cc206_emoti_sense/features/discover_sections/breathwork.dart';
 import 'package:cc206_emoti_sense/features/discover_sections/readings.dart';
 import 'package:provider/provider.dart';
 import 'package:cc206_emoti_sense/provider/recent_items.dart'; 
+
 void main() async{
 
   WidgetsFlutterBinding.ensureInitialized();
@@ -57,8 +58,8 @@ class MyApp extends StatelessWidget {
         '/signup': (context) => SignUpScreen(), 
         '/discover': (context) => const DiscoverPage(),
         '/games': (context) => const GamesPage(), 
-        '/profile': (context) => const ProfilePage(), 
-        '/editprofile': (context) => const ProfileEdit(), 
+        '/profile': (context) => const ProfilePage(),    
+        '/editProfile': (context) => const ProfileEdit(),
         '/music': (context) => MusicPage(),
         '/meditation': (context) => MeditationPage(),
         '/breathwork': (context) => BreathworkPage(), 

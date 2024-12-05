@@ -33,17 +33,24 @@ class _DashboardState extends State<Dashboard> {
     return Scaffold(
       appBar: appBars[_navigation.selectedIndex], 
       body: Container(
+        width: double.infinity,
+        height: double.infinity,
+        
         // Set a gradient or background color for the body
         decoration: BoxDecoration(
           gradient: const LinearGradient(
+            
             colors: [
               Color(0xFF003366), // Calming deep blue
               Color(0xFF006699), // Lighter deep blue
             ],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
+            
           ),
+          
         ),
+        
         child: pages[_navigation.selectedIndex],
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -51,6 +58,7 @@ class _DashboardState extends State<Dashboard> {
         currentIndex: _navigation.selectedIndex,
         onTap: (index) => setState(() => _navigation.onItemTapped(index)),
         backgroundColor:  Color(0xFF006699),
+      
         selectedItemColor: const Color.fromARGB(255, 129, 255, 251),
         unselectedItemColor: const Color.fromARGB(255, 255, 255, 255),
         items: const [

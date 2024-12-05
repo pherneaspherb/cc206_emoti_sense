@@ -1,285 +1,299 @@
 import 'package:flutter/material.dart';
-import 'addjournalentry.dart'; 
-import 'package:cc206_emoti_sense/services/database.dart'; 
-import 'package:firebase_auth/firebase_auth.dart'; 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'addjournalentry.dart';
 
 class JournalPage extends StatefulWidget {
-  final String uid;  // Pass UID from user authentication
+  final String uid;
 
-  JournalPage({required this.uid});
+  const JournalPage({required this.uid});
 
   @override
-  _JournalPageState createState() => _JournalPageState();
+  JournalPageState createState() => JournalPageState();
 }
 
-class _JournalPageState extends State<JournalPage> {
-  List<String> _journalTitles = [];
-  List<String> _journalEntries = [];
-
-  // Function to add a new journal entry
-  void _addJournalEntry(String title, String entry) {
-    setState(() {
-      _journalTitles.add(title);
-      _journalEntries.add(entry);
-    });
-  }
-
-  // Function to edit an existing journal entry
-  void _editJournalEntry(int index, String newTitle, String newEntry) {
-    setState(() {
-      _journalTitles[index] = newTitle;
-      _journalEntries[index] = newEntry;
-    });
-  }
-
-  // Function to delete a journal entry
-  void _deleteJournalEntry(int index) {
-    setState(() {
-      _journalTitles.removeAt(index);
-      _journalEntries.removeAt(index);
-    });
-  }
-
-  // Function to delete all journal entries
-  void _deleteAllEntries() {
-    setState(() {
-      _journalTitles.clear();
-      _journalEntries.clear();
-    });
-  }
+class JournalPageState extends State<JournalPage> {
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  List<Map<String, dynamic>> _journalEntries = []; // Store title and entry together
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Journal', style: TextStyle(color: Colors.white)),
-        backgroundColor: Color(0xFF003366), // Deep Blue AppBar
-        actions: [
-          // "Delete All" icon button in the upper-right corner
-          if (_journalTitles.isNotEmpty)
-            IconButton(
-              icon: Icon(Icons.delete, color: Colors.white),
-              onPressed: _deleteAllEntries,
-            ),
-        ],
-      ),
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              Color(0xFF003366), // Deep blue
-              Color(0xFF006699), // Lighter deep blue
-            ],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ),
-        ),
-        child: Column(
-          children: [
-            // Button to navigate to AddEntryPage with a plus sign icon
-            InteractionButton(
-              icon: Icons.add, // Plus sign icon
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => AddEntryPage(
-                      addJournalEntryCallback: _addJournalEntry,
-                    ),
-                  ),
-                );
-              },
-            ),
-            
-            // Layout for journal entries
-            if (_journalTitles.isEmpty)
-              LayoutEmptyState(message: 'No journal entries yet. Start adding some!'),
-
-            if (_journalTitles.isNotEmpty)
-              Expanded(
-                child: LayoutListView(
-                  items: List.generate(_journalTitles.length, (index) {
-                    return InteractionJournalItem(
-                      title: _journalTitles[index],
-                      entry: _journalEntries[index],
-                      onEdit: () {
-                        _showEditDialog(context, index); // Show the edit dialog
-                      },
-                      onDelete: () {
-                        _deleteJournalEntry(index);
-                      },
-                    );
-                  }),
-                ),
-              ),
-          ],
-        ),
-      ),
-    );
+  void initState() {
+    super.initState();
+    _fetchJournalEntries();
   }
 
-  // Function to show the edit dialog
+  Future<void> _fetchJournalEntries() async {
+    try {
+      final querySnapshot = await _firestore
+          .collection('journals')
+          .doc(widget.uid)
+          .collection('entries')
+          .orderBy('timestamp', descending: true)
+          .get();
+
+      setState(() {
+        _journalEntries = querySnapshot.docs.map((doc) {
+          final data = doc.data();
+          return {
+            'id': doc.id,
+            'title': data['title'] ?? 'Untitled',
+            'entry': data['entry'] ?? '',
+          };
+        }).toList();
+      });
+    } catch (e) {
+      print("Error fetching journal entries: $e");
+    }
+  }
+
+  Future<void> _saveJournalEntry(String title, String entry) async {
+    try {
+      final docRef = await _firestore
+          .collection('journals')
+          .doc(widget.uid)
+          .collection('entries')
+          .add({
+        'title': title,
+        'entry': entry,
+        'timestamp': FieldValue.serverTimestamp(),
+      });
+      setState(() {
+        _journalEntries.insert(0, {'id': docRef.id, 'title': title, 'entry': entry});
+      });
+    } catch (e) {
+      print("Error saving journal entry: $e");
+    }
+  }
+
+  Future<void> _deleteJournalEntryFromFirestore(String id, int index) async {
+    try {
+      await _firestore
+          .collection('journals')
+          .doc(widget.uid)
+          .collection('entries')
+          .doc(id)
+          .delete();
+      setState(() {
+        _journalEntries.removeAt(index);
+      });
+    } catch (e) {
+      print("Error deleting journal entry: $e");
+    }
+  }
+
+  Future<void> _updateJournalEntry(String id, int index, String title, String entry) async {
+    try {
+      await _firestore
+          .collection('journals')
+          .doc(widget.uid)
+          .collection('entries')
+          .doc(id)
+          .update({'title': title, 'entry': entry});
+      setState(() {
+        _journalEntries[index] = {'id': id, 'title': title, 'entry': entry};
+      });
+    } catch (e) {
+      print("Error updating journal entry: $e");
+    }
+  }
+
   void _showEditDialog(BuildContext context, int index) {
-    final TextEditingController titleController = TextEditingController(text: _journalTitles[index]);
-    final TextEditingController entryController = TextEditingController(text: _journalEntries[index]);
+    final entry = _journalEntries[index];
+    final TextEditingController titleController =
+        TextEditingController(text: entry['title']);
+    final TextEditingController entryController =
+        TextEditingController(text: entry['entry']);
 
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Edit Journal Entry'),
+          title: const Text('Edit Journal Entry'),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               TextField(
                 controller: titleController,
-                decoration: InputDecoration(labelText: 'Title'),
+                decoration: const InputDecoration(labelText: 'Title'),
               ),
               TextField(
                 controller: entryController,
-                decoration: InputDecoration(labelText: 'Entry'),
+                decoration: const InputDecoration(labelText: 'Entry'),
                 maxLines: 5,
               ),
             ],
           ),
           actions: [
             TextButton(
-              onPressed: () {
-                // Cancel the edit and close the dialog
-                Navigator.pop(context);
-              },
-              child: Text('Cancel'),
+              onPressed: () => Navigator.pop(context),
+              child: const Text('Cancel'),
             ),
             TextButton(
               onPressed: () {
-                // Save the changes to the journal entry
-                _editJournalEntry(index, titleController.text, entryController.text);
+                _updateJournalEntry(
+                  entry['id'],
+                  index,
+                  titleController.text,
+                  entryController.text,
+                );
                 Navigator.pop(context);
               },
-              child: Text('Save'),
+              child: const Text('Save'),
             ),
           ],
         );
       },
     );
   }
-}
-
-// Reusable Layout Widget for Empty State
-class LayoutEmptyState extends StatelessWidget {
-  final String message;
-
-  LayoutEmptyState({required this.message});
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Center(
-        child: Text(
-          message,
-          style: TextStyle(
-            fontSize: 18.0,
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Journal'),
+        backgroundColor: const Color(0xFF003366),
+        actions: [
+          if (_journalEntries.isNotEmpty)
+            IconButton(
+              icon: const Icon(Icons.delete),
+              onPressed: () => print('Add delete all functionality if required'),
+            ),
+        ],
+      ),
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Color(0xFF003366), Color(0xFF006699)],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
           ),
+        ),
+        child: Column(
+          children: [
+            InteractionButton(
+              icon: Icons.add,
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => AddEntryPage(
+                      addJournalEntryCallback: _saveJournalEntry,
+                    ),
+                  ),
+                );
+              },
+            ),
+            if (_journalEntries.isEmpty)
+              const LayoutEmptyState(message: 'No journal entries yet. Start adding some!'),
+            if (_journalEntries.isNotEmpty)
+              Expanded(
+                child: ListView.builder(
+                  itemCount: _journalEntries.length,
+                  itemBuilder: (context, index) {
+                    final entry = _journalEntries[index];
+                    return InteractionJournalItem(
+                      title: entry['title'],
+                      entry: entry['entry'],
+                      onEdit: () => _showEditDialog(context, index),
+                      onDelete: () =>
+                          _deleteJournalEntryFromFirestore(entry['id'], index),
+                    );
+                  },
+                ),
+              ),
+          ],
         ),
       ),
     );
   }
 }
 
-// Reusable Layout Widget for ListView
-class LayoutListView extends StatelessWidget {
-  final List<Widget> items;
-
-  LayoutListView({required this.items});
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView(
-      padding: const EdgeInsets.all(8.0),
-      children: items,
-    );
-  }
-}
-
-// Reusable Interaction Widget for Buttons
 class InteractionButton extends StatelessWidget {
-  final IconData icon; // Icon for the button
+  final IconData icon;
   final VoidCallback onPressed;
 
-  InteractionButton({required this.icon, required this.onPressed});
+  const InteractionButton({
+    required this.icon,
+    required this.onPressed,
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
-        foregroundColor: Colors.black, backgroundColor: Colors.white,
-        shape: CircleBorder(),
-        padding: EdgeInsets.all(16),
+        shape: const CircleBorder(),
+        padding: const EdgeInsets.all(16),
+        backgroundColor: Colors.white,
       ),
-      child: Icon(icon, color: Colors.black),
+      child: Icon(
+        icon,
+        color: Colors.black,
+      ),
     );
   }
 }
 
-// Reusable Value Widget to show journal title and content
-class InteractionJournalItem extends StatefulWidget {
+class LayoutEmptyState extends StatelessWidget {
+  final String message;
+
+  const LayoutEmptyState({
+    required this.message,
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Text(
+        message,
+        style: const TextStyle(
+          fontSize: 16,
+          color: Colors.white,
+        ),
+        textAlign: TextAlign.center,
+      ),
+    );
+  }
+}
+
+class InteractionJournalItem extends StatelessWidget {
   final String title;
   final String entry;
   final VoidCallback onEdit;
   final VoidCallback onDelete;
 
-  InteractionJournalItem({
+  const InteractionJournalItem({
     required this.title,
     required this.entry,
     required this.onEdit,
     required this.onDelete,
-  });
-
-  @override
-  _InteractionJournalItemState createState() => _InteractionJournalItemState();
-}
-
-class _InteractionJournalItemState extends State<InteractionJournalItem> {
-  bool _isViewing = false; // Flag to toggle between viewing and editing
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: EdgeInsets.symmetric(vertical: 4.0),
-      child: ExpansionTile(
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      margin: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
+      child: ListTile(
+        title: Text(
+          title,
+          style: const TextStyle(fontWeight: FontWeight.bold),
+        ),
+        subtitle: Text(entry),
+        trailing: Row(
+          mainAxisSize: MainAxisSize.min,
           children: [
-            // Title with dark color
-            Expanded(child: Text(widget.title, style: TextStyle(fontSize: 16, color: Colors.black))),
+            IconButton(
+              icon: const Icon(Icons.edit),
+              onPressed: onEdit,
+            ),
+            IconButton(
+              icon: const Icon(Icons.delete),
+              onPressed: onDelete,
+            ),
           ],
         ),
-        children: [
-          Padding(
-            padding: EdgeInsets.all(16.0),
-            child: Column(
-              children: [
-                // Show the journal entry content
-                Text(widget.entry, style: TextStyle(fontSize: 16, color: Colors.black)),
-                ButtonBar(
-                  children: [
-                    IconButton(
-                      icon: Icon(Icons.edit, color: Colors.blue),
-                      onPressed: widget.onEdit, // Edit action
-                    ),
-                    IconButton(
-                      icon: Icon(Icons.delete, color: Colors.red),
-                      onPressed: widget.onDelete, // Delete action
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ],
       ),
     );
   }

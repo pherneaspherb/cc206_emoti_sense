@@ -42,7 +42,7 @@ class BreathworkPage extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     'Breathwork Sessions',
                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
                   ),
@@ -109,8 +109,8 @@ class BreathworkPage extends StatelessWidget {
               onPressed: () {
                 _launchURL(videoUrl);
               },
-              child: Text('Watch', style: TextStyle(color: Colors.white)),
-              style: ElevatedButton.styleFrom(backgroundColor: Colors.green.shade400), // Button color
+              style: ElevatedButton.styleFrom(backgroundColor: Colors.green.shade400),
+              child: const Text('Watch', style: TextStyle(color: Colors.white)), // Button color
             ),
           ],
         ),

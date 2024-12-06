@@ -1,12 +1,10 @@
 import 'package:cc206_emoti_sense/services/auth_service.dart';
-import 'package:cc206_emoti_sense/features/dashboard_page.dart';
 import 'package:flutter/material.dart';
-import 'package:cc206_emoti_sense/features/sign_up.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'dart:developer';
 
 class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
+
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
@@ -33,12 +31,12 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       backgroundColor: const Color(0xFF56E1E9),
       appBar: AppBar(
-        leading: BackButton(color: const Color.fromARGB(255, 8, 3, 87)),
+        leading: const BackButton(color: Color.fromARGB(255, 8, 3, 87)),
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [
               Color(0xFF56E1E9),
@@ -55,15 +53,15 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
+                const Text(
                   'Log In',
                   style: TextStyle(
                     fontSize: 32,
                     fontWeight: FontWeight.bold,
-                    color: const Color.fromARGB(255, 0, 36, 99),
+                    color: Color.fromARGB(255, 0, 36, 99),
                   ),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 // Email Input with Validation
                 TextFormField(
                   controller: emailController,
@@ -73,7 +71,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       borderRadius: BorderRadius.circular(10),
                     ),
                     errorText: emailError, // Show error text for email
-                    errorStyle: TextStyle(
+                    errorStyle: const TextStyle(
                       color: Colors.red, // Error text color
                       fontSize: 14, // Error text size
                     ),
@@ -97,7 +95,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     return null;
                   },
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 // Password Input
                 TextFormField(
                   controller: passwordController,
@@ -108,7 +106,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       borderRadius: BorderRadius.circular(10),
                     ),
                     errorText: passwordError, // Show error text for password
-                    errorStyle: TextStyle(
+                    errorStyle: const TextStyle(
                       color: Colors.red, // Error text color
                       fontSize: 14, // Error text size
                     ),
@@ -126,7 +124,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     return null;
                   },
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 GestureDetector(
                   onTap: () {
                     if (formKey.currentState!.validate()) {
@@ -137,7 +135,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     width: double.infinity,
                     height: 50,
                     decoration: BoxDecoration(
-                      gradient: LinearGradient(
+                      gradient: const LinearGradient(
                         colors: [
                           Color(0xFF1B3C73), // Gradient start
                           Color(0xFF3371D9), // Gradient end
@@ -148,7 +146,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       borderRadius: BorderRadius.circular(10),
                     ),
                     alignment: Alignment.center,
-                    child: Text(
+                    child: const Text(
                       'Log In',
                       style: TextStyle(
                         fontSize: 16,
@@ -158,17 +156,17 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 TextButton(
                   onPressed: () {
                     Navigator.pushNamed(context, '/signup');
                   },
-                  child: Text(
+                  child: const Text(
                     'New to EmotiSense? Sign up for free',
                     style: TextStyle(color: Colors.black),
                   ),
                 ),
-                Spacer(),
+                const Spacer(),
               ],
             ),
           ),

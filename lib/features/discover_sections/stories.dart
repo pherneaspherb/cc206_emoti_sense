@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class PoemsPage extends StatefulWidget {
+  const PoemsPage({super.key});
+
   @override
   _PoemsPageState createState() => _PoemsPageState();
 }
@@ -58,11 +60,11 @@ class _PoemsPageState extends State<PoemsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Poems')),
+      appBar: AppBar(title: const Text('Poems')),
       body: isLoading
-          ? Center(child: CircularProgressIndicator())
+          ? const Center(child: CircularProgressIndicator())
           : poems.isEmpty
-              ? Center(child: Text('No poems available'))
+              ? const Center(child: Text('No poems available'))
               : ListView.builder(
                   itemCount: poems.length,
                   itemBuilder: (context, index) {

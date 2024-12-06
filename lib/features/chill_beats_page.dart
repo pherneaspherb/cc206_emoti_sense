@@ -57,7 +57,7 @@ class _ChillBeatsPageState extends State<ChillBeatsPage> {
               itemBuilder: (context, index) {
                 final song = chillBeatsSongs[index];
                 return ListTile(
-                  leading: Icon(Icons.music_note, color: Colors.purpleAccent),
+                  leading: const Icon(Icons.music_note, color: Colors.purpleAccent),
                   title: Text(
                     song,
                     style: const TextStyle(fontSize: 18),
@@ -85,8 +85,8 @@ class _ChillBeatsPageState extends State<ChillBeatsPage> {
           ),
           const Divider(thickness: 2, color: Colors.grey),
           if (favoriteSongs.isNotEmpty)
-            Padding(
-              padding: const EdgeInsets.all(8.0),
+            const Padding(
+              padding: EdgeInsets.all(8.0),
               child: Text(
                 'Favorites',
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
@@ -132,7 +132,7 @@ class _ChillBeatsPageState extends State<ChillBeatsPage> {
                       child: const Icon(Icons.delete, color: Colors.white),
                     ),
                     child: ListTile(
-                      leading: Icon(Icons.music_note, color: Colors.purpleAccent),
+                      leading: const Icon(Icons.music_note, color: Colors.purpleAccent),
                       title: Text(
                         favoriteSong,
                         style: const TextStyle(fontSize: 18),

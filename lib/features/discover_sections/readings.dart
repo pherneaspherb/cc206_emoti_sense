@@ -5,6 +5,8 @@ import 'package:provider/provider.dart';
 import 'package:cc206_emoti_sense/provider/recent_items.dart';
 
 class ReadingsPage extends StatefulWidget {
+  const ReadingsPage({super.key});
+
   @override
   _ReadingsPageState createState() => _ReadingsPageState();
 }
@@ -65,7 +67,7 @@ class _ReadingsPageState extends State<ReadingsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Collection of Poems for You',
           style: TextStyle(
             fontWeight: FontWeight.bold, // Bold text
@@ -100,7 +102,7 @@ class _ReadingsPageState extends State<ReadingsPage> {
                 fetchCollections(value); // Fetch data on submit
               },
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             isLoading
                 ? Center(child: CircularProgressIndicator(color: Colors.pink.shade700)) // Progress indicator color
                 : collections.isNotEmpty
@@ -110,10 +112,10 @@ class _ReadingsPageState extends State<ReadingsPage> {
                           itemBuilder: (context, index) {
                             final collection = collections[index];
                             return Card(
-                              margin: EdgeInsets.symmetric(vertical: 8),
+                              margin: const EdgeInsets.symmetric(vertical: 8),
                               elevation: 4,
                               child: ListTile(
-                                contentPadding: EdgeInsets.all(10),
+                                contentPadding: const EdgeInsets.all(10),
                                 title: Text(
                                   collection['title'],
                                   style: TextStyle(
@@ -132,7 +134,7 @@ class _ReadingsPageState extends State<ReadingsPage> {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => CollectionDetails(),
+                                      builder: (context) => const CollectionDetails(),
                                       settings: RouteSettings(arguments: collection),
                                     ),
                                   );
@@ -157,6 +159,8 @@ class _ReadingsPageState extends State<ReadingsPage> {
   }
 }
 class CollectionDetails extends StatelessWidget {
+  const CollectionDetails({super.key});
+
   @override
   Widget build(BuildContext context) {
     final collection =
@@ -166,7 +170,7 @@ class CollectionDetails extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           collection['title'],
-          style: TextStyle(
+          style: const TextStyle(
             fontWeight: FontWeight.bold, // Bold text for title
             color: Colors.white, // White text color for the AppBar title
           ),
@@ -192,11 +196,11 @@ class CollectionDetails extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    padding: EdgeInsets.all(16),
+                    padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
                       color: Colors.white, // White container for the poem content
                       borderRadius: BorderRadius.circular(10), // Rounded corners with 10 pixels
-                      boxShadow: [
+                      boxShadow: const [
                         BoxShadow(
                           color: Colors.black26,
                           blurRadius: 10,
@@ -215,7 +219,7 @@ class CollectionDetails extends StatelessWidget {
                             color: Colors.pink.shade700, // Title color
                           ),
                         ),
-                        SizedBox(height: 10),
+                        const SizedBox(height: 10),
                         Text(
                           'by ${collection['author']}',
                           style: TextStyle(
@@ -224,7 +228,7 @@ class CollectionDetails extends StatelessWidget {
                             color: Colors.pink.shade400, // Author color
                           ),
                         ),
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         // Display the lines of the poem
                         Column(
                           children: collection['lines']
@@ -232,7 +236,7 @@ class CollectionDetails extends StatelessWidget {
                                     padding: const EdgeInsets.symmetric(vertical: 4.0),
                                     child: Text(
                                       line,
-                                      style: TextStyle(fontSize: 16),
+                                      style: const TextStyle(fontSize: 16),
                                       textAlign: TextAlign.left,
                                     ),
                                   ))

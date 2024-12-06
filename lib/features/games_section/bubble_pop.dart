@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class BubblePopPage extends StatelessWidget {
-  const BubblePopPage({Key? key}) : super(key: key);
+  const BubblePopPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -19,11 +19,11 @@ class BubblePopPage extends StatelessWidget {
       body: Container(
         width: double.infinity, // Extend to full width
         height: double.infinity, // Extend to full height
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              const Color.fromARGB(255, 148, 87, 231), // Darker purple
-              const Color.fromARGB(255, 201, 153, 255), // Lighter purple
+              Color.fromARGB(255, 148, 87, 231), // Darker purple
+              Color.fromARGB(255, 201, 153, 255), // Lighter purple
             ],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
@@ -40,11 +40,11 @@ class BubblePopPage extends StatelessWidget {
                 children: [
                   // Container for icon and text
                   Container(
-                    padding: EdgeInsets.all(16),
+                    padding: const EdgeInsets.all(16),
                     decoration: BoxDecoration(
                       color: Colors.white, // White container for content
                       borderRadius: BorderRadius.circular(10), // Rounded corners with 10 pixels
-                      boxShadow: [
+                      boxShadow: const [
                         BoxShadow(
                           color: Colors.black26,
                           blurRadius: 10,
@@ -52,14 +52,14 @@ class BubblePopPage extends StatelessWidget {
                         ),
                       ],
                     ),
-                    child: Column(
+                    child: const Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         // Display the bubble chart icon on top inside the box
                         Icon(
                           Icons.bubble_chart,
                           size: 80,
-                          color: const Color.fromARGB(255, 148, 87, 231), // Darker purple
+                          color: Color.fromARGB(255, 148, 87, 231), // Darker purple
                         ),
                         SizedBox(height: 20), // Space between icon and text
                         Text(
@@ -68,7 +68,7 @@ class BubblePopPage extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 24,
                             fontWeight: FontWeight.bold, // Bold title
-                            color: const Color.fromARGB(255, 148, 87, 231), // Title color (darker purple)
+                            color: Color.fromARGB(255, 148, 87, 231), // Title color (darker purple)
                           ),
                         ),
                         SizedBox(height: 10),
@@ -78,7 +78,7 @@ class BubblePopPage extends StatelessWidget {
                           style: TextStyle(
                             fontSize: 18,
                             fontStyle: FontStyle.italic, // Italic text for the description
-                            color: const Color.fromARGB(255, 201, 153, 255), // Lighter purple for description
+                            color: Color.fromARGB(255, 201, 153, 255), // Lighter purple for description
                           ),
                         ),
                       ],

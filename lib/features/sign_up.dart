@@ -12,17 +12,19 @@ class SignUpScreen extends StatelessWidget {
   final TextEditingController confirmPassController = TextEditingController();
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
+  SignUpScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFF56E1E9),
       appBar: AppBar(
-        leading: BackButton(color: const Color.fromARGB(255, 8, 3, 87)),
+        leading: const BackButton(color: Color.fromARGB(255, 8, 3, 87)),
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [
               Color(0xFF56E1E9),
@@ -39,15 +41,15 @@ class SignUpScreen extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
+                const Text(
                   'Sign Up',
                   style: TextStyle(
                     fontSize: 32,
                     fontWeight: FontWeight.bold,
-                    color: const Color.fromARGB(255, 0, 36, 99),
+                    color: Color.fromARGB(255, 0, 36, 99),
                   ),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 TextField(
                   controller: nameController,
                   decoration: InputDecoration(
@@ -57,7 +59,7 @@ class SignUpScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 TextFormField(
                   controller: emailController,
                   decoration: InputDecoration(
@@ -76,7 +78,7 @@ class SignUpScreen extends StatelessWidget {
                     return null;
                   },
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 TextFormField(
                   controller: passwordController,
                   obscureText: true,
@@ -96,7 +98,7 @@ class SignUpScreen extends StatelessWidget {
                     return null;
                   },
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 TextFormField(
                   controller: confirmPassController,
                   obscureText: true,
@@ -116,7 +118,7 @@ class SignUpScreen extends StatelessWidget {
                     return null;
                   },
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 GestureDetector(
                   onTap: () {
                     if (formKey.currentState!.validate()) {
@@ -127,7 +129,7 @@ class SignUpScreen extends StatelessWidget {
                     width: double.infinity,
                     height: 50,
                     decoration: BoxDecoration(
-                      gradient: LinearGradient(
+                      gradient: const LinearGradient(
                         colors: [
                           Color(0xFF1B3C73),
                           Color(0xFF3371D9),
@@ -138,7 +140,7 @@ class SignUpScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10),
                     ),
                     alignment: Alignment.center,
-                    child: Text(
+                    child: const Text(
                       'Sign Up',
                       style: TextStyle(
                         fontSize: 16,
@@ -148,7 +150,7 @@ class SignUpScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-                Spacer(),
+                const Spacer(),
               ],
             ),
           ),
@@ -172,7 +174,7 @@ class SignUpScreen extends StatelessWidget {
 
         log("User created successfully: ${user.user!.uid}");
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("User created successfully")),
+          const SnackBar(content: Text("User created successfully")),
         );
 
         Navigator.pushReplacementNamed(context, '/login');

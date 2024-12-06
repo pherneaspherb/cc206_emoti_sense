@@ -5,7 +5,7 @@ import 'addjournalentry.dart';
 class JournalPage extends StatefulWidget {
   final String uid;
 
-  const JournalPage({required this.uid});
+  const JournalPage({super.key, required this.uid});
 
   @override
   JournalPageState createState() => JournalPageState();
@@ -214,8 +214,8 @@ class InteractionButton extends StatelessWidget {
   const InteractionButton({
     required this.icon,
     required this.onPressed,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -239,8 +239,8 @@ class LayoutEmptyState extends StatelessWidget {
 
   const LayoutEmptyState({
     required this.message,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -268,8 +268,8 @@ class InteractionJournalItem extends StatelessWidget {
     required this.entry,
     required this.onEdit,
     required this.onDelete,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {

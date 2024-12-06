@@ -5,7 +5,7 @@ import 'package:cc206_emoti_sense/features/games_section/daily_check_in_quiz.dar
 import 'package:cc206_emoti_sense/features/games_section/bubble_pop.dart';
 
 class GamesPage extends StatefulWidget {
-  const GamesPage({Key? key}) : super(key: key);
+  const GamesPage({super.key});
 
   @override
   _GamesPageState createState() => _GamesPageState();

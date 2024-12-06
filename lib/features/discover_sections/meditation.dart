@@ -42,7 +42,7 @@ class MeditationPage extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     'Meditation Sessions',
                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
                   ),
@@ -109,8 +109,8 @@ class MeditationPage extends StatelessWidget {
               onPressed: () {
                 _launchURL(videoUrl);
               },
-              child: Text('Watch', style: TextStyle(color: Colors.white),),
-              style: ElevatedButton.styleFrom(backgroundColor: Colors.orange.shade400), // Button color
+              style: ElevatedButton.styleFrom(backgroundColor: Colors.orange.shade400),
+              child: const Text('Watch', style: TextStyle(color: Colors.white),), // Button color
             ),
           ],
         ),

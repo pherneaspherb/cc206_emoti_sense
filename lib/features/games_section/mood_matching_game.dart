@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class MoodMatchingGamePage extends StatelessWidget {
-  const MoodMatchingGamePage({Key? key}) : super(key: key);
+  const MoodMatchingGamePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,11 +17,11 @@ class MoodMatchingGamePage extends StatelessWidget {
         backgroundColor: const Color.fromARGB(255, 3, 169, 244), // Darker blue
       ),
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              const Color.fromARGB(255, 3, 169, 244), // Darker blue
-              const Color.fromARGB(255, 100, 181, 246), // Lighter blue
+              Color.fromARGB(255, 3, 169, 244), // Darker blue
+              Color.fromARGB(255, 100, 181, 246), // Lighter blue
             ],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
@@ -34,8 +34,8 @@ class MoodMatchingGamePage extends StatelessWidget {
               borderRadius: BorderRadius.circular(20),
             ),
             elevation: 10, // Adding a drop shadow
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
+            child: const Padding(
+              padding: EdgeInsets.all(16.0),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.center, // Center content vertically
@@ -44,13 +44,13 @@ class MoodMatchingGamePage extends StatelessWidget {
                   Icon(
                     Icons.tag_faces,
                     size: 80,
-                    color: const Color.fromARGB(255, 3, 169, 244), // Darker blue icon
+                    color: Color.fromARGB(255, 3, 169, 244), // Darker blue icon
                   ),
-                  const SizedBox(height: 16),
+                  SizedBox(height: 16),
                   Text(
                     'Match the moods with their corresponding expressions to boost emotional awareness.',
                     textAlign: TextAlign.center,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 16,
                       color: Color.fromARGB(255, 2, 32, 167), // White text for the description
                     ),

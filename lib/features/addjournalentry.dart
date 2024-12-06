@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class AddEntryPage extends StatelessWidget {
   final Function(String, String) addJournalEntryCallback;
 
-  AddEntryPage({required this.addJournalEntryCallback});
+  AddEntryPage({super.key, required this.addJournalEntryCallback});
 
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _entryController = TextEditingController();
@@ -23,7 +23,7 @@ class AddEntryPage extends StatelessWidget {
 
       // Show confirmation message
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Journal entry saved successfully!")),
+        const SnackBar(content: Text("Journal entry saved successfully!")),
       );
 
       // Navigate back to JournalPage
@@ -31,7 +31,7 @@ class AddEntryPage extends StatelessWidget {
     } else {
       // Show an error message if fields are empty
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Please fill out both title and entry fields")),
+        const SnackBar(content: Text("Please fill out both title and entry fields")),
       );
     }
   }
@@ -40,17 +40,17 @@ class AddEntryPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Add New Journal Entry',
           style: TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.bold,
           ),
         ),
-        backgroundColor: Color(0xFF003366), // Deep Blue AppBar
+        backgroundColor: const Color(0xFF003366), // Deep Blue AppBar
       ),
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [
               Color(0xFF003366), // Deep blue
@@ -68,14 +68,14 @@ class AddEntryPage extends StatelessWidget {
               controller: _titleController,
               label: 'Enter Journal Title',
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             // Entry input field
             InteractionTextField(
               controller: _entryController,
               label: 'Enter Journal Entry',
               maxLines: 5,
             ),
-            SizedBox(height: 24),
+            const SizedBox(height: 24),
             // Save button
             InteractionButton(
               onPressed: () => _saveEntry(context),
@@ -95,7 +95,7 @@ class InteractionTextField extends StatelessWidget {
   final String label;
   final int maxLines;
 
-  const InteractionTextField({
+  const InteractionTextField({super.key, 
     required this.controller,
     required this.label,
     this.maxLines = 1,
@@ -107,13 +107,13 @@ class InteractionTextField extends StatelessWidget {
       controller: controller,
       decoration: InputDecoration(
         labelText: label,
-        labelStyle: TextStyle(color: Colors.black87),
+        labelStyle: const TextStyle(color: Colors.black87),
         filled: true,
         fillColor: Colors.white, // White background
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(8.0),
         ),
-        contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       ),
       maxLines: maxLines,
     );
@@ -126,7 +126,7 @@ class InteractionButton extends StatelessWidget {
   final String text;
   final IconData icon;
 
-  const InteractionButton({
+  const InteractionButton({super.key, 
     required this.onPressed,
     required this.text,
     required this.icon,
@@ -138,15 +138,15 @@ class InteractionButton extends StatelessWidget {
       onPressed: onPressed,
       icon: Icon(
         icon,
-        color: Color(0xFF003366),
+        color: const Color(0xFF003366),
       ),
       label: Text(
         text,
-        style: TextStyle(color: Color(0xFF003366)),
+        style: const TextStyle(color: Color(0xFF003366)),
       ),
       style: ElevatedButton.styleFrom(
         backgroundColor: Colors.white, // White background for the button
-        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(8),
         ),

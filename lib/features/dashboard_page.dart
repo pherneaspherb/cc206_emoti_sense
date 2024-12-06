@@ -37,8 +37,8 @@ class _DashboardState extends State<Dashboard> {
         height: double.infinity,
         
         // Set a gradient or background color for the body
-        decoration: BoxDecoration(
-          gradient: const LinearGradient(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
             
             colors: [
               Color(0xFF003366), // Calming deep blue
@@ -57,7 +57,7 @@ class _DashboardState extends State<Dashboard> {
         type: BottomNavigationBarType.fixed,
         currentIndex: _navigation.selectedIndex,
         onTap: (index) => setState(() => _navigation.onItemTapped(index)),
-        backgroundColor:  Color(0xFF006699),
+        backgroundColor:  const Color(0xFF006699),
       
         selectedItemColor: const Color.fromARGB(255, 129, 255, 251),
         unselectedItemColor: const Color.fromARGB(255, 255, 255, 255),

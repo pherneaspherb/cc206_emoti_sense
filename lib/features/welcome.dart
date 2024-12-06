@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:cc206_emoti_sense/features/login.dart';
-import 'package:cc206_emoti_sense/features/sign_up.dart';
 
 class WelcomeScreen extends StatelessWidget {
+  const WelcomeScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFEEF7FF), // Soft gradient base color
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [
               Color(0xFF56E1E9), // Top gradient color
@@ -23,7 +23,7 @@ class WelcomeScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Spacer(),
+              const Spacer(),
               Center(
                 child: Column(
                   children: [
@@ -31,8 +31,8 @@ class WelcomeScreen extends StatelessWidget {
                       'assets/logo.png', // Your logo image
                       height: 120, // Adjust to match the mockup
                     ),
-                    SizedBox(height: 16),
-                    Text(
+                    const SizedBox(height: 16),
+                    const Text(
                       'EmotiSense',
                       style: TextStyle(
                         fontSize: 28,
@@ -40,15 +40,15 @@ class WelcomeScreen extends StatelessWidget {
                         color: Color(0xFF012B54), // Deep blue
                       ),
                     ),
-                    SizedBox(height: 8),
-                    Text(
+                    const SizedBox(height: 8),
+                    const Text(
                       'Your Calm in Every Heartbeat',
                       style: TextStyle(
                         fontSize: 16,
                         color: Color(0xFF5A738E), // Soft text color
                       ),
                     ),
-                    SizedBox(height: 40),
+                    const SizedBox(height: 40),
                   ],
                 ),
               ),
@@ -61,7 +61,7 @@ class WelcomeScreen extends StatelessWidget {
                   width: double.infinity,
                   height: 50,
                   decoration: BoxDecoration(
-                    gradient: LinearGradient(
+                    gradient: const LinearGradient(
                       colors: [
                         Color(0xFF1B3C73), // Gradient start
                         Color(0xFF3371D9), // Gradient end
@@ -72,7 +72,7 @@ class WelcomeScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(30),
                   ),
                   alignment: Alignment.center,
-                  child: Text(
+                  child: const Text(
                     'Sign Up',
                     style: TextStyle(
                       fontSize: 16,
@@ -82,7 +82,7 @@ class WelcomeScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               // Log In Button
               GestureDetector(
                 onTap: () {
@@ -92,7 +92,7 @@ class WelcomeScreen extends StatelessWidget {
                   width: double.infinity,
                   height: 50,
                   decoration: BoxDecoration(
-                    gradient: LinearGradient(
+                    gradient: const LinearGradient(
                       colors: [
                         Color(0xFF1B3C73), // Gradient start
                         Color(0xFF3371D9), // Gradient end
@@ -103,7 +103,7 @@ class WelcomeScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(30),
                   ),
                   alignment: Alignment.center,
-                  child: Text(
+                  child: const Text(
                     'Log In',
                     style: TextStyle(
                       fontSize: 16,
@@ -113,7 +113,7 @@ class WelcomeScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              Spacer(),
+              const Spacer(),
             ],
           ),
         ),

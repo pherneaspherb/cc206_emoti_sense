@@ -37,13 +37,13 @@ class _DiscoverPageState extends State<DiscoverPage> {
           itemBuilder: (context, index) {
             switch (index) {
               case 0:
-                return _buildCategoryItem(context, 'Music', Icons.music_note, const Color.fromARGB(255, 186, 104, 200), const Color.fromARGB(255, 225, 190, 231), MusicPage());
+                return _buildCategoryItem(context, 'Music', Icons.music_note, const Color.fromARGB(255, 186, 104, 200), const Color.fromARGB(255, 225, 190, 231), const MusicPage());
               case 1:
                 return _buildCategoryItem(context, 'Meditation', Icons.self_improvement, const Color.fromARGB(255, 247, 234, 117), Colors.amber, const MeditationPage());
               case 2:
-                return _buildCategoryItem(context, 'Breathwork', Icons.air, Colors.green, const Color.fromARGB(255, 172, 236, 99), BreathworkPage());
+                return _buildCategoryItem(context, 'Breathwork', Icons.air, Colors.green, const Color.fromARGB(255, 172, 236, 99), const BreathworkPage());
               case 3:
-                return _buildCategoryItem(context, 'Readings', Icons.book, Colors.pink, const Color.fromARGB(255, 247, 148, 181), ReadingsPage());
+                return _buildCategoryItem(context, 'Readings', Icons.book, Colors.pink, const Color.fromARGB(255, 247, 148, 181), const ReadingsPage());
               default:
                 return Container(); // Empty container for any undefined index
             }

@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'dart:developer';
 
 class DatabaseService {
   final String uid;

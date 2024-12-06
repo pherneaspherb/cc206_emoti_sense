@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class MindfulnessMazePage extends StatelessWidget {
-  const MindfulnessMazePage({Key? key}) : super(key: key);
+  const MindfulnessMazePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,11 +17,11 @@ class MindfulnessMazePage extends StatelessWidget {
         backgroundColor: const Color.fromARGB(255, 76, 175, 80), // Darker green
       ),
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              const Color.fromARGB(255, 76, 175, 80), // Darker green
-              const Color.fromARGB(255, 139, 195, 74), // Lighter green
+              Color.fromARGB(255, 76, 175, 80), // Darker green
+              Color.fromARGB(255, 139, 195, 74), // Lighter green
             ],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
@@ -34,8 +34,8 @@ class MindfulnessMazePage extends StatelessWidget {
               borderRadius: BorderRadius.circular(20),
             ),
             elevation: 10, // Adding a drop shadow
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
+            child: const Padding(
+              padding: EdgeInsets.all(16.0),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.center, // Center content vertically
@@ -44,13 +44,13 @@ class MindfulnessMazePage extends StatelessWidget {
                   Icon(
                     Icons.map,
                     size: 80,
-                    color: const Color.fromARGB(255, 76, 175, 80), // Darker green icon
+                    color: Color.fromARGB(255, 76, 175, 80), // Darker green icon
                   ),
-                  const SizedBox(height: 16),
+                  SizedBox(height: 16),
                   Text(
                     'Navigate the maze mindfully, finding moments of calm and focus along the way.',
                     textAlign: TextAlign.center,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 16,
                       color: Colors.white, // White text for the description
                     ),

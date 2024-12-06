@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart'; // Import required for ChangeNotifier
 
 class RecentItems with ChangeNotifier {
-  List<Map<String, String>> _recentItems = [];
+  final List<Map<String, String>> _recentItems = [];
 
   List<Map<String, String>> get recentItems => _recentItems;
 

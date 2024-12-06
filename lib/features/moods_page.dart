@@ -4,7 +4,7 @@ class MoodsPage extends StatefulWidget {
   final List<String> moods;
   final ValueChanged<String> onMoodDeleted;
 
-  MoodsPage({
+  const MoodsPage({super.key, 
     required this.moods,
     required this.onMoodDeleted, required Null Function() onClearAll,
   });
@@ -29,7 +29,7 @@ class _MoodsPageState extends State<MoodsPage> {
     });
 
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
+      const SnackBar(
         content: Text('All moods cleared.'),
       ),
     );
@@ -41,16 +41,16 @@ class _MoodsPageState extends State<MoodsPage> {
       appBar: AppBar(
         title: const Text('Your Moods', style: TextStyle(color: Colors.white)),
         centerTitle: true,
-        backgroundColor: Color(0xFF003366), // Deep Blue AppBar
+        backgroundColor: const Color(0xFF003366), // Deep Blue AppBar
         actions: [
           IconButton(
-            icon: Icon(Icons.delete, color: Colors.white), // Clear all icon in the AppBar
+            icon: const Icon(Icons.delete, color: Colors.white), // Clear all icon in the AppBar
             onPressed: clearAllMoods, // Calls clearAllMoods directly within MoodsPage
           ),
         ],
       ),
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
@@ -69,16 +69,16 @@ class _MoodsPageState extends State<MoodsPage> {
                   final mood = moods[index];
 
                   return Container(
-                    margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                    margin: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
                     decoration: BoxDecoration(
                       color: Colors.white, // White background for each mood
                       borderRadius: BorderRadius.circular(8.0),
                     ),
                     child: ListTile(
-                      contentPadding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-                      title: Text(mood, style: TextStyle(color: Colors.black)), // Mood text in black
+                      contentPadding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+                      title: Text(mood, style: const TextStyle(color: Colors.black)), // Mood text in black
                       trailing: IconButton(
-                        icon: Icon(Icons.delete, color: Colors.red),
+                        icon: const Icon(Icons.delete, color: Colors.red),
                         onPressed: () {
                           widget.onMoodDeleted(mood); // Calls onMoodDeleted from parent
                           setState(() {

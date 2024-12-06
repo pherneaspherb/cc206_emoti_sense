@@ -5,7 +5,7 @@ import 'package:provider/provider.dart'; // Import provider
 import 'package:cc206_emoti_sense/provider/recent_items.dart';  // Import the RecentItems provider
 
 class MusicPage extends StatefulWidget {
-  MusicPage({Key? key}) : super(key: key);
+  const MusicPage({super.key});
 
   @override
   _MusicPageState createState() => _MusicPageState();
@@ -61,7 +61,7 @@ class _MusicPageState extends State<MusicPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(kToolbarHeight),
+        preferredSize: const Size.fromHeight(kToolbarHeight),
         child: Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
@@ -71,7 +71,7 @@ class _MusicPageState extends State<MusicPage> {
             ),
           ),
           child: AppBar(
-            title: Text(
+            title: const Text(
               'Find Music',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
@@ -99,15 +99,15 @@ class _MusicPageState extends State<MusicPage> {
                 filled: true, // Make the background of the search bar white
                 fillColor: Colors.white, // White background for the search bar
                 labelText: 'Search for music',
-                labelStyle: TextStyle(color: Colors.black), // Dark label color for visibility
+                labelStyle: const TextStyle(color: Colors.black), // Dark label color for visibility
                 border: OutlineInputBorder(
                    borderRadius: BorderRadius.circular(30.0), 
                 ),
-                prefixIcon: Icon(
+                prefixIcon: const Icon(
                   Icons.search,
                   color: Colors.white, // Set the search icon color to white
                 ),
-                suffixIcon: Icon(
+                suffixIcon: const Icon(
                   Icons.arrow_forward,
                   color: Colors.white, // Set the arrow color to white
                 ),
@@ -116,9 +116,9 @@ class _MusicPageState extends State<MusicPage> {
                 fetchMusicData(value); // Fetch data on submit
               },
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             isLoading
-                ? Center(child: CircularProgressIndicator())
+                ? const Center(child: CircularProgressIndicator())
                 : Expanded(
                     child: ListView.builder(
                       itemCount: musicData.length < 10 ? musicData.length : 10, // Limit to 10 items
@@ -127,19 +127,19 @@ class _MusicPageState extends State<MusicPage> {
                         final title = musicItem['title'] ?? 'No title';
                         final artist = musicItem['artist-credit']?[0]['name'] ?? 'Unknown artist';
                         return Card(
-                          margin: EdgeInsets.symmetric(vertical: 8),
+                          margin: const EdgeInsets.symmetric(vertical: 8),
                           elevation: 4,
                           child: ListTile(
-                            contentPadding: EdgeInsets.all(10),
+                            contentPadding: const EdgeInsets.all(10),
                             title: Text(
                               title,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
                             subtitle: Text(artist),
-                            leading: Icon(Icons.music_note, color: Colors.deepPurple),
+                            leading: const Icon(Icons.music_note, color: Colors.deepPurple),
                             onTap: () {
                               _updateRecent(context, title, 'Music'); // Update recent on tap
                             },

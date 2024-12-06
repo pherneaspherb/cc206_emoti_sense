@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'moods_page.dart';
 import 'package:provider/provider.dart';
 import 'package:cc206_emoti_sense/provider/recent_items.dart';
@@ -103,7 +102,7 @@ class DashboardNavigation {
           ),
         ],
       ),
-      backgroundColor: Color(0xFF003366),
+      backgroundColor: const Color(0xFF003366),
       elevation: 0,
       centerTitle: true,
       automaticallyImplyLeading: false,
@@ -352,7 +351,7 @@ Widget _buildRecentlyPlayed(BuildContext context) {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(
+                  const Icon(
                     Icons.play_circle_outline,
                     color: Colors.white,
                     size: 40,  // Make the play button smaller

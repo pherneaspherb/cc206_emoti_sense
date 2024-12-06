@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class DailyCheckInQuizPage extends StatefulWidget {
-  const DailyCheckInQuizPage({Key? key}) : super(key: key);
+  const DailyCheckInQuizPage({super.key});
 
   @override
   _DailyCheckInQuizPageState createState() => _DailyCheckInQuizPageState();
@@ -69,11 +69,11 @@ class _DailyCheckInQuizPageState extends State<DailyCheckInQuizPage> {
         backgroundColor: const Color.fromARGB(255, 211, 47, 47), // Dark red
       ),
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              const Color.fromARGB(255, 211, 47, 47), // Dark red
-              const Color.fromARGB(255, 244, 67, 54), // Lighter red
+              Color.fromARGB(255, 211, 47, 47), // Dark red
+              Color.fromARGB(255, 244, 67, 54), // Lighter red
             ],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
@@ -109,13 +109,13 @@ class _DailyCheckInQuizPageState extends State<DailyCheckInQuizPage> {
                 style: ElevatedButton.styleFrom(
                   foregroundColor: const Color.fromARGB(255, 211, 47, 47), backgroundColor: Colors.white, // Dark red text color
                   padding: const EdgeInsets.all(16.0),
-                  side: BorderSide(color: const Color.fromARGB(255, 211, 47, 47), width: 2), // Dark red border
+                  side: const BorderSide(color: Color.fromARGB(255, 211, 47, 47), width: 2), // Dark red border
                 ),
                 child: Text(option['text'] as String),
                 onPressed: () => _answerQuestion(option['score'] as int),
               ),
             );
-          }).toList(),
+          }),
         ],
       ),
     );
@@ -161,7 +161,7 @@ class _DailyCheckInQuizPageState extends State<DailyCheckInQuizPage> {
             style: ElevatedButton.styleFrom(
               foregroundColor: const Color.fromARGB(255, 211, 47, 47), backgroundColor: Colors.white, // Dark red text color
               padding: const EdgeInsets.all(16.0),
-              side: BorderSide(color: const Color.fromARGB(255, 211, 47, 47), width: 2), // Dark red border
+              side: const BorderSide(color: Color.fromARGB(255, 211, 47, 47), width: 2), // Dark red border
             ),
             child: const Text('Retake Quiz'),
           ),

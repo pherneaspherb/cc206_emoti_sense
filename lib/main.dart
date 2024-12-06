@@ -21,7 +21,7 @@ void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   if(kIsWeb){
     await Firebase.initializeApp(
-    options: FirebaseOptions(
+    options: const FirebaseOptions(
       apiKey: "AIzaSyC-9BQmg8TmMh9jXpl3jl5xYjXi6jdfrCY",
   authDomain: "aesync-emotisense.firebaseapp.com",
 
@@ -39,31 +39,33 @@ void main() async{
   runApp(
     ChangeNotifierProvider(
       create: (context) => RecentItems(), // Provide RecentItems globally
-      child: MyApp(),
+      child: const MyApp(),
     ),
   );
 }
 
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       initialRoute: '/', 
       routes: {
-        '/': (context) => WelcomeScreen(), 
+        '/': (context) => const WelcomeScreen(), 
         '/dashboard': (context) => const Dashboard(), 
-        '/login': (context) =>  LoginScreen(), 
+        '/login': (context) =>  const LoginScreen(), 
         '/signup': (context) => SignUpScreen(), 
         '/discover': (context) => const DiscoverPage(),
         '/games': (context) => const GamesPage(), 
         '/profile': (context) => const ProfilePage(),    
         '/editProfile': (context) => const ProfileEdit(),
-        '/music': (context) => MusicPage(),
-        '/meditation': (context) => MeditationPage(),
-        '/breathwork': (context) => BreathworkPage(), 
-        '/stories': (context) => ReadingsPage(), 
+        '/music': (context) => const MusicPage(),
+        '/meditation': (context) => const MeditationPage(),
+        '/breathwork': (context) => const BreathworkPage(), 
+        '/stories': (context) => const ReadingsPage(), 
       },
     );
   }

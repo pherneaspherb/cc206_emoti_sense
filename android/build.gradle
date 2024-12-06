@@ -1,0 +1,33 @@
+// Project-level build.gradle file
+
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        // The classpath for the Google Services plugin (ensure correct version)
+        classpath 'com.google.gms:google-services:4.4.2'  // Ensure this version is correct
+       // classpath 'com.android.tools.build:gradle:7.5.0'  // Ensure this version is compatible with your setup
+        classpath 'com.android.tools.build:gradle:7.4.0'
+        classpath "com.android.tools.build:gradle:8.1.0"
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        mavenCentral()
+    }
+}
+
+rootProject.buildDir = "../build"
+
+subprojects {
+    project.buildDir = "${rootProject.buildDir}/${project.name}"
+    project.evaluationDependsOn(":app")  // Make sure to evaluate the app project before others
+}
+
+tasks.register("clean", Delete) {
+    delete rootProject.buildDir
+}
